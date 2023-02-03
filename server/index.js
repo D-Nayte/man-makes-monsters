@@ -19,6 +19,11 @@ app.use(
     extended: true,
   })
 );
+
+app.get("/", (req, res) => {
+  res.send("Server is running!");
+});
+
 export const queue = {};
 const PORT = process.env.PORT || 5555;
 const server = http.createServer(app);
