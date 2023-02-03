@@ -22,8 +22,10 @@ function PageNotFound() {
       <div className="linkElement">
         <animated.div
           className="cardContainer"
-          onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
-          onMouseLeave={() => set({ xys: [0, 0, 1] })}
+          onMouseMove={({ clientX: x, clientY: y }) =>
+            set.current[0].start({ xys: calc(x, y) })
+          }
+          onMouseLeave={() => set.current[0].start({ xys: [0, 0, 1] })}
           style={{ transform: props.xys.to(trans) }}
         >
           <div className="card">
