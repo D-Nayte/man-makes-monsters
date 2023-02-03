@@ -2,7 +2,7 @@ import { signIn, getProviders } from "next-auth/react";
 import { CgCloseO } from "react-icons/cg";
 import { FcGoogle } from "react-icons/fc";
 
-const redirectTo = { callbackUrl: "http://localhost:3000/" };
+const redirectTo = { callbackUrl: "http://manmakesmonster.com" };
 
 export default function SignIn({ providers, showSignIn, setShowSignIn }) {
   if (!showSignIn) return;
@@ -33,24 +33,3 @@ export default function SignIn({ providers, showSignIn, setShowSignIn }) {
     </div>
   );
 }
-
-// return (
-//   <div className="gameRulesBackdrop">
-//     <div className="signInContainer">
-//       <button onClick={() => setShowSignIn(false)}>
-//         <CgCloseO className="signInClose" />
-//       </button>
-//       {Object.values(providers).map((provider) => (
-//         <div key={provider.name} className="authProviderButtonContainer">
-//           <button
-//             onClick={() => signIn(provider.id, redirectTo)}
-//             className="authProviderButton">
-//             {provider.name === "Google" && <FcGoogle className="Google" />}
-//             Sign in with
-//             {provider.name}
-//           </button>
-//         </div>
-//       ))}
-//     </div>
-//   </div>
-// );
