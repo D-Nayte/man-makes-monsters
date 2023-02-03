@@ -1,0 +1,37 @@
+.bug-report-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.form-group textarea#description {
+  height: 150px; /* adjust the height to 150px */
+  width: 100%; /* adjust the width to 100% */
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+.bugSubmit {
+  padding: 20px 0 0 10px;
+  font-size: 20px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.bugSubmit:hover {
+  text-decoration: underline;
+  transition: 0.3s;
+}

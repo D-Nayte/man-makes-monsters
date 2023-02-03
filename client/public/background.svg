@@ -1,0 +1,15 @@
+<svg width="955" height="775" viewBox="0 0 955 775" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="955" height="775" fill="#1E1E1E"/>
+<rect y="99" width="955" height="577" fill="black"/>
+<g filter="url(#filter0_f_0_1)">
+<ellipse cx="477.5" cy="387.5" rx="36.5" ry="137.5" fill="#D9D9D9"/>
+<path d="M513.5 387.5C513.5 425.439 509.417 459.769 502.826 484.599C499.53 497.018 495.613 507.031 491.284 513.929C486.939 520.852 482.268 524.5 477.5 524.5C472.732 524.5 468.061 520.852 463.716 513.929C459.387 507.031 455.47 497.018 452.174 484.599C445.583 459.769 441.5 425.439 441.5 387.5C441.5 349.561 445.583 315.231 452.174 290.401C455.47 277.982 459.387 267.969 463.716 261.071C468.061 254.148 472.732 250.5 477.5 250.5C482.268 250.5 486.939 254.148 491.284 261.071C495.613 267.969 499.53 277.982 502.826 290.401C509.417 315.231 513.5 349.561 513.5 387.5Z" stroke="white"/>
+</g>
+<defs>
+<filter id="filter0_f_0_1" x="191" y="0" width="573" height="775" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="125" result="effect1_foregroundBlur_0_1"/>
+</filter>
+</defs>
+</svg>

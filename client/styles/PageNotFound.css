@@ -1,0 +1,22 @@
+.pageNotFoundButton {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  font-weight: bold;
+  width: 200px;
+  height: 35px;
+  background: rgb(52, 50, 50);
+  border-radius: 15px;
+  display: flex;
+}
+.pageNotFoundButton button {
+  display: flex;
+  margin: auto;
+}
+.pageNotFoundButton:hover {
+  background: white;
+  transition: 0.3s;
+  color: black;
+}

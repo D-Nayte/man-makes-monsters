@@ -1,0 +1,45 @@
+.singIn-wrapper {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  border: 2px solid red;
+  transform: translate(-50%, -50%);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0.5rem 1.25rem;
+  background-color: black;
+  border: 2px solid white;
+  border-radius: 1rem;
+}
+
+.singIn-wrapper > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.singIn-wrapper > h2 button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.singIn-wrapper > ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 0.75rem;
+  color: black;
+  padding: 0.5rem 1rem;
+  margin: 0;
+  gap: 1rem;
+  font-size: 18px;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}

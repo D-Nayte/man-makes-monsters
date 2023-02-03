@@ -1,0 +1,295 @@
+.lobbyCardsContainer {
+  position: relative;
+  height: 100vh;
+  margin: auto;
+  width: 500px;
+  display: grid;
+  gap: 10vw;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+}
+.lobbyCardRotate {
+  position: relative;
+  transform: rotateY(180deg) scale(1.1) translateX(-205px);
+  border-radius: 15px;
+
+  z-index: 2;
+}
+.lobbyJoinCardRotate {
+  position: relative;
+  transform: rotateY(180deg) scale(1.1) translateX(200px);
+  border-radius: 15px;
+
+  z-index: 2;
+}
+#lobbyHidden {
+  position: relative;
+  transform: scale(0.8) translateX(100px) rotate(-30deg);
+  z-index: 0;
+}
+#lobbyHostHidden {
+  position: relative;
+  transform: scale(0.8) translateX(-100px) rotate(30deg);
+  z-index: 0;
+}
+
+.lobbyCard {
+  height: 400px;
+  width: 250px;
+  position: relative;
+  transition: all 0.5s linear;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.lobbyFront,
+.lobbyBack {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  border-radius: 15px;
+  position: absolute;
+  border: 2px solid white;
+}
+
+.lobbyFront {
+  background: black;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.lobbyFront:hover,
+.lobbyBack:hover {
+  box-shadow: 0 0px 15px 8px rgba(255, 255, 255, 0.2);
+}
+.lobbyjoinhidden {
+  z-index: 0;
+}
+.lobbyFront h2 {
+  font-size: 30px;
+  width: 200px;
+  padding-left: 30px;
+  padding-top: 30px;
+}
+
+.lobbyBack {
+  background: black;
+  position: relative;
+  transform: rotateY(180deg);
+  display: grid;
+  grid-template-rows: 1fr 5fr 1fr;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0.5rem 2rem 1rem 2rem;
+  z-index: -1;
+}
+
+.lobbyBack h2 {
+  height: 33%;
+  cursor: default;
+  padding-top: 20px;
+}
+
+.lobbyContainer {
+  perspective: 1500px;
+}
+.lobbyInputField {
+  border: none;
+  display: flex;
+  border-bottom: 1px solid white;
+  background: transparent;
+  font-size: 28px;
+  color: white;
+  width: 100%;
+  margin: auto;
+}
+.lobbyJoinInputField {
+  border: none;
+  display: flex;
+  border-bottom: 1px solid white;
+  background: transparent;
+  width: 100%;
+  color: white;
+  font-size: 28px;
+}
+
+.lobbyForm {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.isLoading {
+  background-color: black !important;
+  box-shadow: none !important;
+}
+.isLoading:hover {
+  background-color: black !important;
+  color: white !important;
+  box-shadow: none !important;
+}
+.isLoading:after {
+  background-color: black !important;
+  color: white !important;
+}
+
+.waitingLobbyButton {
+  width: 150px;
+  height: 50px;
+  border-radius: 30px;
+  border: 2px solid white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.waitingLobbyButton:hover {
+  background-color: white;
+  color: black;
+  transition: 0.3s;
+  border: 2px solid black;
+  box-shadow: 1px 1px 23px -1px rgba(255, 255, 255, 0.52);
+  -webkit-box-shadow: 1px 1px 23px -1px rgba(255, 255, 255, 0.52);
+  -moz-box-shadow: 1px 1px 23px -1px rgba(255, 255, 255, 0.52);
+}
+
+.lobbyContainer-active {
+  -webkit-animation: switchCards;
+  animation: switchCards;
+  -webkit-animation-duration: 250ms;
+  animation-duration: 250ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+.errMessage {
+  position: fixed;
+  width: 100%;
+  color: white;
+  background-color: #eb455f;
+  height: 50px;
+  -webkit-animation: errAnimation 0.7s;
+  animation: errAnimation 0.7s;
+  top: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 5px;
+  display: flex;
+  font-weight: 800;
+  z-index: 20;
+  font-size: 18px;
+}
+@-webkit-keyframes errAnimation {
+  0% {
+    top: -50px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+@keyframes errAnimation {
+  0% {
+    top: -50px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@-webkit-keyframes switchCards {
+  0% {
+    perspective: 1500px;
+    z-index: 0;
+  }
+
+  75% {
+    perspective: 1500px;
+    z-index: 0;
+  }
+  100% {
+    perspective: none;
+    z-index: 1;
+  }
+}
+
+@keyframes switchCards {
+  0% {
+    perspective: 1500px;
+    z-index: 0;
+  }
+
+  75% {
+    perspective: 1500px;
+    z-index: 0;
+  }
+  100% {
+    perspective: none;
+    z-index: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .lobbyCardsContainer {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+  }
+  .lobbyContainer-active {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .lobbyCardRotate {
+    transform: rotateY(180deg) translateX(0);
+  }
+  .lobbyCard {
+    height: 230px;
+    width: 160px;
+  }
+  .lobbyCard h2 {
+    font-size: 23px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .lobbyForm {
+    flex-basis: 100%;
+  }
+  .lobbyForm input {
+    font-size: 16px;
+  }
+  .lobbyCardRotate {
+    height: 300px;
+    width: 200px;
+  }
+  .lobbyJoinCardRotate {
+    transform: rotateY(180deg) scale(1.1) translateX(0);
+    height: 320px;
+    width: 200px;
+  }
+
+  .lobbyCardRotate {
+    height: 352px;
+    width: 220px;
+  }
+
+  #lobbyHidden {
+    transform: scale(0.9) translateX(50px) translateY(250px) rotate(-30deg);
+  }
+  #lobbyHostHidden {
+    transform: scale(0.9) translateX(-100px) translateY(250px) rotate(30deg);
+  }
+  .errMessage {
+    font-size: 14px;
+  }
+}

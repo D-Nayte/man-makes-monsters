@@ -1,0 +1,229 @@
+.whiteCardContainer {
+  display: flex;
+  width: 175px;
+  aspect-ratio: 1/1.4;
+  border-radius: 15px;
+  color: black;
+  perspective: 1000px;
+  font-size: 18px;
+  -webkit-animation: wiggle 3s 2s linear infinite;
+  animation: wiggle 3s 2s linear infinite;
+  transition: 0.5s;
+  z-index: 20;
+}
+
+.whiteCardContainer:hover {
+  scale: 1.05;
+  transition: 0.5s;
+  box-shadow: -27px -19px 11px -3px rgba(125, 125, 125, 0.28);
+  -webkit-animation: none;
+  animation: none;
+}
+.linkElement {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.whiteCard {
+  width: 100%;
+  height: 100%;
+  transition: transform 250ms;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  position: relative;
+}
+
+.whiteCard.whiteIsFlipped {
+  transform: rotateY(180deg);
+}
+
+.whiteCardFace {
+  position: absolute;
+
+  width: 170px;
+  aspect-ratio: 1/1.4;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid black;
+  background: white;
+  /*box-shadow: 0 0px 18px 0px rgba(255, 255, 255, 0.2);*/
+}
+.whiteCardFace--front {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.whiteCardFace--front h2 {
+  margin: 0;
+  display: flex;
+  text-align: left;
+  font-size: 24px;
+  width: 70%;
+  height: 100%;
+  padding: 10px;
+}
+.whiteCardFaceButton {
+  position: absolute;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%);
+  font-weight: bold;
+  /*letter-spacing: 1px;*/
+}
+.whiteCardFace--front h3 {
+  color: white;
+  letter-spacing: 2px;
+}
+
+.whiteCardFace--back {
+  transform: rotateY(180deg);
+  background-color: hidden;
+}
+.whiteCardHeader {
+  position: relative;
+  /*padding: 30px 30px 40px;*/
+  cursor: default;
+  font-weight: bolder;
+  font-size: 18px;
+  padding: 15px;
+}
+.whiteCardHeader:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  border-radius: 0 0 50% 0;
+}
+.logoCard {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -o-object-fit: cover;
+  object-fit: cover;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+
+@-webkit-keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  65% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+  80% {
+    transform: rotate(-3deg);
+  }
+  85% {
+    transform: rotate(3deg);
+  }
+  95% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes wiggle {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  65% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(3deg);
+  }
+  80% {
+    transform: rotate(-3deg);
+  }
+  85% {
+    transform: rotate(3deg);
+  }
+  95% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@-webkit-keyframes whiteSlideIn {
+  from {
+    transform: translateY(50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes whiteSlideIn {
+  from {
+    transform: translateY(50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .whiteCardContainer {
+    min-width: 115px;
+    max-width: 36vw;
+    font-size: 14px;
+  }
+  .whiteCardFace {
+    min-width: 115px;
+    max-width: 36vw;
+  }
+  .whiteCardFace--front h2 {
+    font-size: 18px;
+  }
+  .whiteCardHeader {
+    font-size: 14px;
+    padding: 10px;
+  }
+}

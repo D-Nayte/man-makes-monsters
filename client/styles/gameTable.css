@@ -1,0 +1,489 @@
+.game {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.devbug-h1 {
+  position: absolute;
+  left: 50%;
+  top: -20%;
+}
+
+.droppable-container {
+  flex-basis: 50%;
+  /* display: flex; */
+  flex-direction: column;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
+}
+.czarIsChoosing {
+  margin: auto;
+  padding-top: 40px;
+  text-align: center;
+
+  position: relative;
+}
+
+.whiteCardTable ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+.whiteCardTable ul li:hover {
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.whiteCardTable ul .lastWhiteCard:hover {
+  -webkit-animation: fadeIn 1000ms forwards;
+  animation: fadeIn 1000ms forwards;
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+  99% {
+    z-index: 2;
+  }
+  100% {
+    transform: scale(1);
+    z-index: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: scale(1.05);
+    z-index: 2;
+  }
+  99% {
+    z-index: 2;
+  }
+  100% {
+    transform: scale(1);
+    z-index: 0;
+  }
+}
+
+.whiteCardTable ul li:hover {
+  transform: rotate(3deg);
+}
+
+.onTable {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+.cardDisplay {
+  display: grid;
+  grid-template-areas:
+    "blackCard white1 white2"
+    ". selectButton selectButton"
+    "waitText waitText waitText";
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  -moz-column-gap: 10px;
+  column-gap: 10px;
+}
+
+.cardDisplay.playedWhite {
+  display: flex;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  margin: auto;
+  gap: 2rem;
+  background-color: transparent;
+  justify-content: center;
+  padding: 1rem 1rem;
+}
+
+.cardDisplay.playedWhite li {
+  display: flex;
+  position: relative;
+  gap: 0.25rem;
+  background-color: transparent;
+  transition: all 250ms;
+}
+
+.cardDisplay.playedWhite li div:nth-child(1) {
+  transform: rotate(-15deg) translateX(25%);
+  z-index: 0;
+  scale: 0.85;
+}
+
+.cardDisplay.playedWhite li div:nth-child(2) {
+  transform: rotate(15deg) translateX(-25%);
+  z-index: 0;
+  scale: 0.85;
+}
+
+.cardDisplay.playedWhite li:hover {
+  scale: 1.1;
+}
+
+.cardDisplay.playedWhite:hover li div {
+  box-shadow: 0 0px 18px 0px rgba(255, 255, 255, 0.2);
+}
+
+.choose-button {
+  position: absolute;
+  top: 0;
+  left: 70%;
+  text-align: center;
+  border-radius: 15px;
+  font-size: 18px;
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 5;
+  transition: all 250ms;
+  opacity: 0;
+  color: white;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.choose-icon {
+  overflow: visible;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  border: 2px solid gold;
+  background-color: black;
+  padding: 10px;
+  font-size: 20px;
+  color: gold;
+  justify-content: center;
+  display: flex;
+  margin: auto;
+}
+.waiting-text {
+  display: flex;
+  margin: auto;
+  width: 80px;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+
+.cardDisplay.playedWhite li:hover .choose-button {
+  transform: translateX(40%) translateY(0);
+  opacity: 1;
+}
+
+.cardDisplay.playedWhite li:hover .choose-button:disabled {
+  background-color: rgba(26, 26, 26, 0.856);
+  border: 2px solid transparent;
+  padding: 5px;
+  color: rgba(245, 245, 245, 0.466);
+}
+
+.cardDisplay.confirmed li {
+  position: relative;
+  transition: all 500ms !important;
+}
+
+.cardDisplay.confirmed li:nth-child(2):hover,
+.cardDisplay.confirmed li:nth-child(3):hover {
+  scale: 1.1 !important;
+  z-index: 1 !important;
+}
+
+.cardDisplay.confirmed {
+  position: relative;
+}
+
+.cardDisplay.confirmed li:nth-child(1) {
+  z-index: 1;
+  transform: translateX(100%);
+}
+
+.cardDisplay.confirmed li:nth-child(2) {
+  z-index: 0;
+  scale: 0.9;
+  transform: translateX(-50%) rotateZ(-20deg);
+}
+
+.cardDisplay.confirmed li:nth-child(3) {
+  z-index: 0;
+  scale: 0.9;
+  transform: translateX(-75%) rotateZ(20deg);
+}
+
+.timeMessageContainer {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+  font-size: larger;
+  z-index: 200;
+}
+
+.cardDisplay li[role="button"]:nth-child(1) {
+  grid-area: blackCard;
+}
+
+.cardDisplay li[role="button"]:nth-child(2) {
+  grid-area: white1;
+}
+
+.cardDisplay li[role="button"]:nth-child(3) {
+  grid-area: white2;
+}
+
+.selectButton {
+  grid-area: selectButton;
+  display: flex;
+  position: absolute;
+  bottom: -28%;
+  left: 50%;
+  z-index: 20;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: black;
+  letter-spacing: 1px;
+  font-size: 16px;
+  color: white;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  transition: 0.3;
+  box-shadow: 0px 0px 15px 2px rgb(0, 0, 0);
+  padding: 0.75rem 2rem;
+}
+
+.selectButton.active {
+  -webkit-animation: slideIn 2000ms forwards;
+  animation: slideIn 2000ms forwards;
+}
+.selectButton:hover {
+  background-color: white;
+  color: black;
+  transition: 0.5s;
+}
+.waitText {
+  top: 38%;
+  grid-area: waitText;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.white-in-black {
+  font-style: italic;
+  font-family: Arial, Helvetica, sans-serif;
+  border-bottom: 2px solid white;
+  font-weight: 600;
+}
+
+.blackHand {
+  position: relative;
+  display: flex;
+  grid-area: blackHand;
+}
+
+.whiteHand {
+  -webkit-animation: outOfView 0.75s forwards;
+  animation: outOfView 0.75s forwards;
+  display: grid;
+
+  transition: all 250ms;
+}
+
+.whiteHandOut {
+  position: fixed;
+  bottom: -70%;
+  left: 50%;
+  transform: translateX(-50%) translateY(25%);
+}
+
+@-webkit-keyframes outOfView {
+  0% {
+    transform: translateY(1000px);
+  }
+  50% {
+    transform: translateY(-80px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes outOfView {
+  0% {
+    transform: translateY(1000px);
+  }
+  50% {
+    transform: translateY(-80px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+.czarButtonLeft {
+  display: none;
+}
+.czarButtonRight {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .whiteCardTable {
+    width: 100vw;
+    overflow: hidden;
+    gap: 0 !important;
+    transition: 2s;
+    margin: 0;
+  }
+
+  .onTable {
+    padding-top: 0;
+  }
+  .black-on-table > .cardDisplay {
+    display: grid;
+    width: 100vw;
+    margin: 0;
+    padding: 0 30px;
+    grid-template-areas:
+      "blackCard blackCard"
+      "white1 white2"
+      "confirm confirm";
+    justify-content: center;
+    row-gap: 5px;
+  }
+  .black-on-table > .cardDisplay.confirmed {
+    grid-template-areas:
+      "blackCard white1 white2"
+      "confirm confirm confirm"
+      "waitText waitText waitText";
+  }
+  .whiteCardTable ul {
+    display: flex;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    overflow: none;
+    gap: 10px;
+    transform: translateX(300px);
+    padding-top: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .carusselButton1 {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 13%;
+    height: 100%;
+    z-index: 50;
+    transform: translateY(-50%);
+    box-shadow: inset 30px -10px 10px -12px rgba(0, 0, 0, 0.836);
+  }
+  .carusselButton2 {
+    position: absolute;
+    box-shadow: inset -30px -10px 15px -12px rgb(0, 0, 0, 0.836);
+    width: 13%;
+    height: 100%;
+    top: 50%;
+    right: 0;
+    z-index: 50;
+    transform: translateY(-50%);
+  }
+  .arrowIcon {
+    display: flex;
+    font-size: 38px;
+    margin: auto;
+  }
+  .droppable-container {
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .game {
+    height: 100%;
+    padding-bottom: 25px;
+  }
+  #__next {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .selectButton {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    margin-top: 10px;
+    flex-basis: 100%;
+    max-width: 220px;
+    grid-area: confirm;
+    margin: auto;
+    padding: 0.45rem 1.45rem;
+    font-size: 14px;
+  }
+  .cardDisplay li[role="button"]:nth-child(1) {
+    display: flex;
+    justify-content: center;
+  }
+  .choose-button {
+    font-size: 10px;
+    padding: 5px;
+  }
+  .cardDisplay.playedWhite {
+    display: flex;
+    width: 100vw;
+    overflow-x: scroll;
+    margin: auto;
+    gap: 0rem;
+    justify-content: flex-start;
+    padding: 1rem 1rem;
+  }
+  .cardDisplay.playedWhite li div:nth-child(1) {
+    transform: rotate(0deg) translateX(15px);
+    z-index: 0;
+    scale: 0.85;
+  }
+
+  .cardDisplay.playedWhite li div:nth-child(2) {
+    transform: rotate(0deg) translateX(-15px);
+    z-index: 0;
+    scale: 0.85;
+  }
+  .choose-button {
+    top: 50%;
+    left: 30%;
+  }
+}

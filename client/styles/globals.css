@@ -1,0 +1,108 @@
+@import url("./Card.css");
+@import url("./Countdown.css");
+@import url("./Lobbycards.css");
+@import url("./Lobby.css");
+@import url("./skelletton.css");
+@import url("./Navbar.css");
+@import url("./FrontPage.css");
+@import url("./gameTable.css");
+@import url("./czar.css");
+@import url("./scoreboard.css");
+@import url("./winnerPage.css");
+@import url("./floatingBalloons.css");
+@import url("./shitContainer.css");
+@import url("./kickButton.css");
+@import url("./Loading.css");
+@import url("./WhiteCard.css");
+@import url("./PageNotFound.css");
+@import url("./avatars.css");
+@import url("./settings.css");
+@import url("./GameRules.css");
+@import url("./BugReport.css");
+@import url("./Contact.css");
+@import url("./GameEnd.css");
+@import url("./signIn.css");
+
+* {
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0;
+}
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+*:disabled {
+  border-color: transparent;
+}
+
+.debuggerMonitor {
+  position: absolute;
+  top: 1%;
+  right: 1%;
+}
+
+input:focus {
+  outline: none;
+  scale: 1.03;
+  transition: all 250ms;
+  box-shadow: 0 13px 10px -4px rgba(255, 255, 255, 0.171);
+}
+
+html,
+body {
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  font-family: Roboto, Helvetica, sans-serif;
+  background: url("../public/background3.svg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  overflow: hidden;
+}
+.temph1 {
+  display: flex;
+  justify-content: center;
+}
+
+.rockt {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  stroke-width: 0.4;
+  font-size: 400%;
+}
+
+#__next {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.avaPopup {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+}

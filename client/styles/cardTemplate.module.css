@@ -1,0 +1,94 @@
+.cardTemplateContainer {
+  position: relative;
+  display: inline-block;
+  padding: 15px;
+  width: 170px;
+  aspect-ratio: 1/1.4;
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+  border-radius: 0.6rem;
+  z-index: 1;
+  font-size: 18px;
+  border: 1px solid black;
+}
+
+.cardTemplateContainer:hover {
+  box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.623);
+}
+
+.black {
+  background-color: black;
+  border: 1px solid white;
+  grid-area: blackCard;
+  padding: 15px;
+  color: white;
+  transition: all 250ms;
+  z-index: 0;
+  -webkit-animation: slideIn 250ms ease-in-out;
+  animation: slideIn 250ms ease-in-out;
+}
+
+@-webkit-keyframes slideIn {
+  0% {
+    transform: translateX(50vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(50vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.black:hover {
+  rotate: 3deg;
+  cursor: pointer;
+}
+
+.hide {
+  opacity: 0;
+}
+
+.whites {
+  -webkit-animation: showUp 250ms ease-in 250ms forwards;
+  animation: showUp 250ms ease-in 250ms forwards;
+}
+
+@-webkit-keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .cardTemplateContainer {
+    min-width: 115px;
+    max-width: 36vw;
+    padding: 10px;
+    font-size: 14px;
+    overflow: auto;
+  }
+}

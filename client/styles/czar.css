@@ -1,0 +1,153 @@
+.czarSelectionContainer {
+  position: relative;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 0;
+}
+
+.selectedCard {
+  z-index: 1000;
+}
+
+.czarSelectionContainer > div {
+  display: flex;
+  margin-top: 4rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.czarSelectionContainer ul {
+  display: flex;
+  gap: 1rem;
+}
+.czarSelectionContainer ul h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.czarSelecteWhites {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.czarSelecteWhites h2 {
+  text-align: center;
+}
+.czarPicking {
+  padding: 15px;
+  /*
+  position: relative;
+  */
+
+  display: inline-block;
+  width: 240px;
+  aspect-ratio: 1/1.4;
+  background-color: white;
+  color: black;
+  font-weight: bolder;
+  border-radius: 0.6rem;
+  margin: 0.2rem 0.2rem;
+  z-index: 1;
+  font-size: 24px;
+}
+.czarPickingContainer ul {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.czarPickingContainer ul li div {
+  padding: 50px;
+}
+
+.lowest {
+  position: fixed;
+  top: 30%;
+  left: 28%;
+  /*z-index: 90000 !important;*/
+}
+.middle {
+  position: fixed;
+  top: 30%;
+  left: 43%;
+}
+.highest {
+  position: fixed;
+  top: 30%;
+  left: 58%;
+}
+
+.czarPickingH1 {
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+/*
+@keyframes flyOut {
+  0% {
+    position: absolute !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  100% {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(0%, 0%);
+  }
+}
+
+*/
+@media (max-width: 640px) {
+  .czarPicking {
+    width: 160px;
+    font-size: 16px;
+    padding: 10px !important;
+  }
+  .czarSelectionContainer {
+    gap: 1rem;
+    display: flex;
+    height: 60%;
+    justify-content: space-between;
+  }
+  .czarPickingH1 {
+    font-size: 26px;
+    padding-bottom: 1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+  .czarSelectionContainer ul {
+    gap: 0.5rem;
+    display: flex;
+    overflow: none;
+
+    transition: 0.5s;
+  }
+  .czarButtonLeft {
+    display: flex;
+    position: absolute;
+    color: white;
+    top: 105%;
+    z-index: 0;
+    left: 5%;
+    font-size: 30px;
+  }
+  .czarButtonRight {
+    display: flex;
+    position: absolute;
+    top: 105%;
+    right: 5%;
+    z-index: 0;
+    font-size: 30px;
+  }
+}

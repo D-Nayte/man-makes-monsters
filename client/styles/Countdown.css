@@ -1,0 +1,44 @@
+.timer-wrapper {
+  display: flex;
+  justify-content: center;
+  font-size: 34px;
+  color: white;
+  padding: 20px;
+}
+.timerContainer {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  z-index: 0;
+}
+
+.customTimer {
+  border-radius: 5px;
+  background-color: white;
+  transition: all 2000ms ease-out;
+  position: fixed;
+  bottom: 0;
+  left: -1%;
+  height: 19px;
+  border-radius: 0 1rem 1rem 0;
+}
+.remainingTime {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 16px;
+  mix-blend-mode: difference;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 30;
+}
+#countDownComponent {
+  display: none !important;
+}
+@media (max-width: 640px) {
+  #countDownComponent {
+    display: none !important;
+  }
+}

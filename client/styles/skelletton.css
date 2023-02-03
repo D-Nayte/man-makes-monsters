@@ -1,0 +1,98 @@
+div.skeleton {
+  border: 2px dashed rgb(124, 124, 124);
+  background-color: transparent !important;
+  color: white;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  -webkit-animation: showUp 250ms ease-in 250ms forwards;
+  animation: showUp 250ms ease-in 250ms forwards;
+}
+@-webkit-keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes showUp {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.skeleton::after {
+  content: "+";
+  display: flex;
+  font-size: 3rem;
+  font-weight: 300;
+  justify-content: center;
+  align-items: center;
+  color: rgb(124, 124, 124);
+  position: absolute;
+  width: 40%;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 2px solid rgb(124, 124, 124);
+}
+
+.skeleton:hover::before {
+  content: "Drop your card here";
+  width: 80%;
+  border: 1px solid rgba(128, 128, 128, 0.534);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(60%);
+  font-size: 1rem;
+  font-weight: 400;
+  position: absolute;
+}
+
+.skeleton:hover {
+  box-shadow: none;
+}
+
+.skeleton0 {
+  grid-area: white1;
+}
+
+.skeleton1 {
+  grid-area: white2;
+}
+
+.hide-skell {
+  -webkit-animation: hideSkell 0ms;
+  animation: hideSkell 0ms;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  z-index: -1;
+  display: none;
+}
+
+@-webkit-keyframes hideSkell {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hideSkell {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

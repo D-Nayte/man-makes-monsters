@@ -1,0 +1,151 @@
+.shit1 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 10%;
+  -webkit-animation: rain 4s infinite linear;
+  animation: rain 4s infinite linear;
+}
+.shit2 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 15%;
+  -webkit-animation: rain 2.9s infinite linear;
+  animation: rain 2.9s infinite linear;
+}
+.shit3 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 22%;
+  -webkit-animation: rain 3s infinite linear;
+  animation: rain 3s infinite linear;
+}
+.shit4 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 35%;
+  -webkit-animation: rain 3.6s infinite linear;
+  animation: rain 3.6s infinite linear;
+}
+.shit5 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 46%;
+  -webkit-animation: rain 2.4s infinite linear;
+  animation: rain 2.4s infinite linear;
+}
+.shit6 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 60%;
+  -webkit-animation: rain 3.5s infinite linear;
+  animation: rain 3.5s infinite linear;
+}
+.shit7 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 66%;
+  -webkit-animation: rain 4s infinite linear;
+  animation: rain 4s infinite linear;
+}
+.shit8 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 68%;
+  -webkit-animation: rain 2s infinite linear;
+  animation: rain 2s infinite linear;
+}
+.shit9 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 75%;
+  -webkit-animation: rain 3s infinite linear;
+  animation: rain 3s infinite linear;
+}
+.shit10 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+
+  top: 10%;
+  left: 85%;
+  -webkit-animation: rain 5s infinite linear;
+  animation: rain 5s infinite linear;
+}
+.shit11 {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  opacity: 0;
+  top: 10%;
+  left: 68%;
+  -webkit-animation: rain 2s infinite linear;
+  animation: rain 2s infinite linear;
+  -webkit-animation-delay: 3s;
+  animation-delay: 3s;
+}
+
+@-webkit-keyframes rain {
+  from {
+    transform: translateY(-100vh) rotate(-200deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh) rotate(450deg);
+    opacity: 1;
+  }
+}
+
+@keyframes rain {
+  from {
+    transform: translateY(-100vh) rotate(-200deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh) rotate(450deg);
+    opacity: 1;
+  }
+}
+@media (max-width: 640px) {
+  .shit2 {
+    display: none;
+  }
+
+  .shit4 {
+    display: none;
+  }
+
+  .shit6 {
+    display: none;
+  }
+
+  .shit8 {
+    display: none;
+  }
+}

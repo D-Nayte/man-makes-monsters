@@ -1,0 +1,383 @@
+.waitingLobbyContainer {
+  position: relative;
+  display: flex;
+  margin: auto;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+.waitingLobbyCard {
+  display: flex;
+  width: 100%;
+
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0;
+}
+.framerContainer {
+  max-width: 240px;
+  width: 70vw;
+  aspect-ratio: 0.65/1;
+  border: 2px solid white;
+
+  border-radius: 15px;
+
+  z-index: 1;
+  background: rgb(0, 0, 0);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem 1rem 2rem 1rem;
+}
+
+.framerContainer h1 {
+  padding-left: 1rem;
+}
+
+.loadingContainer {
+  display: inline-block;
+}
+.icon {
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 2;
+
+  width: 20px;
+  height: 20px;
+}
+.icon:hover {
+  color: #a0d68a;
+}
+.loader {
+  width: auto;
+  height: auto;
+  margin: auto;
+  display: flex;
+}
+.circle {
+  width: 7px;
+  height: 7px;
+  background: white;
+  border-radius: 50%;
+  margin: 0 2px;
+  -webkit-animation: jump 1s linear infinite;
+  animation: jump 1s linear infinite;
+}
+.lobbyIdContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+.lobbyIdContainer div:hover {
+  cursor: pointer;
+}
+
+.lobbyIdCopyField {
+  border-radius: 10px;
+  background-color: rgb(41, 40, 40);
+  width: 100%;
+  position: relative;
+}
+
+.input-icon-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: 0.5s;
+  font-weight: bold;
+  border-radius: 10px;
+}
+.input-icon-wrapper:hover {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(175, 173, 173);
+  color: black;
+  transition: 0.5s;
+}
+.input-icon-wrapper:active {
+  background-color: green;
+}
+
+.lobbyIdContainer p {
+  font-size: 12px;
+  padding-left: 10px;
+  overflow: hidden;
+  max-width: 80%;
+}
+
+.tempCopyText {
+  position: absolute;
+  color: #a0d68a;
+  font-weight: 600;
+  width: auto;
+  margin: auto;
+  border-radius: 30px;
+}
+.hostCrown {
+  display: flex;
+  position: absolute;
+  font-size: 38px;
+  color: orange;
+  top: -20px;
+  left: -20px;
+  transform: rotate(-40deg);
+}
+
+.dragContainer {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: 0 3rem;
+}
+.dragContainer p {
+  font-size: 10px;
+  font-weight: bold;
+  padding: 10px;
+  text-align: center;
+}
+
+.dragContainer li {
+  width: 110px;
+  height: 170px;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  border: 1px solid black;
+}
+
+.dragContainer li h2 {
+  padding-left: 10px;
+  padding-right: 10px;
+  overflow-wrap: break-word;
+  text-align: center;
+  padding-top: 0.5rem;
+}
+.wrap-text {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.dragContainer li:nth-child(1) {
+  -webkit-animation: moveCard 0.5s linear;
+  animation: moveCard 0.5s linear;
+  bottom: 10%;
+  left: 5%;
+  transform: rotate(-20deg);
+}
+.dragContainer li:nth-child(2) {
+  -webkit-animation: moveCard 0.5s linear;
+  animation: moveCard 0.5s linear;
+  bottom: 10%;
+  left: 15%;
+  transform: rotate(20deg);
+}
+.dragContainer li:nth-child(3) {
+  -webkit-animation: moveCard 0.5s linear;
+  animation: moveCard 0.5s linear;
+  bottom: 10%;
+  left: 25%;
+  transform: rotate(-10deg);
+}
+.dragContainer li:nth-child(4) {
+  -webkit-animation: moveCard 0.4s linear;
+  animation: moveCard 0.4s linear;
+  bottom: 8%;
+  left: 35%;
+  transform: rotate(20deg);
+}
+.dragContainer li:nth-child(5) {
+  -webkit-animation: moveCard 0.35s linear;
+  animation: moveCard 0.35s linear;
+  bottom: 8%;
+  left: 45%;
+  transform: rotate(10deg);
+}
+.dragContainer li:nth-child(6) {
+  -webkit-animation: moveCard 0.35s linear;
+  animation: moveCard 0.35s linear;
+  bottom: 8%;
+  left: 56%;
+  transform: rotate(-10deg);
+}
+.dragContainer li:nth-child(7) {
+  -webkit-animation: moveCard 0.35s linear;
+  animation: moveCard 0.35s linear;
+  bottom: 8%;
+  left: 64%;
+  transform: rotate(10deg);
+}
+.dragContainer li:nth-child(8) {
+  -webkit-animation: moveCard 0.35s linear;
+  animation: moveCard 0.35s linear;
+  bottom: 8%;
+  left: 75%;
+  transform: rotate(-13deg);
+}
+.dragContainer li:nth-child(9) {
+  bottom: 10%;
+  left: 86%;
+  transform: rotate(13deg);
+}
+.dragContainer li:nth-child(10) {
+  bottom: 10%;
+  left: 90%;
+  transform: rotate(-13deg);
+}
+.changeNameButton {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  border-radius: 10px;
+  background-color: rgba(41, 40, 40, 0.28);
+  color: white;
+  text-align: center;
+  z-index: 10;
+}
+.inputEnterIconContainer {
+  width: 100%;
+  position: relative;
+}
+.enterIcon {
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 800;
+  stroke-width: 50px;
+  height: 100%;
+  z-index: -1;
+  width: 10%;
+}
+.disconectIcon {
+  margin: auto;
+  display: flex;
+  font-size: 30px;
+  color: #eb455f;
+  font-weight: bold;
+}
+
+@-webkit-keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+@keyframes hideAnimation {
+  to {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+@-webkit-keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-7px);
+  }
+  70% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes jump {
+  0% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-7px);
+  }
+  70% {
+    transform: translateY(0);
+  }
+}
+
+#b {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+#c {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+@-webkit-keyframes moveCard {
+  0% {
+    transform: translateX(1500px) rotate(1turn);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes moveCard {
+  0% {
+    transform: translateX(1500px) rotate(1turn);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hostCrown {
+    font-size: 25px;
+    top: 0;
+    left: 0;
+    transform: translate(-30%, -30%) rotate(-40deg);
+  }
+  .dragContainer {
+    margin-top: auto;
+    padding: 0.5rem 1.25rem;
+    width: 100vw;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+  }
+  .dragContainer li {
+    width: 80px !important;
+    height: 115px;
+    flex-shrink: 0;
+  }
+  .framerContainer {
+    margin: 0;
+    margin-top: auto;
+  }
+  .waitingLobbyCard {
+    justify-content: space-evenly;
+  }
+  .dragContainer h2 {
+    font-size: 12px !important;
+    padding: 0.5rem !important;
+  }
+  .waitingLobbyContainer {
+    padding-bottom: 1.5rem;
+  }
+  .disconectIcon {
+    position: absolute;
+    color: #eb455eb0;
+    stroke-width: 1px;
+    height: 60%;
+    width: 60%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+  }
+  .disconnectText {
+    display: none;
+  }
+}
