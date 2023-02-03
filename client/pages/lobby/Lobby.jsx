@@ -166,7 +166,7 @@ const Lobby = (props) => {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
       setListenersReady(false);
     }
-  }, [listenersReady]);
+  }, [listenersReady, reconnect]);
 
   useEffect(() => {
     if (router.query.lobbyId) {
@@ -174,10 +174,7 @@ const Lobby = (props) => {
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
     }
     socket.io.on("reconnect", () => {
-      setReconnect(true);
-      setTimeout(() => {
-        setReconnect(false);
-      }, 500);
+      setReconnect((prev) => !prev);
     });
   }, [router.isReady]);
 

@@ -348,7 +348,7 @@ const Game = ({ socket }) => {
         id: cookies.socketId,
       });
     }
-  }, [lobbyId]);
+  }, [lobbyId, reconnect]);
 
   // setup lobbyID from router after router is ready
   useEffect(() => {
@@ -362,10 +362,7 @@ const Game = ({ socket }) => {
       }));
     }
     socket.io.on("reconnect", () => {
-      setReconnect(true);
-      setTimeout(() => {
-        setReconnect(false);
-      }, 500);
+      setReconnect((prev) => !prev);
     });
   }, [router.isReady]);
 
