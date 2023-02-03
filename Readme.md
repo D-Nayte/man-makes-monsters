@@ -23,7 +23,7 @@ A fun and exciting online card game similar to Cards Against Humanity that you c
 
 ## **Demo Video**
 
-### [(Back to top)](#man-makes-monsters)
+### [(Back to top)](#man-makes-monster)
 
 ## Watch demo video here
 
@@ -33,7 +33,7 @@ A fun and exciting online card game similar to Cards Against Humanity that you c
 
 ## **Installation**
 
-#### [(Back to top)](#man-makes-monsters)
+### [(Back to top)](#man-makes-monster)
 
 This repository uses MongoDB and Next.Auth, so to work with it you will need a `.env` file and a separate database. To install, run `npm install` in your terminal, and start the server with `npm start`.
 
@@ -42,7 +42,7 @@ This repository uses MongoDB and Next.Auth, so to work with it you will need a `
 
 ## **How to play it**
 
-#### [(Back to top)](#man-makes-monsters)
+### [(Back to top)](#man-makes-monster)
 
 Follow these steps to play the game:
 
@@ -56,7 +56,7 @@ Follow these steps to play the game:
 
 ## **Tech Stack**
 
-#### [(Back to top)](#man-makes-monsters)
+### [(Back to top)](#man-makes-monster)
 
 The project uses the following technologies:
 
@@ -84,6 +84,6 @@ The project uses the following technologies:
 
 ## **Contact**
 
-#### [(Back to top)](#man-makes-monsters)
+### [(Back to top)](#man-makes-monster)
 
 For any questions or concerns, please don't hesitate to contact us. We'll be happy to help!
