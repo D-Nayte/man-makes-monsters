@@ -4,8 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function SignIn({ providers, showSignIn, setShowSignIn }) {
   const redirectTo = {
-    callbackUrl:
-      process.env.NEXTAUTH_CALLBACK || "https://manmakesmonster.com/",
+    callbackUrl: process.env.NEXTAUTH_CALLBACK || "http://localhost:3000",
   };
   if (!showSignIn) return;
 
