@@ -19,16 +19,16 @@ app.use(
     extended: true,
   })
 );
-app.listen(80, async () => {
-  console.log("http://localhost");
-});
+// app.listen(80, async () => {
+//   console.log("http://localhost");
+// });
 
 app.get("/", (req, res) => {
   res.send("Server is running!");
 });
 
 export const queue = {};
-const PORT = 5555;
+const PORT = 80;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
