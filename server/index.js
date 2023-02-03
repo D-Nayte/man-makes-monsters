@@ -8,7 +8,7 @@ import useQueue from "./utils/useQueue.js";
 import consoleSuccess from "./utils/consoleSuccess.js";
 import { cachUser, getCachedUser } from "./cache/useCache.js";
 
-dotenv.config({ path: "../.env" });
+dotenv.config();
 connectDB(process.env.DB_URI);
 
 const app = express();
