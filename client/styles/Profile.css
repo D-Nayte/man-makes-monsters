@@ -76,6 +76,16 @@
   transform: translate(-50%, -50%);
   object-fit: fill;
 }
+@media (max-width: 1050px) {
+  .profileCardsContainer {
+    grid-template-columns: 1fr 1fr;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 400px;
+    margin: auto;
+  }
+}
 
 @media (max-width: 640px) {
   .profileCardsContainer {
@@ -83,6 +93,7 @@
     padding-top: 30px;
     grid-template-columns: 1fr;
     align-items: center;
+    justify-content: center;
     gap: 20px;
     width: 100%;
     height: 400px;
