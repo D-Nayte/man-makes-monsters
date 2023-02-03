@@ -19,9 +19,6 @@ app.use(
     extended: true,
   })
 );
-// app.listen(80, async () => {
-//   console.log("http://localhost");
-// });
 
 app.get("/", (req, res) => {
   res.send("Server is running!");

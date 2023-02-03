@@ -4,13 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev_client": "cd client && next dev",
-    "build_client": "cd client && next build",
-    "start_client": "cd client &&  next start",
-    "lint_client": "cd client &&  next lint",
-    "start_server": "cd server && nodemon index.js",
-    "prod_server": "cd server && node index.js",
-    "start": "concurrently \"npm run start_server\" \"npm run dev_client\""
+    "dev_client": " next dev",
+    "build_client": "next build",
+    "start_client": " next start",
+    "lint_client": "next lint"
   },
   "keywords": [],
   "author": "",
@@ -24,14 +21,9 @@
     "@dnd-kit/sortable": "^7.0.2",
     "boring-avatars": "^1.7.0",
     "dicebear": "^5.1.3",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "framer-motion": "^8.0.3",
-    "mongoose": "^6.8.0",
     "next": "13.0.6",
     "next-auth": "^4.18.7",
-    "node-cache": "^5.1.2",
-    "nodemon": "^2.0.20",
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-confetti": "^6.1.0",
@@ -41,9 +33,8 @@
     "react-icons": "^4.7.1",
     "react-joyride": "^2.5.3",
     "react-spring": "^9.6.1",
-    "react-use-gesture": "^9.1.3",
-    "socket.io": "^4.5.4",
-    "socket.io-client": "^4.5.4"
+    "socket.io-client": "^4.5.4",
+    "react-use-gesture": "^9.1.3"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"

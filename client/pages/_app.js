@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
-export const socket = io("http://localhost", {
+export const socket = io("http://localhost:5555", {
   reconnection: true, // enable reconnection
   reconnectionAttempts: 5, // try to reconnect 5 times
   reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
