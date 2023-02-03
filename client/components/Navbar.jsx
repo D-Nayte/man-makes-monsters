@@ -20,14 +20,6 @@ import Profile from "./Profile";
 import SignIn from "../pages/api/auth/SignIn";
 
 function Navbar(props) {
-  const [providers, setProviders] = useState(null);
-  const [showSignIn, setShowSignIn] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [showRules, setShowRules] = useState(false);
-  const [showBug, setShowBug] = useState(false);
-  const [showContact, setShowContact] = useState(false);
   const {
     socket,
     setHandSize,
@@ -37,11 +29,21 @@ function Navbar(props) {
     language,
     setLanguage,
   } = props;
+  const [providers, setProviders] = useState(null);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showRules, setShowRules] = useState(false);
+  const [showBug, setShowBug] = useState(false);
+  const [showContact, setShowContact] = useState(false);
+
   const { data: session } = useSession();
-  const { storeData } = useAppContext();
+  const { storeData, setStoreData } = useAppContext();
   const [showErrMessage, setShowErrMessage] = useState(false);
   const [reconnect, setReconnect] = useState(false);
   const router = useRouter();
+  const [selectedBackground, setSelectedBackground] = useState("");
   const [lobbyId, setLobbyId] = useState(null);
   const cookies = parseCookies();
   const [gameIdentifier, setGameIdentifier] = useState(null);
@@ -101,6 +103,7 @@ function Navbar(props) {
       return setLobbyId(router.query.lobbyId[0]);
     }
   }, [router.isReady, router, socket]);
+
   useEffect(() => {
     !providers &&
       (async () => {
@@ -108,6 +111,10 @@ function Navbar(props) {
         setProviders(providers);
       })();
   }, []);
+
+  useEffect(() => {
+    setStoreData((prev) => ({ ...prev, selectedBackground }));
+  }, [selectedBackground]);
 
   return (
     <>
@@ -132,7 +139,8 @@ function Navbar(props) {
         onMouseLeave={() => {
           setShowProfile(false);
           setShowSettings(false);
-        }}>
+        }}
+      >
         <button className="burgerMenue"></button>
         <ul>
           {session ? (
@@ -140,7 +148,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowProfile((prev) => !prev)}>
+                  onClick={() => setShowProfile((prev) => !prev)}
+                >
                   <div className="navbarProfilePic">
                     <img
                       className="navIcon"
@@ -156,7 +165,8 @@ function Navbar(props) {
                         showProfile
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -166,7 +176,8 @@ function Navbar(props) {
                 <ul className="settingsInputContainer">
                   <li
                     className="profileMenu"
-                    onClick={() => setShowProfileMenu(true)}>
+                    onClick={() => setShowProfileMenu(true)}
+                  >
                     <span className="profileMenuIcon">
                       <ImProfile />
                     </span>
@@ -184,7 +195,8 @@ function Navbar(props) {
           ) : (
             <li
               className={!lobbyId ? "" : "diseabled"}
-              onClick={!lobbyId ? () => setShowSignIn(true) : null}>
+              onClick={!lobbyId ? () => setShowSignIn(true) : null}
+            >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
@@ -199,7 +211,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowSettings((prev) => !prev)}>
+                  onClick={() => setShowSettings((prev) => !prev)}
+                >
                   <div className="navbarIcons gameSettingsIcon">
                     <FiSettings />
                   </div>
@@ -210,7 +223,8 @@ function Navbar(props) {
                         showSettings
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -275,6 +289,8 @@ function Navbar(props) {
           />
         )}
         <Profile
+          selectedBackground={selectedBackground}
+          setSelectedBackground={setSelectedBackground}
           setShowProfileMenu={setShowProfileMenu}
           showProfileMenu={showProfileMenu}
           className="gameRulesContent"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import Head from "next/Head";
+import Head from "next/head";
 
 const Layout = ({ children, socket, ...props }) => {
   return (

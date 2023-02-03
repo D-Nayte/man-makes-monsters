@@ -22,6 +22,7 @@
 @import url("./Contact.css");
 @import url("./GameEnd.css");
 @import url("./signIn.css");
+@import url("./Profile.css");
 
 * {
   box-sizing: border-box;
