@@ -9,6 +9,7 @@
     "start_client": "cd client &&  next start",
     "lint_client": "cd client &&  next lint",
     "start_server": "cd server && nodemon index.js",
+    "prod_server": "cd server && index.js",
     "start": "concurrently \"npm run start_server\" \"npm run dev_client\""
   },
   "keywords": [],
