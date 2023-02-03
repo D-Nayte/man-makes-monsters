@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 
 export default function SignIn({ providers, showSignIn, setShowSignIn }) {
   const redirectTo = {
-    callbackUrl: "https://manmakesmonster.com/api/auth/callback/google",
+    callbackUrl: "https://manmakesmonster.com/",
   };
   if (!showSignIn) return;
 
