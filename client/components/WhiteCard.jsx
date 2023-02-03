@@ -52,7 +52,7 @@ function WhiteCard({ getNewWhiteCard, setCardsOnTable }) {
   useEffect(() => {
     newWhiteCard && setIsActive(true);
   }, [newWhiteCard]);
-  console.log("storeData", storeData);
+
   return (
     <div className="whiteCardContainer">
       <div
