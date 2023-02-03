@@ -1,4 +1,4 @@
-# **Man Makes Monsters**
+# **Man Makes Monster**
 
 <p align="center"><img src=./client/public//MMM-logo.svg width=200px></p>
 
