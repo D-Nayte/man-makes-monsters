@@ -82,7 +82,8 @@
     display: grid;
     padding-top: 30px;
     grid-template-columns: 1fr;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
     width: 100%;
     height: 400px;
     margin: auto;
