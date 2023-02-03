@@ -1,4 +1,4 @@
-import german from "./german.json" assert { type: "json" };
-import english from "./english.json" assert { type: "json" };
+import { german } from "./german.js";
+import { english } from "./english.js";
 
 export default { german, english };
