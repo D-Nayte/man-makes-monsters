@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
 });
 
 export const queue = {};
-const PORT = process.env.PORT || 5555;
+const PORT = 5555;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
