@@ -2,9 +2,10 @@ import { signIn, getProviders } from "next-auth/react";
 import { CgCloseO } from "react-icons/cg";
 import { FcGoogle } from "react-icons/fc";
 
-const redirectTo = { callbackUrl: "http://manmakesmonster.com" };
-
 export default function SignIn({ providers, showSignIn, setShowSignIn }) {
+  const redirectTo = {
+    callbackUrl: "https://manmakesmonster.com/api/auth/callback/google",
+  };
   if (!showSignIn) return;
 
   return (
