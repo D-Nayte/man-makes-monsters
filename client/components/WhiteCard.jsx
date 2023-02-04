@@ -52,13 +52,12 @@ function WhiteCard({ getNewWhiteCard, setCardsOnTable }) {
   useEffect(() => {
     newWhiteCard && setIsActive(true);
   }, [newWhiteCard]);
-  console.log("storeData", storeData);
+
   return (
     <div className="whiteCardContainer">
       <div
         className={isActive ? "whiteCard whiteIsFlipped" : "whiteCard"}
-        onClick={handleClick}
-      >
+        onClick={handleClick}>
         {storeData.selectedBackground.SVG ? (
           <div className="whiteCardFace whiteCardFace--front">
             <img
