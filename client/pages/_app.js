@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
-export const socket = io(process.env.NEXT_SERVERADDRESS, {
+export const socket = io("https://man-makes-monsters-servr.onrender.com", {
   reconnection: true, // enable reconnection
   reconnectionAttempts: 5, // try to reconnect 5 times
   reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
