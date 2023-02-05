@@ -8,7 +8,7 @@ import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
 export const socket = io(
-  process.env.NEXT_PUBLIC_HOST || "http://localhost:5555",
+  process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", //http://192.168.178.20:5555
   {
     reconnection: true, // enable reconnection
     reconnectionAttempts: 5, // try to reconnect 5 times
@@ -23,6 +23,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const [language, setLanguage] = useState("english");
 
   useEffect(() => {
+    console.log("socket.id", socket.id);
     if (socket.id && !cookies.socketId)
       setCookie(null, "socketId", socket.id, { path: "/" });
   }, [socket.id]);

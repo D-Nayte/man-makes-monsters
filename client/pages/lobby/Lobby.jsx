@@ -21,7 +21,7 @@ import { VscDebugDisconnect } from "react-icons/vsc";
 const Lobby = (props) => {
   const { socket, handSize, amountOfRounds, language } = props;
   const router = useRouter();
-  const { joinGame } = router.query;
+  const [joinGame, setJoinGame] = useState(null);
   const cookies = parseCookies();
   const [showErrMessage, setShowErrMessage] = useState(null);
   const [players, setPlayers] = useState([]);
@@ -93,6 +93,7 @@ const Lobby = (props) => {
   useEffect(() => {
     if (lobbyId) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
+        console.log("currentLobby", currentLobby);
         if (!currentLobby || err) {
           setIsloading(false);
           return setShowErrMessage(
@@ -158,11 +159,10 @@ const Lobby = (props) => {
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
-    if (lobbyId && listenersReady) {
+    if (lobbyId && listenersReady && cookies.socketId) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
-      setListenersReady(false);
     }
-  }, [listenersReady, reconnect]);
+  }, [listenersReady, reconnect, cookies.socketId, lobbyId]);
 
   useEffect(() => {
     if (currentLobby) {
@@ -174,6 +174,7 @@ const Lobby = (props) => {
   }, [currentLobby]);
 
   useEffect(() => {
+    setJoinGame(router.query.joinGame);
     if (router.query.lobbyId) {
       setlinkInvation(`${window?.location.href}?joinGame=true`);
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
