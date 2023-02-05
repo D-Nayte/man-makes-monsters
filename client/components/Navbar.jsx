@@ -116,8 +116,6 @@ function Navbar(props) {
     setStoreData((prev) => ({ ...prev, selectedBackground }));
   }, [selectedBackground]);
 
-  console.log(router.pathname === "/lobby/game/[...gameId]", "router");
-
   return (
     <>
       <nav className="navContainer">

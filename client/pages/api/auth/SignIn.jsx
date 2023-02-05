@@ -16,7 +16,6 @@ export default function SignIn({ providers, showSignIn, setShowSignIn }) {
   };
   if (!showSignIn) return;
 
-  console.log(router, "router signIn");
   return (
     <div className="gameRulesBackdrop">
       <div className="singIn-wrapper">
