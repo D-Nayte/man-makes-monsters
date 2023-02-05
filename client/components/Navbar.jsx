@@ -152,7 +152,7 @@ function Navbar(props) {
                   id="settingsToggle"
                   onClick={() => setShowProfile((prev) => !prev)}
                 >
-                  <div className="navbarProfilePic">
+                  <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
                       src={session.user.image}
@@ -175,9 +175,9 @@ function Navbar(props) {
                 </div>
               </li>
               <li id={showProfile ? "openSettings" : "closeSettings"}>
-                <ul className="settingsInputContainer">
+                <ul className="settingsInputContainer ">
                   <li
-                    className="profileMenu"
+                    className="profileMenu "
                     onClick={() => setShowProfileMenu(true)}
                   >
                     <span className="profileMenuIcon">
@@ -207,7 +207,7 @@ function Navbar(props) {
             <li
               className={
                 router.pathname !== "/lobby/game/[...gameId]"
-                  ? "signIn"
+                  ? "signIn joyRideProfile"
                   : "signIn diseabled"
               }
               onClick={

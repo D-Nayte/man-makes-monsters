@@ -13,7 +13,7 @@ import PageNotFound from "../../components/PageNotFound";
 import { useAppContext } from "../../context";
 import { TfiRocket } from "react-icons/tfi";
 import JoyRide, { ACTIONS, EVENTS, STATUS } from "react-joyride";
-import { Steps } from "../../components/Steps.js";
+import { notTheHostSteps, Steps } from "../../components/Steps.js";
 import useLocalStorage from "../../components/useLocalStorage";
 import { AiOutlineEnter } from "react-icons/ai";
 import { VscDebugDisconnect } from "react-icons/vsc";
@@ -208,7 +208,7 @@ const Lobby = (props) => {
 
   return (
     <>
-      {isHost && (
+      {isHost ? (
         <JoyRide
           callback={handleJoyrideCallback}
           continuous
@@ -218,6 +218,18 @@ const Lobby = (props) => {
           showProgress
           showSkipButton
           steps={Steps}
+          run={value == "DONE" ? false : useJoyRide}
+        />
+      ) : (
+        <JoyRide
+          callback={handleJoyrideCallback}
+          continuous
+          stepIndex={stepIndex}
+          hideCloseButton
+          scrollToFirstStep
+          showProgress
+          showSkipButton
+          steps={notTheHostSteps}
           run={value == "DONE" ? false : useJoyRide}
         />
       )}
