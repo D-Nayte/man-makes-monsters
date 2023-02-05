@@ -116,6 +116,8 @@ function Navbar(props) {
     setStoreData((prev) => ({ ...prev, selectedBackground }));
   }, [selectedBackground]);
 
+  console.log(router.pathname === "/lobby/game/[...gameId]", "router");
+
   return (
     <>
       <nav className="navContainer">
@@ -181,27 +183,46 @@ function Navbar(props) {
                     <span className="profileMenuIcon">
                       <ImProfile />
                     </span>
-                    Profile
+                    Card Backgrounds
                   </li>
-                  <li className="profileMenu" onClick={signOut}>
-                    <span className="profileMenuIcon">
-                      <BiLogOut />
-                    </span>
-                    Sign out
-                  </li>
+                  {router.pathname !== "/lobby/game/[...gameId]" ? (
+                    <li className="profileMenu" onClick={signOut}>
+                      <span className="profileMenuIcon">
+                        <BiLogOut />
+                      </span>
+                      Sign out
+                    </li>
+                  ) : (
+                    <li className="profileMenu">
+                      <span className="profileMenuIcon">
+                        <BiLogOut />
+                      </span>
+                      Can't Sign out during a game
+                    </li>
+                  )}
                 </ul>
               </li>
             </>
           ) : (
             <li
-              className={!lobbyId ? "" : "diseabled"}
-              onClick={!lobbyId ? () => setShowSignIn(true) : null}
+              className={
+                router.pathname !== "/lobby/game/[...gameId]"
+                  ? "signIn"
+                  : "signIn diseabled"
+              }
+              onClick={
+                router.pathname !== "/lobby/game/[...gameId]"
+                  ? () => setShowSignIn(true)
+                  : null
+              }
             >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
               <div className="navBarText">
-                {!lobbyId ? "Sign In" : "Can't sign in during a game"}
+                {router.pathname !== "/lobby/game/[...gameId]"
+                  ? "Sign In"
+                  : "Can't sign in during a game"}
               </div>
             </li>
           )}
@@ -288,6 +309,7 @@ function Navbar(props) {
             className="gameRulesContent"
           />
         )}
+
         <Profile
           selectedBackground={selectedBackground}
           setSelectedBackground={setSelectedBackground}
