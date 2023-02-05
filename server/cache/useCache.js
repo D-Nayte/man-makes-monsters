@@ -19,13 +19,13 @@ export const storeToCache = async ({ lobbyId, currentLobby, currentGame }) => {
       serverCache.set(player.id, currentLobbyData.currentLobby._id)
     );
   const success = serverCache.set(lobbyId, JSON.stringify(currentLobbyData));
-  if (!success) throw new Error("Store to cache failed!");
+  if (!success) return console.error("Store to cache failed!");
   return currentLobbyData;
 };
 
 export const getCache = async ({ lobbyId }) => {
   if (!lobbyId || typeof lobbyId !== "string")
-    return new Error("no valid lobbyId to searche for in 'getCache'");
+    return console.error("no valid lobbyId to searche for in 'getCache'");
 
   let currentLobbyData = await serverCache.get(lobbyId);
 
@@ -43,7 +43,7 @@ export const getCache = async ({ lobbyId }) => {
     };
 
     const success = serverCache.set(lobbyId, JSON.stringify(currentLobbyData));
-    if (!success) throw new Error("Store to cache failed!");
+    if (!success) return console.error("Store to cache failed!");
 
     return currentLobbyData;
   }
@@ -51,9 +51,10 @@ export const getCache = async ({ lobbyId }) => {
 };
 
 export const getLobbyIdFromCache = ({ userId }) => {
-  if (!userId) throw new Error("no userId to search for lobby id");
+  if (!userId) return console.error("no userId to search for lobby id");
   const lobbyId = serverCache.take(userId);
-  if (!lobbyId) throw new Error("cand find lobby id in 'getLobbyIdFromCache");
+  if (!lobbyId)
+    return console.error("cand find lobby id in 'getLobbyIdFromCache");
   return lobbyId;
 };
 
@@ -63,7 +64,7 @@ export const cachUser = ({ id, socketId }) => {
 };
 
 export const getCachedUser = ({ socketId }) => {
-  const userId = serverCache.get(socketId);
-  if (!userId) console.error("No user id found!");
+  const userId = serverCache.take(socketId);
+  if (!userId) return console.error("No user id found!");
   return userId;
 };

@@ -172,10 +172,10 @@ const Lobby = (props) => {
     if (router.query.lobbyId) {
       setlinkInvation(`${window?.location.href}?joinGame=true`);
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
+      socket.io.on("reconnect", () => {
+        setReconnect((prev) => !prev);
+      });
     }
-    socket.io.on("reconnect", () => {
-      setReconnect((prev) => !prev);
-    });
   }, [router.isReady]);
 
   //hello David :) WE good at naming conventions😘😘
