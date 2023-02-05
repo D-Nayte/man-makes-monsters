@@ -170,18 +170,19 @@
   width: 100%;
   color: white;
   background-color: #eb455f;
-  height: 50px;
+  opacity: 0.6;
+  height: 30px;
   -webkit-animation: errAnimation 0.7s;
   animation: errAnimation 0.7s;
   top: 0;
   left: 0;
   align-items: center;
   justify-content: center;
-  letter-spacing: 5px;
+  letter-spacing: 1px;
   display: flex;
-  font-weight: 800;
+  font-weight: 600;
   z-index: 20;
-  font-size: 18px;
+  font-size: 16px;
 }
 @-webkit-keyframes errAnimation {
   0% {
