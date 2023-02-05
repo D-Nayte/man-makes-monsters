@@ -10,9 +10,10 @@ const Error = ({ showErrMessage, setShowErrMessage, success }) => {
       className="errMessage"
       style={
         success
-          ? { backgroundColor: "rgb(2, 105, 2)" }
+          ? { backgroundColor: "#A0D68A" }
           : { backgroundColor: "#eb455f" }
-      }>
+      }
+    >
       {showErrMessage.length <= 0
         ? "Something went wrong!"
         : success

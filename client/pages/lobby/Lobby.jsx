@@ -13,7 +13,7 @@ import PageNotFound from "../../components/PageNotFound";
 import { useAppContext } from "../../context";
 import { TfiRocket } from "react-icons/tfi";
 import JoyRide, { ACTIONS, EVENTS, STATUS } from "react-joyride";
-import { Steps } from "../../components/Steps.js";
+import { notTheHostSteps, Steps } from "../../components/Steps.js";
 import useLocalStorage from "../../components/useLocalStorage";
 import { AiOutlineEnter } from "react-icons/ai";
 import { VscDebugDisconnect } from "react-icons/vsc";
@@ -208,7 +208,7 @@ const Lobby = (props) => {
 
   return (
     <>
-      {isHost && (
+      {isHost ? (
         <JoyRide
           callback={handleJoyrideCallback}
           continuous
@@ -218,6 +218,18 @@ const Lobby = (props) => {
           showProgress
           showSkipButton
           steps={Steps}
+          run={value == "DONE" ? false : useJoyRide}
+        />
+      ) : (
+        <JoyRide
+          callback={handleJoyrideCallback}
+          continuous
+          stepIndex={stepIndex}
+          hideCloseButton
+          scrollToFirstStep
+          showProgress
+          showSkipButton
+          steps={notTheHostSteps}
           run={value == "DONE" ? false : useJoyRide}
         />
       )}
@@ -242,7 +254,8 @@ const Lobby = (props) => {
               x: -1300,
               rotate: -120,
               transition: { duration: 0.75 },
-            }}>
+            }}
+          >
             <h1>
               Waiting for players&nbsp;
               <span className="loadingContainer">
@@ -301,7 +314,8 @@ const Lobby = (props) => {
                         transform: "scale(1)",
                       }
                     : null
-                }>
+                }
+              >
                 <span>{isLoading ? "Loading..." : "Start Game"}</span>
               </button>
             )}
@@ -315,7 +329,8 @@ const Lobby = (props) => {
                     player.inactive || checkIfPlaying(player.id)
                       ? "inactive"
                       : null
-                  }>
+                  }
+                >
                   <h2 style={{ fontSize: `${calculateFontSize(player.name)}` }}>
                     {player.name.toUpperCase() !== "DAVID" ? (
                       player.name.toUpperCase()

@@ -45,3 +45,51 @@ export const Steps = [
     placement: "right end",
   },
 ];
+
+export const notTheHostSteps = [
+  {
+    title: "Welcome to the Lobby!",
+    content: "this crown will later show you who's the Czar of each round",
+    target: ".hostCrown",
+    placement: "right",
+  },
+  {
+    title: "Change your Name",
+    content:
+      "We have assigned you by default a random name, but if you wish to change it you can do so here",
+    target: ".changeNameButton",
+    placement: "bottom",
+  },
+  {
+    title: "Waiting for players",
+    content: "When all players have joined, the Host will being the game!",
+    target: ".framerContainer h1",
+    placement: "bottom",
+  },
+  {
+    title: "SCOREBOARD",
+    content: "You can click here to see yours and your friends scores!",
+    target: ".scoreButton",
+    placement: "right",
+  },
+  {
+    title: "Avatar Settings",
+    content:
+      "You can edit your avatar and express your feelings during the game by clicking on it",
+    target: ".profileContainer",
+    placement: "bottom",
+  },
+  {
+    title: "Change Card Background",
+    content:
+      "You can change the look of your cards backgrounds if you're logged in right here!",
+    target: ".joyRideProfile",
+    placement: "left",
+  },
+  {
+    title: "Have Fun!",
+    content: "",
+    target: ".changeNameButton",
+    placement: "top",
+  },
+];

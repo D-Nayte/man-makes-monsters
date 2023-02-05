@@ -150,7 +150,7 @@ function Navbar(props) {
                   id="settingsToggle"
                   onClick={() => setShowProfile((prev) => !prev)}
                 >
-                  <div className="navbarProfilePic">
+                  <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
                       src={session.user.image}
@@ -173,35 +173,54 @@ function Navbar(props) {
                 </div>
               </li>
               <li id={showProfile ? "openSettings" : "closeSettings"}>
-                <ul className="settingsInputContainer">
+                <ul className="settingsInputContainer ">
                   <li
-                    className="profileMenu"
+                    className="profileMenu "
                     onClick={() => setShowProfileMenu(true)}
                   >
                     <span className="profileMenuIcon">
                       <ImProfile />
                     </span>
-                    Profile
+                    Card Backgrounds
                   </li>
-                  <li className="profileMenu" onClick={signOut}>
-                    <span className="profileMenuIcon">
-                      <BiLogOut />
-                    </span>
-                    Sign out
-                  </li>
+                  {router.pathname !== "/lobby/game/[...gameId]" ? (
+                    <li className="profileMenu" onClick={signOut}>
+                      <span className="profileMenuIcon">
+                        <BiLogOut />
+                      </span>
+                      Sign out
+                    </li>
+                  ) : (
+                    <li className="profileMenu">
+                      <span className="profileMenuIcon">
+                        <BiLogOut />
+                      </span>
+                      Can't Sign out during a game
+                    </li>
+                  )}
                 </ul>
               </li>
             </>
           ) : (
             <li
-              className={!lobbyId ? "" : "diseabled"}
-              onClick={!lobbyId ? () => setShowSignIn(true) : null}
+              className={
+                router.pathname !== "/lobby/game/[...gameId]"
+                  ? "signIn joyRideProfile"
+                  : "signIn diseabled"
+              }
+              onClick={
+                router.pathname !== "/lobby/game/[...gameId]"
+                  ? () => setShowSignIn(true)
+                  : null
+              }
             >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
               <div className="navBarText">
-                {!lobbyId ? "Sign In" : "Can't sign in during a game"}
+                {router.pathname !== "/lobby/game/[...gameId]"
+                  ? "Sign In"
+                  : "Can't sign in during a game"}
               </div>
             </li>
           )}
@@ -288,6 +307,7 @@ function Navbar(props) {
             className="gameRulesContent"
           />
         )}
+
         <Profile
           selectedBackground={selectedBackground}
           setSelectedBackground={setSelectedBackground}
