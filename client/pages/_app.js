@@ -23,6 +23,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const [language, setLanguage] = useState("english");
 
   useEffect(() => {
+    console.log("socket.id", socket.id);
     if (socket.id && !cookies.socketId)
       setCookie(null, "socketId", socket.id, { path: "/" });
   }, [socket.id]);
