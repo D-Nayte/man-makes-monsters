@@ -161,14 +161,14 @@ const Lobby = (props) => {
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
-    if (lobbyId && listenersReady) {
+    if (lobbyId && listenersReady && cookies.socketId) {
       console.log("lobbyId", lobbyId);
       console.log("cookies.socketId", cookies.socketId);
       console.log("joinGame", joinGame);
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
       setListenersReady(false);
     }
-  }, [listenersReady, reconnect]);
+  }, [listenersReady, reconnect, cookies.socketId]);
 
   useEffect(() => {
     if (currentLobby) {
