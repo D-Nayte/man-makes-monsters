@@ -93,9 +93,6 @@ const Lobby = (props) => {
   useEffect(() => {
     if (lobbyId) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
-        console.log("currentLobby", currentLobby);
-        console.log("err", err);
-
         if (!currentLobby || err) {
           setIsloading(false);
           return setShowErrMessage(
@@ -162,11 +159,7 @@ const Lobby = (props) => {
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
     if (lobbyId && listenersReady && cookies.socketId) {
-      console.log("lobbyId", lobbyId);
-      console.log("cookies.socketId", cookies.socketId);
-      console.log("joinGame", joinGame);
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
-      setListenersReady(false);
     }
   }, [listenersReady, reconnect, cookies.socketId]);
 
