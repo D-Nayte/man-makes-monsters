@@ -29,9 +29,9 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
 
   useEffect(() => {
     socket.emit("cachUser", { cookieId: cookies.socketId });
-    // socket.io.on("reconnect", () => {
-    //   socket.emit("cachUser", { cookieId: cookies.socketId });
-    // });
+    socket.io.on("reconnect", () => {
+      socket.emit("cachUser", { cookieId: cookies.socketId });
+    });
   }, [cookies.socketId]);
 
   const consoleMessage = () => {
