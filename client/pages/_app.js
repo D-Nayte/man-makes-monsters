@@ -7,13 +7,24 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
-export const socket = io("https://man-makes-monsters-servr.onrender.com", {
-  reconnection: true, // enable reconnection
-  reconnectionAttempts: 5, // try to reconnect 5 times
-  reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
-});
+export const socket = io(
+  process.env.NEXT_PUBLIC_HOST || "http://localhost:5555",
+  {
+    //https://man-makes-monsters-servr.onrender.com
+    reconnection: true, // enable reconnection
+    reconnectionAttempts: 5, // try to reconnect 5 times
+    reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
+  }
+);
 
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
+  // const socket = io(process.env.NEXT_PUBLIC_HOST, {
+  //   //https://man-makes-monsters-servr.onrender.com
+  //   reconnection: true, // enable reconnection
+  //   reconnectionAttempts: 5, // try to reconnect 5 times
+  //   reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
+  // });
+  console.log("HOST ADRESS", process.env.NEXT_PUBLIC_HOST);
   const cookies = parseCookies();
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
