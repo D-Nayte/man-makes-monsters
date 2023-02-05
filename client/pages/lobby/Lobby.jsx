@@ -39,10 +39,6 @@ const Lobby = (props) => {
   const { storeData, setStoreData } = useAppContext();
   const lobbyId = storeData.lobbyId;
 
-  setTimeout(() => {
-    setuseJoyRide(true);
-  }, 1000);
-
   const handleGameCreation = () => {
     setIsloading(true);
     socket.emit("createGameObject", {
@@ -169,6 +165,15 @@ const Lobby = (props) => {
   }, [listenersReady, reconnect]);
 
   useEffect(() => {
+    if (currentLobby) {
+      //activate tutorial after lobby is successfully loaded
+      setTimeout(() => {
+        setuseJoyRide(true);
+      }, 1000);
+    }
+  }, [currentLobby]);
+
+  useEffect(() => {
     if (router.query.lobbyId) {
       setlinkInvation(`${window?.location.href}?joinGame=true`);
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
@@ -254,8 +259,7 @@ const Lobby = (props) => {
               x: -1300,
               rotate: -120,
               transition: { duration: 0.75 },
-            }}
-          >
+            }}>
             <h1>
               Waiting for players&nbsp;
               <span className="loadingContainer">
@@ -314,8 +318,7 @@ const Lobby = (props) => {
                         transform: "scale(1)",
                       }
                     : null
-                }
-              >
+                }>
                 <span>{isLoading ? "Loading..." : "Start Game"}</span>
               </button>
             )}
@@ -329,8 +332,7 @@ const Lobby = (props) => {
                     player.inactive || checkIfPlaying(player.id)
                       ? "inactive"
                       : null
-                  }
-                >
+                  }>
                   <h2 style={{ fontSize: `${calculateFontSize(player.name)}` }}>
                     {player.name.toUpperCase() !== "DAVID" ? (
                       player.name.toUpperCase()
