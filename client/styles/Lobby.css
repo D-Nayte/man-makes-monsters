@@ -346,6 +346,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     flex-wrap: nowrap;
+    padding: 1rem 1.25rem;
   }
   .dragContainer li {
     width: 80px !important;
