@@ -65,7 +65,6 @@ export const findRoomToJoin = async ({
 
 export const updateClient = async (data) => {
   const { lobbyId, socket, joinGame, id, io, newPLayerName, avatar } = data;
-
   if (!lobbyId || !id)
     return socket.emit("updateRoom", {
       err: "Cant find game to join. Wrong lobby id or player id",
@@ -175,8 +174,8 @@ export const setPlayerInactive = async ({ io, userId }) => {
         currentGame
       ).exec();
     }
-    //search for player that needs to be set inactive from lobby
 
+    //search for player that needs to be set inactive from lobby
     currentLobby.waiting = currentLobby.waiting.map((player) => {
       if (player.id === userId) player.inactive = true;
       if (player.isHost) player.isHost = false;
@@ -188,7 +187,7 @@ export const setPlayerInactive = async ({ io, userId }) => {
       return player.isHost && !player.inactive;
     });
 
-    //if no host inside game, make the next PLayer to host
+    //if no host inside game, make the next Player to host
     if (!findHost) {
       const activePlayerIndex = currentLobby.waiting.findIndex(
         (player) => !player.inactive
@@ -199,11 +198,12 @@ export const setPlayerInactive = async ({ io, userId }) => {
       }
     }
     await storeToCache({ lobbyId, currentLobby });
+
     LobbyCollection.findByIdAndUpdate(lobbyId, currentLobby).exec();
 
     if (lobbyId) io.to(lobbyId).emit("updateRoom", { currentLobby });
   } catch (error) {
-    console.error(error);
+    console.error("Error while removing player on disconnect", error);
     return { err: "Cant find player to remove" };
   }
 };

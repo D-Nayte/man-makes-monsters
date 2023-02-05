@@ -79,7 +79,8 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup }) => {
   };
 
   useEffect(() => {
-    storeAvatarSettings(avatarOptions);
+    if (playerId === cookies.socketId && !isPopup)
+      storeAvatarSettings(avatarOptions);
   }, []);
 
   useEffect(() => {

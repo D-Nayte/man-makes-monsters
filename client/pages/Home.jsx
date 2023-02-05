@@ -25,10 +25,6 @@ const Home = ({ socket }) => {
   };
 
   useEffect(() => {
-    setCookie(null, "socketId", socket.id, { path: "/" });
-  }, [socket.id]);
-
-  useEffect(() => {
     //If new lobby was createt, redirect to Lobby with room data
     socket.on("LobbyCreated", ({ lobbyId }) => {
       router.push({
