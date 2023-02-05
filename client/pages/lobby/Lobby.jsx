@@ -93,6 +93,7 @@ const Lobby = (props) => {
   useEffect(() => {
     if (lobbyId) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
+        console.log("currentLobby", currentLobby);
         if (!currentLobby || err) {
           setIsloading(false);
           return setShowErrMessage(
@@ -161,7 +162,7 @@ const Lobby = (props) => {
     if (lobbyId && listenersReady && cookies.socketId) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
     }
-  }, [listenersReady, reconnect, cookies.socketId]);
+  }, [listenersReady, reconnect, cookies.socketId, lobbyId]);
 
   useEffect(() => {
     if (currentLobby) {
