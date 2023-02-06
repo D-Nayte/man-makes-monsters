@@ -24,6 +24,12 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
     socket.on("connect", () => {
       setSocketReady(true);
     });
+    console.log("socket", socket.id);
+
+    if (socket.id && !cookies.socketId) {
+      consoleMessage();
+      setCookie(null, "socketId", socket.id, { path: "/" });
+    }
   }, []);
 
   useEffect(() => {
