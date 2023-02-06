@@ -91,11 +91,7 @@ const Lobby = (props) => {
   };
 
   useEffect(() => {
-    // console.log("lobbyId", lobbyId);
-    // console.log("socket.connected", socket.connected);
-    // console.log("cookies.socketId", cookies.socketId);
-    // console.log("joinGame", joinGame);
-    if (cookies.socketId && lobbyId) {
+    if (cookies.socketId && lobbyId && socket) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
         if (!currentLobby || err) {
           setIsloading(false);
