@@ -8,12 +8,23 @@ export default function SignIn({ providers, showSignIn, setShowSignIn }) {
   const [redirectTo, setRedirectTo] = useState(null);
   const router = useRouter();
 
-  const handleSignIn = (providerId) => {
+  /*const handleSignIn = (providerId) => {
     setRedirectTo({
       redirectUrl: router.asPath,
     });
     signIn(providerId, redirectTo);
+  };*/
+
+  const handleSignIn = (providerId) => {
+    let openWindow = window.open(
+      `/signin/${providerId}`,
+      "Sign In",
+      "width=400,height=600,resizable,scrollbars=yes,status=1"
+    );
+
+    openWindow?.focus();
   };
+
   if (!showSignIn) return;
 
   return (
@@ -31,7 +42,10 @@ export default function SignIn({ providers, showSignIn, setShowSignIn }) {
             <li>
               {provider.name === "Google" && <FcGoogle className="Google" />}
               <button
-                onClick={() => handleSignIn(provider.id)}
+                onClick={() => {
+                  handleSignIn(provider.id);
+                  setShowSignIn(false);
+                }}
                 className="authProviderButton"
               >
                 {`Sign in with ${provider.name}`}

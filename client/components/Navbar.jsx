@@ -203,25 +203,13 @@ function Navbar(props) {
             </>
           ) : (
             <li
-              className={
-                router.pathname !== "/lobby/game/[...gameId]"
-                  ? "signIn joyRideProfile"
-                  : "signIn diseabled"
-              }
-              onClick={
-                router.pathname !== "/lobby/game/[...gameId]"
-                  ? () => setShowSignIn(true)
-                  : null
-              }
+              className={"signIn joyRideProfile"}
+              onClick={() => setShowSignIn(true)}
             >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
-              <div className="navBarText">
-                {router.pathname !== "/lobby/game/[...gameId]"
-                  ? "Sign In"
-                  : "Can't sign in during a game"}
-              </div>
+              <div className="navBarText">Sign In</div>
             </li>
           )}
 
