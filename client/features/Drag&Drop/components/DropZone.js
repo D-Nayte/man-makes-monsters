@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { DragOverlay, useDndMonitor, useDroppable } from "@dnd-kit/core";
+import React from "react";
+import { useDndMonitor, useDroppable } from "@dnd-kit/core";
 import {
   horizontalListSortingStrategy,
   SortableContext,
@@ -25,6 +25,7 @@ export function DropZone(props) {
     loading,
     setCardsOnTable,
     setConfirmed,
+    socket,
   } = props;
   const [blackCard, setBlackCard] = useState(null);
   const [skelletons, setSkelletons] = useState(null);
@@ -236,6 +237,7 @@ export function DropZone(props) {
                   getNewWhiteCard={getNewWhiteCard}
                   loading={loading}
                   setCardsOnTable={setCardsOnTable}
+                  socket={socket}
                 />
               )}
 
@@ -247,7 +249,7 @@ export function DropZone(props) {
               stage === "deciding")
               ? skelletons.map((skell, index) => (
                   <li
-                    key={skell.key}
+                    key={skell.key + index}
                     className={
                       !skell.show
                         ? `hide-skell skeleton${index}`

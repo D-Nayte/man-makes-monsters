@@ -446,6 +446,7 @@ const Game = ({ socket }) => {
                 currentLobby={currentLobby}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                socket={socket}
               />
             </>
           )}
@@ -479,6 +480,7 @@ const Game = ({ socket }) => {
                   currentLobby={currentLobby}
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
+                  socket={socket}
                 />
               </section>
             )}
@@ -492,6 +494,7 @@ const Game = ({ socket }) => {
                 currentLobby={currentLobby}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                socket={socket}
               />
             </section>
           )}
@@ -523,6 +526,7 @@ const Game = ({ socket }) => {
               confirmed={confirmed}
               setConfirmed={setConfirmed}
               stage={gameStage}
+              socket={socket}
               maxHandSize={maxHandSize}>
               {playedWhite && isCzar && (
                 <ul className={"cardDisplay playedWhite"}>
