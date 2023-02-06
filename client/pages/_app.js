@@ -21,6 +21,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
 
   useEffect(() => {
     console.log("socket.connected", socket.connected);
+    console.log("socket", socket);
     if (socket.id && !cookies.socketId) {
       consoleMessage();
       setCookie(null, "socketId", socket.id, { path: "/" });
