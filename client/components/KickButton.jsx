@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 import { useAppContext } from "../context";
-import { socket } from "../pages/_app";
 
-const KickButton = ({ playerId, playerName, showKick }) => {
+const KickButton = ({ playerId, playerName, showKick, socket }) => {
   const { storeData } = useAppContext();
   const [showButton, setShowButton] = useState(false);
   const windowWidth = window && window.innerWidth;
@@ -18,7 +17,7 @@ const KickButton = ({ playerId, playerName, showKick }) => {
   };
 
   return (
-    <>
+    <div style={{ cursor: "pointer" }}>
       {windowWidth < 700 && (
         <button
           className="mobileKickButton"
@@ -27,16 +26,14 @@ const KickButton = ({ playerId, playerName, showKick }) => {
             setTimeout(() => {
               setShowButton(false);
             }, 3000);
-          }}
-        >
+          }}>
           <CgCloseO />
         </button>
       )}
       {showKick === playerId && (
         <div
           className="kick-container kick-hover"
-          onClick={() => setShowButton(true)}
-        >
+          onClick={() => setShowButton(true)}>
           <img
             className="kick-icon"
             src="/combat-kick.png"
@@ -45,17 +42,16 @@ const KickButton = ({ playerId, playerName, showKick }) => {
         </div>
       )}
       {showButton && (
-        <div className="kickButtonBackground">
+        <div className="kickButtonBackground" style={{ curser: "pointer" }}>
           <button
             onClick={handleKick}
             className="kickButton"
-            onMouseLeave={() => setShowButton(false)}
-          >
+            onMouseLeave={() => setShowButton(false)}>
             <p>Kick {playerName}? </p>
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
