@@ -15,6 +15,12 @@ import GameEnd from "../../../components/GameEnd";
 import { BsFillTrophyFill } from "react-icons/bs";
 
 const Game = ({ socket }) => {
+  if (!socket)
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [lobbyId, setLobbyId] = useState(null);

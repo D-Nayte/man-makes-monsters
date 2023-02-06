@@ -20,6 +20,14 @@ import { VscDebugDisconnect } from "react-icons/vsc";
 
 const Lobby = (props) => {
   const { socket, handSize, amountOfRounds, language } = props;
+
+  if (!socket)
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
+
   const router = useRouter();
   const [joinGame, setJoinGame] = useState(null);
   const cookies = parseCookies();

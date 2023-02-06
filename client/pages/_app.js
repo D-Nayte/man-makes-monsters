@@ -62,7 +62,6 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
     );
   };
 
-  if (!socket) return;
   return (
     <ContextWrapper>
       <SessionProvider session={session}>
