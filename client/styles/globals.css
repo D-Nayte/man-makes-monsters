@@ -76,7 +76,12 @@ body {
   height: 100%;
   margin: auto;
   font-family: Roboto, Helvetica, sans-serif;
-  background: url("../public/background3.svg");
+  background: radial-gradient(
+      circle closest-corner at center,
+      #333333,
+      black 40%
+    )
+    no-repeat;
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
