@@ -16,8 +16,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
 
   const startSocket = () => {
     const newSocket = io(
-      process.env.NEXT_PUBLIC_HOST ||
-        "https://man-makes-monsters-servr.onrender.com", //http://192.168.178.20:5555
+      process.env.NEXT_PUBLIC_HOST || "http://localhost:5555",
       {
         reconnection: true, // enable reconnection
         reconnectionAttempts: 5, // try to reconnect 5 times
