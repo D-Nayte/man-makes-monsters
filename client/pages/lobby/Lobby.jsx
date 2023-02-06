@@ -91,10 +91,10 @@ const Lobby = (props) => {
   };
 
   useEffect(() => {
-    console.log("lobbyId", lobbyId);
-    console.log("socket.connected", socket.connected);
-    console.log("cookies.socketId", cookies.socketId);
-    console.log("joinGame", joinGame);
+    // console.log("lobbyId", lobbyId);
+    // console.log("socket.connected", socket.connected);
+    // console.log("cookies.socketId", cookies.socketId);
+    // console.log("joinGame", joinGame);
     if (cookies.socketId && lobbyId) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
         if (!currentLobby || err) {
