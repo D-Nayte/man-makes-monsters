@@ -154,7 +154,7 @@ const Lobby = (props) => {
       socket.removeAllListeners();
       setListenersReady(false);
     };
-  }, [cookies.socketId, lobbyId, joinGame]);
+  }, [cookies.socketId, lobbyId, joinGame, reconnect]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
