@@ -7,48 +7,34 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
+const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
+  reconnection: true, // enable reconnection
+  reconnectionAttempts: 5, // try to reconnect 5 times
+  reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
+});
+
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const cookies = parseCookies();
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
-  const [socket, setSocket] = useState(null);
-
-  const startSocket = () => {
-    const newSocket = io(
-      process.env.NEXT_PUBLIC_HOST || "http://localhost:5555",
-      {
-        reconnection: true, // enable reconnection
-        reconnectionAttempts: 5, // try to reconnect 5 times
-        reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
-      }
-    );
-    return newSocket;
-  };
 
   useEffect(() => {
-    consoleMessage();
-    const socket = startSocket();
-    socket.on("connect", () => {
-      setSocket(socket);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (socket) {
-      if (socket.id && !cookies.socketId)
-        setCookie(null, "socketId", socket.id, { path: "/" });
+    if (socket.id && !cookies.socketId) {
+      consoleMessage();
+      setCookie(null, "socketId", socket.id, { path: "/" });
     }
-  }, [socket]);
+  }, [socket.connected]);
 
   useEffect(() => {
-    if (socket) {
+    if (cookies.socketId && socket.connected) {
+      console.log("RUNNN!!");
       socket.emit("cachUser", { cookieId: cookies.socketId });
       socket.io.on("reconnect", () => {
         socket.emit("cachUser", { cookieId: cookies.socketId });
       });
     }
-  }, [cookies.socketId, socket]);
+  }, [cookies.socketId, socket.connected]);
 
   const consoleMessage = () => {
     console.log(
@@ -62,7 +48,6 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
     );
   };
 
-  if (!socket) return;
   return (
     <ContextWrapper>
       <SessionProvider session={session}>
