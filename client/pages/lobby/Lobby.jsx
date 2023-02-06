@@ -91,7 +91,11 @@ const Lobby = (props) => {
   };
 
   useEffect(() => {
-    if (cookies.socketId && lobbyId && socket.connected) {
+    console.log("lobbyId", lobbyId);
+    console.log("socket.connected", socket.connected);
+    console.log("cookies.socketId", cookies.socketId);
+    console.log("joinGame", joinGame);
+    if (cookies.socketId && lobbyId) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
         if (!currentLobby || err) {
           setIsloading(false);
@@ -154,7 +158,7 @@ const Lobby = (props) => {
       socket.removeAllListeners();
       setListenersReady(false);
     };
-  }, [cookies.socketId, lobbyId, joinGame, reconnect]);
+  }, [cookies.socketId, lobbyId, joinGame, reconnect, socket.connected]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
