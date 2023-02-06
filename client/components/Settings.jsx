@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Ukflag1 from "../public/Ukflag1.svg";
 import {
   BsFillArrowDownSquareFill,
   BsFillArrowUpSquareFill,
