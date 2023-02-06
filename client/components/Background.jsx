@@ -2,32 +2,29 @@ import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 import allCardBackgrounds from "../public/assets/cardpictures";
 
-function Profile({
-  showProfileMenu,
-  setShowProfileMenu,
-  setSelectedCardBackground,
-  selectedCardBackground,
+function Background({
+  showBackground,
+  setShowBackground,
+  selectedBackground,
+  setSelectedBackground,
 }) {
-  if (!showProfileMenu) return;
+  if (!showBackground) return;
   return (
     <div className="gameRulesBackdrop">
       <div className="gameRules">
-        <h1>Profile</h1>
-        <button onClick={() => setShowProfileMenu(false)}>
+        <button onClick={() => setShowBackground(false)}>
           <CgCloseO className="closeMenuButton" />
         </button>
 
-        <h2>Choose Your Card background</h2>
+        <h2>Choose Your background</h2>
         <div className="profileCardsContainer">
           {allCardBackgrounds.map((cardObject) => {
             return (
               <div
                 className={`whiteCardFaceMock whiteCardFace--frontMock ${
-                  selectedCardBackground.SVG === cardObject.SVG
-                    ? "selected"
-                    : ""
+                  selectedBackground.SVG === cardObject.SVG ? "selected" : ""
                 }`}
-                onClick={() => setSelectedCardBackground(cardObject)}
+                onClick={() => setSelectedBackground(cardObject)}
               >
                 <img src={cardObject.SVG} alt="" className="profileCcMock" />
               </div>
@@ -39,4 +36,4 @@ function Profile({
   );
 }
 
-export default Profile;
+export default Background;
