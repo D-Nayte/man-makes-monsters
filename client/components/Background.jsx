@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
-import allCardBackgrounds from "../public/assets/cardpictures";
+import allBackgrounds from "../public/assets/backgrounds";
 
 function Background({
   showBackground,
@@ -17,16 +17,22 @@ function Background({
         </button>
 
         <h2>Choose Your background</h2>
-        <div className="profileCardsContainer">
-          {allCardBackgrounds.map((cardObject) => {
+        <div className="backgroundsContainer">
+          {allBackgrounds.map((backgroundObject) => {
             return (
               <div
-                className={`whiteCardFaceMock whiteCardFace--frontMock ${
-                  selectedBackground.SVG === cardObject.SVG ? "selected" : ""
+                className={`backgroundMock whiteCardFace--frontMock ${
+                  selectedBackground.SVG === backgroundObject.SVG
+                    ? "selected"
+                    : ""
                 }`}
-                onClick={() => setSelectedBackground(cardObject)}
+                onClick={() => setSelectedBackground(backgroundObject)}
               >
-                <img src={cardObject.SVG} alt="" className="profileCcMock" />
+                <img
+                  src={backgroundObject.SVG}
+                  alt=""
+                  className="profileCcMock"
+                />
               </div>
             );
           })}

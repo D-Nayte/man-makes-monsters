@@ -72,7 +72,8 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
           handSize={handSize}
           amountOfRounds={amountOfRounds}
           language={language}
-          setLanguage={setLanguage}>
+          setLanguage={setLanguage}
+        >
           <AnimatePresence mode="wait" initial={false}>
             <Component
               key={router.pathname}

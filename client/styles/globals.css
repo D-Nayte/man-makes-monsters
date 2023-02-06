@@ -23,6 +23,7 @@
 @import url("./GameEnd.css");
 @import url("./signIn.css");
 @import url("./Profile.css");
+@import url("./Background.css");
 
 * {
   box-sizing: border-box;

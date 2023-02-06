@@ -42,6 +42,7 @@ function Navbar(props) {
 
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
+
   const [showErrMessage, setShowErrMessage] = useState(false);
   const [reconnect, setReconnect] = useState(false);
   const router = useRouter();
@@ -118,6 +119,9 @@ function Navbar(props) {
   useEffect(() => {
     setStoreData((prev) => ({ ...prev, selectedCardBackground }));
   }, [selectedCardBackground]);
+  useEffect(() => {
+    setStoreData((prev) => ({ ...prev, selectedBackground }));
+  }, [selectedBackground]);
 
   return (
     <>
@@ -179,13 +183,19 @@ function Navbar(props) {
                 <ul className="settingsInputContainer ">
                   <li
                     className="profileMenu "
-                    onClick={() => setShowProfileMenu(true)}
+                    onClick={() => {
+                      setShowProfile((prev) => !prev);
+                      setShowProfileMenu(true);
+                    }}
                   >
                     Card Backside
                   </li>
                   <li
                     className="profileMenu "
-                    onClick={() => setShowBackground(true)}
+                    onClick={() => {
+                      setShowProfile((prev) => !prev);
+                      setShowBackground(true);
+                    }}
                   >
                     Backgrounds
                   </li>
