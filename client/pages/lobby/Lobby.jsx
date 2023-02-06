@@ -91,7 +91,7 @@ const Lobby = (props) => {
   };
 
   useEffect(() => {
-    if (cookies.socketId && lobbyId) {
+    if (cookies.socketId && lobbyId && socket) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
         if (!currentLobby || err) {
           setIsloading(false);
