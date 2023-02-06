@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { DragOverlay, useDndMonitor, useDroppable } from "@dnd-kit/core";
+import React from "react";
+import { useDndMonitor, useDroppable } from "@dnd-kit/core";
 import {
   horizontalListSortingStrategy,
   SortableContext,
@@ -25,6 +25,7 @@ export function DropZone(props) {
     loading,
     setCardsOnTable,
     setConfirmed,
+    socket,
   } = props;
   const [blackCard, setBlackCard] = useState(null);
   const [skelletons, setSkelletons] = useState(null);
@@ -152,8 +153,7 @@ export function DropZone(props) {
     <SortableContext
       id={id}
       items={cards.map((card) => card && card.text)}
-      strategy={horizontalListSortingStrategy}
-    >
+      strategy={horizontalListSortingStrategy}>
       <article
         className={
           isCzar && blackCard
@@ -163,8 +163,7 @@ export function DropZone(props) {
             : isCzar && !blackCard
             ? "czarSelecteWhites whiteHandOut"
             : null
-        }
-      >
+        }>
         {id === "table" && !isCzar && !blackCard && (
           <div className="czarIsChoosing">
             <h1>Czar is Choosing a Black Card</h1>
@@ -174,16 +173,14 @@ export function DropZone(props) {
         <div
           className={
             blackCard ? "onTable black-on-table" : "onTable whiteCardTable"
-          }
-        >
+          }>
           {!blackCard && windowWidth < 720 && (
             <>
               <button
                 className="carusselButton1"
                 onClick={handleScrollLeft}
                 onMouseDown={handleLeftMouseDown}
-                onMouseUp={handleLeftMouseUp}
-              >
+                onMouseUp={handleLeftMouseUp}>
                 <FaChevronLeft className="arrowIcon" />
               </button>
               <button className="carusselButton2" onClick={handleScrollRight}>
@@ -210,8 +207,7 @@ export function DropZone(props) {
               y: 1300,
 
               transition: { duration: 0.5 },
-            }}
-          >
+            }}>
             {cards &&
               cards.map((card, index) => {
                 return (
@@ -234,13 +230,16 @@ export function DropZone(props) {
                   />
                 );
               })}
-            {id === "player" && cards.length < maxHandSize && (
-              <WhiteCard
-                getNewWhiteCard={getNewWhiteCard}
-                loading={loading}
-                setCardsOnTable={setCardsOnTable}
-              />
-            )}
+            {id === "player" &&
+              cards.length < maxHandSize &&
+              stage === "white" && (
+                <WhiteCard
+                  getNewWhiteCard={getNewWhiteCard}
+                  loading={loading}
+                  setCardsOnTable={setCardsOnTable}
+                  socket={socket}
+                />
+              )}
 
             {(skelletons && stage === "white" && !isCzar) ||
             (skelletons &&
@@ -250,13 +249,12 @@ export function DropZone(props) {
               stage === "deciding")
               ? skelletons.map((skell, index) => (
                   <li
-                    key={skell.key}
+                    key={skell.key + index}
                     className={
                       !skell.show
                         ? `hide-skell skeleton${index}`
                         : `skeleton${index}`
-                    }
-                  >
+                    }>
                     <CardTemplate card={skell} index={index} isSkell={true} />
                   </li>
                 ))
@@ -272,8 +270,7 @@ export function DropZone(props) {
                     !confirmed && !isCzar
                       ? "selectButton active"
                       : "selectButton "
-                  }
-                >
+                  }>
                   <h3>Confirm</h3>
                 </li>
                 {confirmed && (

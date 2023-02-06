@@ -15,6 +15,12 @@ import GameEnd from "../../../components/GameEnd";
 import { BsFillTrophyFill } from "react-icons/bs";
 
 const Game = ({ socket }) => {
+  if (!socket)
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [lobbyId, setLobbyId] = useState(null);
@@ -38,8 +44,8 @@ const Game = ({ socket }) => {
   const [showErrMessage, setShowErrMessage] = useState(false);
   const [currentLobby, setCurrentLobby] = useState(false);
   const [gameIdentifier, setGameIdentifier] = useState(null);
+  const [listenersReady, setListenersReady] = useState(false);
   const [maxHandSize, setMaxHandSize] = useState(null);
-  const [closingGame, setClosingGame] = useState(false);
   const [gameEnds, setGameEnds] = useState(false);
   const { storeData, setStoreData } = useAppContext();
   const [reconnect, setReconnect] = useState(false);
@@ -333,9 +339,10 @@ const Game = ({ socket }) => {
       setLoading(false);
       processGame({ currentGame, err, kicked });
     });
-
+    setListenersReady(true);
     return () => {
       socket.removeAllListeners();
+      setListenersReady(false);
     };
   }, [router.isReady, gameStage, reconnect]);
 
@@ -348,7 +355,7 @@ const Game = ({ socket }) => {
         id: cookies.socketId,
       });
     }
-  }, [lobbyId, reconnect]);
+  }, [lobbyId, listenersReady]);
 
   // setup lobbyID from router after router is ready
   useEffect(() => {
@@ -362,6 +369,7 @@ const Game = ({ socket }) => {
       }));
     }
     socket.io.on("reconnect", () => {
+      setListenersReady((prev) => !prev);
       setReconnect((prev) => !prev);
     });
   }, [router.isReady]);
@@ -444,6 +452,7 @@ const Game = ({ socket }) => {
                 currentLobby={currentLobby}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                socket={socket}
               />
             </>
           )}
@@ -477,6 +486,7 @@ const Game = ({ socket }) => {
                   currentLobby={currentLobby}
                   isOpen={isOpen}
                   setIsOpen={setIsOpen}
+                  socket={socket}
                 />
               </section>
             )}
@@ -490,6 +500,7 @@ const Game = ({ socket }) => {
                 currentLobby={currentLobby}
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
+                socket={socket}
               />
             </section>
           )}
@@ -521,6 +532,7 @@ const Game = ({ socket }) => {
               confirmed={confirmed}
               setConfirmed={setConfirmed}
               stage={gameStage}
+              socket={socket}
               maxHandSize={maxHandSize}>
               {playedWhite && isCzar && (
                 <ul className={"cardDisplay playedWhite"}>

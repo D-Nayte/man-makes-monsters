@@ -20,8 +20,16 @@ import { VscDebugDisconnect } from "react-icons/vsc";
 
 const Lobby = (props) => {
   const { socket, handSize, amountOfRounds, language } = props;
+
+  if (!socket)
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
+
   const router = useRouter();
-  const { joinGame } = router.query;
+  const [joinGame, setJoinGame] = useState(null);
   const cookies = parseCookies();
   const [showErrMessage, setShowErrMessage] = useState(null);
   const [players, setPlayers] = useState([]);
@@ -38,10 +46,6 @@ const Lobby = (props) => {
   const [stepIndex, setStepIndex] = useState(0);
   const { storeData, setStoreData } = useAppContext();
   const lobbyId = storeData.lobbyId;
-
-  setTimeout(() => {
-    setuseJoyRide(true);
-  }, 1000);
 
   const handleGameCreation = () => {
     setIsloading(true);
@@ -95,7 +99,7 @@ const Lobby = (props) => {
   };
 
   useEffect(() => {
-    if (lobbyId) {
+    if (cookies.socketId && lobbyId) {
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
         if (!currentLobby || err) {
           setIsloading(false);
@@ -158,24 +162,34 @@ const Lobby = (props) => {
       socket.removeAllListeners();
       setListenersReady(false);
     };
-  }, [lobbyId, reconnect]);
+  }, [cookies.socketId, lobbyId, joinGame, reconnect]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
-    if (lobbyId && listenersReady) {
+    if (listenersReady) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
-      setListenersReady(false);
     }
-  }, [listenersReady, reconnect]);
+  }, [listenersReady]);
 
   useEffect(() => {
+    if (currentLobby) {
+      //activate tutorial after lobby is successfully loaded
+      setTimeout(() => {
+        setuseJoyRide(true);
+      }, 1000);
+    }
+  }, [currentLobby]);
+
+  useEffect(() => {
+    setJoinGame(router.query.joinGame);
     if (router.query.lobbyId) {
       setlinkInvation(`${window?.location.href}?joinGame=true`);
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
+      socket.io.on("reconnect", () => {
+        setListenersReady(false);
+        setReconnect((prev) => !prev);
+      });
     }
-    socket.io.on("reconnect", () => {
-      setReconnect((prev) => !prev);
-    });
   }, [router.isReady]);
 
   //hello David :) WE good at naming conventions😘😘
@@ -254,8 +268,7 @@ const Lobby = (props) => {
               x: -1300,
               rotate: -120,
               transition: { duration: 0.75 },
-            }}
-          >
+            }}>
             <h1>
               Waiting for players&nbsp;
               <span className="loadingContainer">
@@ -314,8 +327,7 @@ const Lobby = (props) => {
                         transform: "scale(1)",
                       }
                     : null
-                }
-              >
+                }>
                 <span>{isLoading ? "Loading..." : "Start Game"}</span>
               </button>
             )}
@@ -329,8 +341,7 @@ const Lobby = (props) => {
                     player.inactive || checkIfPlaying(player.id)
                       ? "inactive"
                       : null
-                  }
-                >
+                  }>
                   <h2 style={{ fontSize: `${calculateFontSize(player.name)}` }}>
                     {player.name.toUpperCase() !== "DAVID" ? (
                       player.name.toUpperCase()

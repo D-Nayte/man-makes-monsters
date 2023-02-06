@@ -7,27 +7,48 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
-export const socket = io("https://man-makes-monsters-servr.onrender.com", {
-  // http://localhost:5555
-  reconnection: true, // enable reconnection
-  reconnectionAttempts: 5, // try to reconnect 5 times
-  reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
-});
-
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const cookies = parseCookies();
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
+  const [socket, setSocket] = useState(null);
+
+  const startSocket = () => {
+    const newSocket = io(
+      process.env.NEXT_PUBLIC_HOST || "http://localhost:5555",
+      {
+        reconnection: true, // enable reconnection
+        reconnectionAttempts: 5, // try to reconnect 5 times
+        reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
+      }
+    );
+    return newSocket;
+  };
 
   useEffect(() => {
-    if (socket.id && !cookies.socketId)
-      setCookie(null, "socketId", socket.id, { path: "/" });
-  }, [socket.id]);
+    consoleMessage();
+    const socket = startSocket();
+    socket.on("connect", () => {
+      setSocket(socket);
+    });
+  }, []);
 
   useEffect(() => {
-    socket.emit("cachUser", { cookieId: cookies.socketId });
-  }, [cookies.socketId]);
+    if (socket) {
+      if (socket.id && !cookies.socketId)
+        setCookie(null, "socketId", socket.id, { path: "/" });
+    }
+  }, [socket]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.emit("cachUser", { cookieId: cookies.socketId });
+      socket.io.on("reconnect", () => {
+        socket.emit("cachUser", { cookieId: cookies.socketId });
+      });
+    }
+  }, [cookies.socketId, socket]);
 
   const consoleMessage = () => {
     console.log(
@@ -41,10 +62,6 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
     );
   };
 
-  useEffect(() => {
-    consoleMessage();
-  }, []);
-
   return (
     <ContextWrapper>
       <SessionProvider session={session}>
@@ -55,8 +72,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
           handSize={handSize}
           amountOfRounds={amountOfRounds}
           language={language}
-          setLanguage={setLanguage}
-        >
+          setLanguage={setLanguage}>
           <AnimatePresence mode="wait" initial={false}>
             <Component
               key={router.pathname}

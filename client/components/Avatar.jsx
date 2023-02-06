@@ -3,14 +3,13 @@ import { avataaars } from "@dicebear/collection";
 import React, { useEffect, useState } from "react";
 import AvatarCustomizer from "./AvatarCustomizer";
 import { parseCookies } from "nookies";
-import { socket } from "../pages/_app";
 import { useAppContext } from "../context";
 import { useRouter } from "next/router";
 import emotions from "../utils/avatarEmotions.js";
 import { GoSettings } from "react-icons/go";
 import { motion as m } from "framer-motion";
 
-const Avatar = ({ userName, playerId, playerAvatar, isPopup }) => {
+const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   const cookies = parseCookies();
   const router = useRouter();
   const [showSettings, setShowSettings] = useState(false);
@@ -79,7 +78,8 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup }) => {
   };
 
   useEffect(() => {
-    storeAvatarSettings(avatarOptions);
+    if (playerId === cookies.socketId && !isPopup)
+      storeAvatarSettings(avatarOptions);
   }, []);
 
   useEffect(() => {

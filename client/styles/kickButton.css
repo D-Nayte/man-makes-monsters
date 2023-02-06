@@ -11,14 +11,13 @@
   position: absolute;
   width: 40px;
   height: 40px;
-
   cursor: pointer;
   top: 60%;
   left: 12%;
   transform: translate(-50%, -50%) rotate(40deg);
   transition: 0.3s;
 }
-.kick-icon:hover {
+.scoreboardList > li > div:first-child:hover .kick-icon {
   scale: 1.2;
   transition: 0.3s;
   transform: rotate(10deg);

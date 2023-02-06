@@ -1,9 +1,8 @@
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "../context/index.js";
-import { socket } from "../pages/_app.js";
 
-function WhiteCard({ getNewWhiteCard, setCardsOnTable }) {
+function WhiteCard({ getNewWhiteCard, setCardsOnTable, socket }) {
   const [isActive, setIsActive] = useState(false);
   const [newWhiteCard, setNewWhiteCard] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -57,8 +56,7 @@ function WhiteCard({ getNewWhiteCard, setCardsOnTable }) {
     <div className="whiteCardContainer">
       <div
         className={isActive ? "whiteCard whiteIsFlipped" : "whiteCard"}
-        onClick={handleClick}
-      >
+        onClick={handleClick}>
         {storeData.selectedBackground.SVG ? (
           <div className="whiteCardFace whiteCardFace--front">
             <img

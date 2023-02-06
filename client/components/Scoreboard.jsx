@@ -130,6 +130,7 @@ const Scoreboard = ({ currentLobby, socket, isOpen, setIsOpen }) => {
                     userName={player.name}
                     playerId={player.id}
                     playerAvatar={player.avatar}
+                    socket={socket}
                   />
 
                   <span
@@ -154,6 +155,7 @@ const Scoreboard = ({ currentLobby, socket, isOpen, setIsOpen }) => {
                 playerId={player.id}
                 playerAvatar={player.avatar}
                 isPopup={true}
+                socket={socket}
               />
             );
           })}

@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", async (reason) => {
-    const userId = getCachedUser({ socketId: socket.id });
+    let userId = getCachedUser({ socketId: socket.id });
     if (!userId) return;
 
     useQueue({

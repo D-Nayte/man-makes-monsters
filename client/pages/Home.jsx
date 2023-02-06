@@ -1,15 +1,20 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
-import { parseCookies, setCookie } from "nookies";
 import { motion as m } from "framer-motion";
 import JoinGame from "../components/JoinLobby.jsx";
 import HostGame from "../components/HostGame.jsx";
 import Error from "../components/Error.jsx";
+import Loading from "../components/Loading.jsx";
 
 const Home = ({ socket }) => {
+  if (!socket)
+    return (
+      <main>
+        <Loading />
+      </main>
+    );
   const playerName = useRef("");
   const roomKey = useRef("");
-  const cookies = parseCookies();
   const [hostOrJoin, setHostOrJoin] = useState(null);
   const router = useRouter();
   const [showErrMessage, setShowErrMessage] = useState(false);
@@ -23,10 +28,6 @@ const Home = ({ socket }) => {
     setIsJoinActive(true);
     if (setIsHostActive) setTimeout(() => setIsHostActive(false), 150);
   };
-
-  useEffect(() => {
-    setCookie(null, "socketId", socket.id, { path: "/" });
-  }, [socket.id]);
 
   useEffect(() => {
     //If new lobby was createt, redirect to Lobby with room data
