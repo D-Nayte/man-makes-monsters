@@ -154,14 +154,14 @@ const Lobby = (props) => {
       socket.removeAllListeners();
       setListenersReady(false);
     };
-  }, [cookies.socketId, lobbyId]);
+  }, [cookies.socketId, lobbyId, joinGame]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
-    if (lobbyId && listenersReady && cookies.socketId) {
+    if (listenersReady) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
     }
-  }, [reconnect, listenersReady]);
+  }, [listenersReady]);
 
   useEffect(() => {
     if (currentLobby) {
@@ -178,6 +178,7 @@ const Lobby = (props) => {
       setlinkInvation(`${window?.location.href}?joinGame=true`);
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
       socket.io.on("reconnect", () => {
+        setListenersReady(false);
         setReconnect((prev) => !prev);
       });
     }
