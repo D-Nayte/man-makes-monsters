@@ -18,6 +18,13 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
+  const [socketReady, setSocketReady] = useState(false);
+
+  useEffect(() => {
+    socket.on("connect", () => {
+      setSocketReady(true);
+    });
+  }, []);
 
   useEffect(() => {
     console.log("socket.connected", socket.connected);
@@ -26,7 +33,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
       consoleMessage();
       setCookie(null, "socketId", socket.id, { path: "/" });
     }
-  }, [socket.connected]);
+  }, [socket.connected, socketReady]);
 
   useEffect(() => {
     if (cookies.socketId && socket.connected) {
@@ -36,7 +43,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
         socket.emit("cachUser", { cookieId: cookies.socketId });
       });
     }
-  }, [cookies.socketId, socket.connected]);
+  }, [cookies.socketId, socket.connected, socketReady]);
 
   const consoleMessage = () => {
     console.log(
