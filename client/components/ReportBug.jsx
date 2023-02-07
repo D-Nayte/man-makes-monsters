@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 
-function ReportBug({
-  showBug,
-  setShowBug,
-  responseDataArray,
-  setResponseDataArray,
-}) {
+function ReportBug({ showBug, setShowBug }) {
   const [charCount, setCharCount] = useState(0);
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    description: "",
+    name: null,
+    email: null,
+    description: null,
     priority: "low",
   });
 
@@ -27,18 +22,27 @@ function ReportBug({
     event.preventDefault();
     // Send formData to the server or handle it as needed
 
-    const url = "http://localhost:5555/submit-bug-report";
+    const url =
+      process.env.NEXT_PUBLIC_MAIL_URL || "http://localhost:5555/admin-mail/";
     try {
+      console.log("url", url);
       const response = await fetch(url, {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        method: "POST",
+
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-      setResponseDataArray(responseDataArray.concat(data));
+      if (response.ok) {
+        setFormData({
+          name: null,
+          email: null,
+          description: null,
+          priority: "low",
+        });
+      }
     } catch (error) {
       console.error("failed to fetch", error);
     }
@@ -53,8 +57,8 @@ function ReportBug({
         </button>
         <form
           className="bug-report-form"
-          onSubmit={() => {
-            handleSubmit;
+          onSubmit={(event) => {
+            handleSubmit(event);
             setShowBug(false);
           }}
         >
@@ -100,8 +104,8 @@ function ReportBug({
             <select
               id="priority"
               name="priority"
-              value={formData.priority}
               onChange={handleInputChange}
+              defaultValue={formData.priority}
             >
               <option value="low">Low</option>
               <option value="medium">Medium</option>

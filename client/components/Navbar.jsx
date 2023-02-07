@@ -41,7 +41,6 @@ function Navbar(props) {
   const [showContact, setShowContact] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
   const [showMail, setShowMail] = useState(false);
-  const [responseDataArray, setResponseDataArray] = useState([]);
 
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
@@ -302,7 +301,7 @@ function Navbar(props) {
             </div>
             <div className="navBarText">Contact us</div>
           </li>
-          {session && session.user.email === "dannimalka.iag@gmail.com" && (
+          {session && (
             <li onClick={() => setShowMail(true)}>
               <div className="navbarIcons">
                 <BsFillChatRightTextFill />
@@ -352,13 +351,9 @@ function Navbar(props) {
           showContact={showContact}
           className="gameRulesContent"
         />
-        <AdminMail
-          setShowMail={setShowMail}
-          showMail={showMail}
-          className="gameRulesContent"
-          responseDataArray={responseDataArray}
-          setResponseDataArray={setResponseDataArray}
-        />
+        {showMail && (
+          <AdminMail setShowMail={setShowMail} className="gameRulesContent" />
+        )}
       </div>
       <Error
         showErrMessage={showErrMessage}

@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import router from "./router/pogMessage.js";
 import connectDB from "./database/db.js";
 import { Server } from "socket.io";
 import express from "express";
@@ -15,11 +16,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+app.use("/admin-mail", router);
 
 app.get("/", (req, res) => {
   res.send("Server is running!");
