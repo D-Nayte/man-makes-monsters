@@ -39,8 +39,13 @@ const JoinGame = ({ roomKey, playerName, socket, setShowErrMessage }) => {
     setRoomeCode(roomCode);
   };
 
+  const demoStyle = {
+    opacity: ".5",
+    pointerEvents: "none",
+  };
+
   return (
-    <form onSubmit={(e) => handleSubmit(e)} className="lobbyForm">
+    <form style={demoStyle} className="lobbyForm">
       <p>Enter Your Name:</p>
       <input
         maxLength={15}

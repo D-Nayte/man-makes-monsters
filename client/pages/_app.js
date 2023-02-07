@@ -9,7 +9,7 @@ import { ContextWrapper } from "../context";
 
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const cookies = parseCookies();
-  const [amountOfRounds, setAmountOfRounds] = useState(10);
+  const [amountOfRounds, setAmountOfRounds] = useState(2);
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
   const [socket, setSocket] = useState(null);
