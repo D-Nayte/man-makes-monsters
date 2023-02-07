@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 import allBackgrounds from "../public/assets/backgrounds";
@@ -28,11 +29,16 @@ function Background({
                 }`}
                 onClick={() => setSelectedBackground(backgroundObject)}
               >
-                <img
+                <Image
+                  width={1}
+                  height={1}
                   src={backgroundObject.SVG}
                   alt=""
                   className="profileCcMock"
                 />
+                <div>
+                  <p>{backgroundObject.label}</p>
+                </div>
               </div>
             );
           })}
