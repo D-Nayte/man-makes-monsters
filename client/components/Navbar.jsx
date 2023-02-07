@@ -5,7 +5,7 @@ import { parseCookies } from "nookies";
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { ImProfile } from "react-icons/im";
-import { BsBug } from "react-icons/bs";
+import { BsBug, BsFillChatRightTextFill } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { AiOutlineDollarCircle, AiOutlineMail } from "react-icons/ai";
@@ -19,6 +19,7 @@ import { BiLogOut } from "react-icons/bi";
 import Profile from "./Profile";
 import SignIn from "../pages/api/auth/SignIn";
 import Background from "./Background";
+import AdminMail from "./AdminMail";
 
 function Navbar(props) {
   const {
@@ -39,6 +40,8 @@ function Navbar(props) {
   const [showBug, setShowBug] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
+  const [showMail, setShowMail] = useState(false);
+  const [responseDataArray, setResponseDataArray] = useState([]);
 
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
@@ -299,6 +302,14 @@ function Navbar(props) {
             </div>
             <div className="navBarText">Contact us</div>
           </li>
+          {session && session.user.email === "dannimalka.iag@gmail.com" && (
+            <li onClick={() => setShowMail(true)}>
+              <div className="navbarIcons">
+                <BsFillChatRightTextFill />
+              </div>
+              <div className="navBarText">Admin mail</div>
+            </li>
+          )}
         </ul>
         <p className="copyright">
           Copyright © 2023 Man Makes Monster. All rights reserved.
@@ -340,6 +351,13 @@ function Navbar(props) {
           setShowContact={setShowContact}
           showContact={showContact}
           className="gameRulesContent"
+        />
+        <AdminMail
+          setShowMail={setShowMail}
+          showMail={showMail}
+          className="gameRulesContent"
+          responseDataArray={responseDataArray}
+          setResponseDataArray={setResponseDataArray}
         />
       </div>
       <Error

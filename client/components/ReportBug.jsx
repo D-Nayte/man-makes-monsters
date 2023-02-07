@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 
-function ReportBug({ showBug, setShowBug }) {
-  if (!showBug) return;
+function ReportBug({
+  showBug,
+  setShowBug,
+  responseDataArray,
+  setResponseDataArray,
+}) {
+  const [charCount, setCharCount] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -10,6 +15,7 @@ function ReportBug({ showBug, setShowBug }) {
     priority: "low",
   });
 
+  if (!showBug) return;
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
@@ -17,9 +23,25 @@ function ReportBug({ showBug, setShowBug }) {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Send formData to the server or handle it as needed
+
+    const url = "http://localhost:5555/submit-bug-report";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      setResponseDataArray(responseDataArray.concat(data));
+    } catch (error) {
+      console.error("failed to fetch", error);
+    }
   };
 
   return (
@@ -29,7 +51,13 @@ function ReportBug({ showBug, setShowBug }) {
         <button onClick={() => setShowBug(false)}>
           <CgCloseO className="closeMenuButton" />
         </button>
-        <form className="bug-report-form" onSubmit={handleSubmit}>
+        <form
+          className="bug-report-form"
+          onSubmit={() => {
+            handleSubmit;
+            setShowBug(false);
+          }}
+        >
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
@@ -55,11 +83,16 @@ function ReportBug({ showBug, setShowBug }) {
           <div className="form-group">
             <label htmlFor="description">Description:</label>
             <textarea
+              onInput={(e) => {
+                setCharCount(e.target.value.length);
+              }}
+              maxLength={200}
               id="description"
               name="description"
               value={formData.description}
               onChange={handleInputChange}
             />
+            <p>Characters: {charCount}/200</p>
           </div>
 
           <div className="form-group">
@@ -68,7 +101,8 @@ function ReportBug({ showBug, setShowBug }) {
               id="priority"
               name="priority"
               value={formData.priority}
-              onChange={handleInputChange}>
+              onChange={handleInputChange}
+            >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>

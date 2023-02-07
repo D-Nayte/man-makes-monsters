@@ -1,0 +1,14 @@
+.adminMailContainer {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.adminMailContainer div {
+  border: 2px solid white;
+  width: auto;
+  text-overflow: clip;
+  padding: 10px;
+  word-break: break-all;
+  display: flex;
+  flex-direction: column;
+}

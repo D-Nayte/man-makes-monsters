@@ -24,6 +24,7 @@
 @import url("./signIn.css");
 @import url("./Profile.css");
 @import url("./Background.css");
+@import url("./AdminMail.css");
 
 * {
   box-sizing: border-box;
