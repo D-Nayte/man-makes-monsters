@@ -1,0 +1,70 @@
+.backgroundsContainer {
+  display: grid;
+  padding-top: 30px;
+  grid-template-columns: 1fr 1fr;
+  margin: auto;
+  width: max-content;
+  gap: 40px;
+}
+
+.backgroundMock {
+  position: relative;
+  width: 280px;
+  height: max-content;
+  aspect-ratio: 1.6/1;
+  overflow: hidden;
+  border-radius: 10px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0);
+
+  font-weight: bold;
+}
+.backgroundMock div {
+  position: absolute;
+  height: 25%;
+  width: 100%;
+
+  top: 75%;
+  z-index: 50;
+}
+.backgroundMock div p {
+  display: flex;
+  font-size: 20px;
+  justify-content: center;
+}
+
+.backgroundMock:hover {
+  scale: 1.1;
+  rotate: 3deg;
+  transition: 0.3s;
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: 1px black;
+}
+
+@media (max-width: 1050px) {
+  .backgroundsContainer {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 100%;
+    height: 400px;
+    margin: auto;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .backgroundsContainer {
+    display: grid;
+    padding-top: 30px;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 20px;
+    width: max-content;
+    padding: 25px;
+    height: 400px;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

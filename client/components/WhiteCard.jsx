@@ -56,11 +56,12 @@ function WhiteCard({ getNewWhiteCard, setCardsOnTable, socket }) {
     <div className="whiteCardContainer">
       <div
         className={isActive ? "whiteCard whiteIsFlipped" : "whiteCard"}
-        onClick={handleClick}>
-        {storeData.selectedBackground.SVG ? (
+        onClick={handleClick}
+      >
+        {storeData.selectedCardBackground.SVG ? (
           <div className="whiteCardFace whiteCardFace--front">
             <img
-              src={storeData.selectedBackground.SVG}
+              src={storeData.selectedCardBackground.SVG}
               alt=""
               className="logoCard"
             />

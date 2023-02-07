@@ -18,6 +18,7 @@ import Contact from "./Contact";
 import { BiLogOut } from "react-icons/bi";
 import Profile from "./Profile";
 import SignIn from "../pages/api/auth/SignIn";
+import Background from "./Background";
 
 function Navbar(props) {
   const {
@@ -37,12 +38,15 @@ function Navbar(props) {
   const [showRules, setShowRules] = useState(false);
   const [showBug, setShowBug] = useState(false);
   const [showContact, setShowContact] = useState(false);
+  const [showBackground, setShowBackground] = useState(false);
 
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
+
   const [showErrMessage, setShowErrMessage] = useState(false);
   const [reconnect, setReconnect] = useState(false);
   const router = useRouter();
+  const [selectedCardBackground, setSelectedCardBackground] = useState("");
   const [selectedBackground, setSelectedBackground] = useState("");
   const [lobbyId, setLobbyId] = useState(null);
   const cookies = parseCookies();
@@ -113,6 +117,9 @@ function Navbar(props) {
   }, []);
 
   useEffect(() => {
+    setStoreData((prev) => ({ ...prev, selectedCardBackground }));
+  }, [selectedCardBackground]);
+  useEffect(() => {
     setStoreData((prev) => ({ ...prev, selectedBackground }));
   }, [selectedBackground]);
 
@@ -139,7 +146,8 @@ function Navbar(props) {
         onMouseLeave={() => {
           setShowProfile(false);
           setShowSettings(false);
-        }}>
+        }}
+      >
         <button className="burgerMenue"></button>
         <ul>
           {session ? (
@@ -147,7 +155,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowProfile((prev) => !prev)}>
+                  onClick={() => setShowProfile((prev) => !prev)}
+                >
                   <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
@@ -163,7 +172,8 @@ function Navbar(props) {
                         showProfile
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -173,11 +183,21 @@ function Navbar(props) {
                 <ul className="settingsInputContainer ">
                   <li
                     className="profileMenu "
-                    onClick={() => setShowProfileMenu(true)}>
-                    <span className="profileMenuIcon">
-                      <ImProfile />
-                    </span>
-                    Card Backgrounds
+                    onClick={() => {
+                      setShowProfile((prev) => !prev);
+                      setShowProfileMenu(true);
+                    }}
+                  >
+                    Card Backside
+                  </li>
+                  <li
+                    className="profileMenu "
+                    onClick={() => {
+                      setShowProfile((prev) => !prev);
+                      setShowBackground(true);
+                    }}
+                  >
+                    Backgrounds
                   </li>
                   {router.pathname !== "/lobby/game/[...gameId]" ? (
                     <li className="profileMenu" onClick={signOut}>
@@ -199,24 +219,13 @@ function Navbar(props) {
             </>
           ) : (
             <li
-              className={
-                router.pathname !== "/lobby/game/[...gameId]"
-                  ? "signIn joyRideProfile"
-                  : "signIn diseabled"
-              }
-              onClick={
-                router.pathname !== "/lobby/game/[...gameId]"
-                  ? () => setShowSignIn(true)
-                  : null
-              }>
+              className={"signIn joyRideProfile"}
+              onClick={() => setShowSignIn(true)}
+            >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
-              <div className="navBarText">
-                {router.pathname !== "/lobby/game/[...gameId]"
-                  ? "Sign In"
-                  : "Can't sign in during a game"}
-              </div>
+              <div className="navBarText">Sign In</div>
             </li>
           )}
 
@@ -225,7 +234,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowSettings((prev) => !prev)}>
+                  onClick={() => setShowSettings((prev) => !prev)}
+                >
                   <div className="navbarIcons gameSettingsIcon">
                     <FiSettings />
                   </div>
@@ -236,7 +246,8 @@ function Navbar(props) {
                         showSettings
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -302,13 +313,19 @@ function Navbar(props) {
         )}
 
         <Profile
-          selectedBackground={selectedBackground}
-          setSelectedBackground={setSelectedBackground}
+          selectedCardBackground={selectedCardBackground}
+          setSelectedCardBackground={setSelectedCardBackground}
           setShowProfileMenu={setShowProfileMenu}
           showProfileMenu={showProfileMenu}
           className="gameRulesContent"
         />
-
+        <Background
+          selectedBackground={selectedBackground}
+          setSelectedBackground={setSelectedBackground}
+          showBackground={showBackground}
+          setShowBackground={setShowBackground}
+          className="gameRulesContent"
+        />
         <ReportBug
           setShowBug={setShowBug}
           showBug={showBug}

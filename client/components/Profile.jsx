@@ -5,8 +5,8 @@ import allCardBackgrounds from "../public/assets/cardpictures";
 function Profile({
   showProfileMenu,
   setShowProfileMenu,
-  setSelectedBackground,
-  selectedBackground,
+  setSelectedCardBackground,
+  selectedCardBackground,
 }) {
   if (!showProfileMenu) return;
   return (
@@ -23,9 +23,11 @@ function Profile({
             return (
               <div
                 className={`whiteCardFaceMock whiteCardFace--frontMock ${
-                  selectedBackground.SVG === cardObject.SVG ? "selected" : ""
+                  selectedCardBackground.SVG === cardObject.SVG
+                    ? "selected"
+                    : ""
                 }`}
-                onClick={() => setSelectedBackground(cardObject)}
+                onClick={() => setSelectedCardBackground(cardObject)}
               >
                 <img src={cardObject.SVG} alt="" className="profileCcMock" />
               </div>
