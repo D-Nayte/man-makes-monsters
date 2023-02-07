@@ -133,6 +133,7 @@ function Navbar(props) {
             </button>
           </h2>
         )}
+        <h2 style={{ marginRight: "auto", marginLeft: "auto" }}>DEMO</h2>
       </nav>
       <div
         className="accountMenu"

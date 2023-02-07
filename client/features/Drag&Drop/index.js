@@ -81,7 +81,13 @@ function DragAndDropContainer(props) {
       </div>
 
       <DragOverlay style={randomTilt()}>
-        {activeId ? <CardTemplate id={activeId} isOverlay={true} /> : null}
+        {activeId ? (
+          <CardTemplate
+            id={activeId}
+            isOverlay={true}
+            key={"whiteCardOverlay"}
+          />
+        ) : null}
       </DragOverlay>
     </DndContext>
   );

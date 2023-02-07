@@ -42,6 +42,7 @@ const JoinGame = ({ roomKey, playerName, socket, setShowErrMessage }) => {
   const demoStyle = {
     opacity: ".5",
     pointerEvents: "none",
+    color: "gray",
   };
 
   return (
@@ -69,7 +70,7 @@ const JoinGame = ({ roomKey, playerName, socket, setShowErrMessage }) => {
         onChange={(e) => displayRoomCode(e.target.value)}
       />
 
-      <button type="submit" className="waitingLobbyButton">
+      <button type="submit" className="waitingLobbyButton" style={demoStyle}>
         <span>Join Game</span>
       </button>
     </form>

@@ -214,7 +214,7 @@ export function DropZone(props) {
                   <DragItem
                     card={card}
                     allCards={cards}
-                    id={card.text}
+                    id={card.text + "cardItem" + index}
                     key={card.text + card.pack + index}
                     element={element}
                     confirmed={confirmed}
@@ -245,11 +245,12 @@ export function DropZone(props) {
             (skelletons &&
               !confirmed &&
               !isCzar &&
+              id === "table" &&
               skelletons &&
               stage === "deciding")
               ? skelletons.map((skell, index) => (
                   <li
-                    key={skell.key + index}
+                    key={skell.key + index + "skellKey23"}
                     className={
                       !skell.show
                         ? `hide-skell skeleton${index}`

@@ -33,6 +33,8 @@ const Game = ({ socket }) => {
   const [gameStage, setGameStage] = useState(null);
   const [blackCards, setBlackCards] = useState([]);
   const [playedWhite, setPlayedWhite] = useState(null);
+  const [bot1, setBot1] = useState(null);
+  const [bot2, setBot2] = useState(null);
   const [timerTrigger, setTimerTrigger] = useState(false);
   const [confirmed, setConfirmed] = useState();
   let [loading, setLoading] = useState(true);
@@ -75,19 +77,21 @@ const Game = ({ socket }) => {
     socket.emit("changeGame", playerData);
   };
 
-  const whiteCardChoosed = (cards) => {
+  const whiteCardChoosed = (cards, bot) => {
+    console.log("bot", bot);
+    console.log("cards", cards);
     setTimer(false);
     const playerData = {
-      playerId: cookies.socketId,
+      playerId: bot?.id || cookies.socketId,
       stage: "white",
       blackCards,
       gameId,
       lobbyId,
-      playedWhite: cards,
+      playedWhite: bot?.hand?.splice(0, 2) || cards,
     };
 
     //if timer runs out, submit random white cards based on black cards pick
-    if (!cards) {
+    if (!cards && !bot) {
       const pick = cardsOnTable.table.cards[0].pick;
       playerData.playedWhite = cardsOnTable.player.cards.splice(0, pick);
       setCardsOnTable((prev) => ({ ...cardsOnTable }));
@@ -193,6 +197,7 @@ const Game = ({ socket }) => {
   };
 
   const processGame = ({ currentGame, err }) => {
+    console.log("currentGame", currentGame);
     //if player got kicket
     const player = currentGame?.players.find(
       (player) => player.id === cookies.socketId
@@ -330,6 +335,8 @@ const Game = ({ socket }) => {
         ...prev,
         changeAvatar: currentGame.changeAvatar,
       }));
+      setBot1(currentGame.players[1]);
+      setBot2(currentGame.players[2]);
     }
   };
 
@@ -409,6 +416,28 @@ const Game = ({ socket }) => {
       checkoutRound(cookies.socketId);
     }
   }, [timer]);
+
+  useEffect(() => {
+    if (currentLobby) {
+      let lastTurnindex = currentLobby.turns.length - 1;
+      if (lastTurnindex < 0) lastTurnindex = 0;
+      setTimeout(() => {
+        if (gameStage === "black" && !isCzar) chooseBlackCard(blackCards[0]);
+        if (gameStage === "white" && !isCzar && confirmed) {
+          whiteCardChoosed(null, bot1);
+          whiteCardChoosed(null, bot2);
+        }
+        if (gameStage === "white" && isCzar) whiteCardChoosed(null, bot2);
+        if (gameStage === "white" && isCzar) whiteCardChoosed(null, bot1);
+        if (gameStage === "deciding" && !isCzar)
+          submitWinner(
+            currentLobby.turns[lastTurnindex].white_cards[0].played_card
+          );
+        if (gameStage === "winner") checkoutRound(bot1.id);
+        if (gameStage === "winner") checkoutRound(bot2.id);
+      }, 1000);
+    }
+  }, [gameStage, confirmed]);
 
   if (loading && !currentLobby)
     return (
@@ -543,8 +572,11 @@ const Game = ({ socket }) => {
                           onMouseEnter={() => handleMouseOver(cards)}
                           onMouseLeave={() => handleMouseLeave(cards)}
                           key={cards[0].text + cards[0].pack + index}>
-                          {cards.map((card) => (
-                            <PlayedWhite card={card} key={card.text} />
+                          {cards.map((card, index) => (
+                            <PlayedWhite
+                              card={card}
+                              key={card.text + "played_card" + index}
+                            />
                           ))}
                           <button
                             onClick={() => submitWinner(cards)}

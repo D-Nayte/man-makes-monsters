@@ -73,6 +73,27 @@ const Lobby = (props) => {
     return currentLobby.players.find((player) => player.id === playerId);
   };
 
+  const addBots = (number) => {
+    //if (currentLobby?.waiting?.length <= 3) {
+    for (let index = 1; index <= number; index++) {
+      setTimeout(() => {
+        socket.emit("updateLobby", {
+          lobbyId,
+          id: "demoId" + index,
+          joinGame: true,
+        });
+      }, index * 1000);
+
+      setTimeout(() => {
+        socket.emit("updateLobby", {
+          lobbyId,
+          id: "demoId" + index,
+          newPLayerName: "Bot" + index,
+        });
+      }, index * 1005);
+    }
+  };
+
   const handleJoyrideCallback = (data) => {
     const { action, index, status, type } = data;
 
@@ -168,6 +189,8 @@ const Lobby = (props) => {
     //self update page after got redirected, use key from query as lobby id
     if (listenersReady) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
+      //Demo bots
+      addBots(2);
     }
   }, [listenersReady]);
 

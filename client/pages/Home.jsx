@@ -132,8 +132,8 @@ const Home = ({ socket }) => {
                 <h2>Join a Game.</h2>
               </div>
 
-              <div className="lobbyBack">
-                <h2>Join a Game.</h2>
+              <div className="lobbyBack" style={{ pointerEvents: "none" }}>
+                <h2>Join a Game. DEMO</h2>
                 {hostOrJoin === "join" ? (
                   <JoinGame
                     setShowErrMessage={setShowErrMessage}
