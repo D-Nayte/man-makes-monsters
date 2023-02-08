@@ -88,6 +88,8 @@ const Game = ({ socket }) => {
       playedWhite: bot?.hand?.splice(0, 2) || cards,
     };
 
+    if (bot) bot.played = true;
+
     //if timer runs out, submit random white cards based on black cards pick
     if (!cards && !bot) {
       const pick = cardsOnTable.table.cards[0].pick;
@@ -424,8 +426,10 @@ const Game = ({ socket }) => {
           whiteCardChoosed(null, bot1);
           whiteCardChoosed(null, bot2);
         }
-        if (gameStage === "white" && isCzar) whiteCardChoosed(null, bot2);
-        if (gameStage === "white" && isCzar) whiteCardChoosed(null, bot1);
+        if (gameStage === "white" && isCzar && !bot2.played)
+          whiteCardChoosed(null, bot2);
+        if (gameStage === "white" && isCzar && !bot1.played)
+          whiteCardChoosed(null, bot1);
         if (gameStage === "deciding" && !isCzar)
           submitWinner(
             currentLobby.turns[lastTurnindex].white_cards[0].played_card

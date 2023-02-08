@@ -62,11 +62,22 @@ const Settings = ({
             </h2>
           </li>
         )}
+        <div
+          style={{
+            position: "absolut",
+            top: "0",
+            height: "100%",
+            width: "100%",
+            zIndex: "5",
+            backgroundColor: "red",
+          }}>
+          Not available in demo
+        </div>
         <li>
           <h3>Amount of Cards per Player</h3>
         </li>
         <li>
-          <button onClick={handleDecrement}>
+          <button>
             <BsFillArrowDownSquareFill className="settingsButton" />
           </button>
           <input
@@ -76,9 +87,9 @@ const Settings = ({
             min="1"
             max="10"
             placeholder="Default 10"
-            onChange={(e) => handleChange(e.target.value)}
+            readOnly
           />
-          <button onClick={handleIncrement}>
+          <button>
             <BsFillArrowUpSquareFill className="settingsButton" />
           </button>
         </li>
@@ -86,7 +97,7 @@ const Settings = ({
           <h3>Max amount of rounds</h3>
         </li>
         <li>
-          <button onClick={handleRoundsDecrement}>
+          <button>
             <BsFillArrowDownSquareFill className="settingsButton" />
           </button>
           <input
@@ -94,9 +105,9 @@ const Settings = ({
             value={amountOfRounds}
             type="number"
             placeholder="Default 10"
-            onChange={(e) => setRoundsValue(parseInt(e.target.value))}
+            readOnly
           />
-          <button onClick={handleRoundsIncrement}>
+          <button>
             <BsFillArrowUpSquareFill className="settingsButton" />
           </button>
         </li>
@@ -112,7 +123,7 @@ const Settings = ({
                 name="language"
                 value="english"
                 id="english"
-                onChange={(e) => setLanguage(e.target.value)}
+                readOnly
                 checked={language === "english" ? true : false}
               />
             </div>
@@ -123,7 +134,7 @@ const Settings = ({
                 name="language"
                 value="german"
                 id="german"
-                onChange={(e) => setLanguage(e.target.value)}
+                readOnly
                 checked={language === "german" ? true : false}
               />
             </div>

@@ -1,6 +1,5 @@
 .whiteCardContainer {
   display: flex;
-  width: 175px;
   aspect-ratio: 1/1.4;
   border-radius: 15px;
   color: black;

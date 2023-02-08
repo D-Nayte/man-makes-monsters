@@ -194,7 +194,11 @@ export function DropZone(props) {
           )}
           <m.ul
             className={
-              confirmed && blackCard ? "cardDisplay confirmed" : "cardDisplay"
+              stage === "deciding" && isCzar
+                ? "cardDisplay deciding"
+                : confirmed && blackCard
+                ? "cardDisplay confirmed"
+                : "cardDisplay"
             }
             ref={setNodeRef}
             initial={{ y: -500, rotate: 20 }}
