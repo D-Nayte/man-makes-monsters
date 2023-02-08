@@ -16,10 +16,7 @@ const allCardBackgrounds = [
     label: "creditCard",
     SVG: goldencc2.src,
   },
-  {
-    label: "joker",
-    SVG: joker.src,
-  },
+
   {
     label: "dontw0rry",
     SVG: dontw0rry.src,

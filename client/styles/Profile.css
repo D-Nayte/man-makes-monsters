@@ -4,6 +4,33 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
 }
+.lockedCard {
+  position: relative;
+  width: 170px;
+  height: max-content;
+  aspect-ratio: 1/1.4;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid black;
+}
+.lockedCard:hover {
+  scale: 1.1;
+  rotate: 3deg;
+  transition: 0.3s;
+}
+
+.lockedIcon {
+  position: absolute;
+  color: rgba(255, 255, 255, 0);
+  height: 100%;
+  width: 100%;
+  border-radius: 10px;
+  z-index: 50;
+}
+.lockedIcon:hover {
+  background-color: rgba(128, 128, 128, 0.572);
+  color: rgba(128, 128, 128, 0.907);
+}
 
 .whiteCardFaceMock {
   position: relative;
