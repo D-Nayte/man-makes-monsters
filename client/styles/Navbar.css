@@ -58,6 +58,7 @@
 }
 .navContainer img {
   width: 50px;
+  z-index: 50;
 
   opacity: 0.3;
   cursor: pointer;
