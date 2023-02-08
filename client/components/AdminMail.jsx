@@ -1,28 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 
-function AdminMail({ showMail, setShowMail }) {
-  const [storedMailData, setStoredMailData] = useState(null);
-
-  const getMails = async () => {
-    try {
-      const url =
-        process.env.NEXT_PUBLIC_GETMAILS_URL ||
-        "http://localhost:5555/admin-mail/fetchmail/";
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data) {
-        setStoredMailData(data);
-      }
-    } catch (error) {
-      console.error(" MAIL FETCH FAILED", error);
-    }
-  };
-
-  useEffect(() => {
-    getMails();
-  }, []);
-
+function AdminMail({ showMail, setShowMail, storedMailData }) {
   return (
     <div className="gameRulesBackdrop">
       <div className="gameRules">
