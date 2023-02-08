@@ -26,10 +26,24 @@ function ReportBug({ showBug, setShowBug }) {
     <div className="gameRulesBackdrop">
       <div className="gameRules">
         <h1>Bug Report</h1>
-        <button onClick={() => setShowBug(false)}>
-          <CgCloseO className="closeMenuButton" />
+        <div
+          style={{
+            position: "absolut",
+            top: "0",
+            height: "100%",
+            width: "100%",
+            zIndex: "5",
+            backgroundColor: "red",
+          }}>
+          Not available in demo
+        </div>
+        <button>
+          <CgCloseO
+            className="closeMenuButton"
+            onClick={() => setShowBug(false)}
+          />
         </button>
-        <form className="bug-report-form" onSubmit={handleSubmit}>
+        <form className="bug-report-form">
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
@@ -37,7 +51,7 @@ function ReportBug({ showBug, setShowBug }) {
               id="name"
               name="name"
               value={formData.name}
-              onChange={handleInputChange}
+              readOnly
             />
           </div>
 
@@ -48,7 +62,7 @@ function ReportBug({ showBug, setShowBug }) {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
+              readOnly
             />
           </div>
 
@@ -58,7 +72,7 @@ function ReportBug({ showBug, setShowBug }) {
               id="description"
               name="description"
               value={formData.description}
-              onChange={handleInputChange}
+              readOnly
             />
           </div>
 
@@ -68,13 +82,17 @@ function ReportBug({ showBug, setShowBug }) {
               id="priority"
               name="priority"
               value={formData.priority}
-              onChange={handleInputChange}>
+              readOnly>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
           </div>
-          <button type="submit" className="bugSubmit">
+          <button
+            type="submit"
+            className="bugSubmit"
+            style={{ color: "gray" }}
+            disabled>
             Submit
           </button>
         </form>

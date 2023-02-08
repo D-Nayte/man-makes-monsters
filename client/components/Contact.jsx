@@ -27,10 +27,21 @@ function Contact({ showContact, setShowContact }) {
     <div className="gameRulesBackdrop">
       <div className="gameRules">
         <h1>Contact us</h1>
+        <div
+          style={{
+            position: "absolut",
+            top: "0",
+            height: "100%",
+            width: "100%",
+            zIndex: "5",
+            backgroundColor: "red",
+          }}>
+          Not available in demo
+        </div>
         <button onClick={() => setShowContact(false)}>
           <CgCloseO className="closeMenuButton" />
         </button>
-        <form className="contact-form" onSubmit={handleSubmit}>
+        <form className="contact-form">
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
@@ -38,7 +49,7 @@ function Contact({ showContact, setShowContact }) {
               id="name"
               name="name"
               value={formData.name}
-              onChange={handleInputChange}
+              readOnly
             />
           </div>
           <div className="form-group">
@@ -48,7 +59,7 @@ function Contact({ showContact, setShowContact }) {
               id="email"
               name="email"
               value={formData.email}
-              onChange={handleInputChange}
+              readOnly
             />
           </div>
           <div className="form-group">
@@ -57,10 +68,12 @@ function Contact({ showContact, setShowContact }) {
               id="message"
               name="message"
               value={formData.message}
-              onChange={handleInputChange}
+              readOnly
             />
           </div>
-          <button type="submit">Submit</button>
+          <button type="submit" style={{ color: "gray" }} disabled>
+            Submit
+          </button>
         </form>
       </div>
     </div>
