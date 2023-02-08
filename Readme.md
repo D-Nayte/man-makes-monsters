@@ -29,7 +29,7 @@ A fun and exciting online card game similar to Cards Against Humanity that you c
 
 ### Watch demo video here
 
-[![Man Makes Monster Demo](https://i.imgur.com/BUAeIZc.png)](https://youtu.be/0sSkp54oWaE "Demo of the website Man Makes Monster")
+[![Man Makes Monster Demo](https://i.imgur.com/BUAeIZc.png)](https://www.youtube.com/watch?v=Gi_D3tFjVHM&ab_channel=DanniMalka "Demo of the website Man Makes Monster")
 <br>
 <br>
 
@@ -39,7 +39,8 @@ A fun and exciting online card game similar to Cards Against Humanity that you c
 
 By following the link below, you can play a demo version without the need of members.
 
-[Demo game](https://man-makes-monsters-demo.vercel.app/)
+## [go to Demo game --->](https://man-makes-monsters-demo.vercel.app/)
+
 <br>
 <br>
 
