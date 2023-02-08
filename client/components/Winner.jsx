@@ -74,7 +74,11 @@ const Winner = ({
       ) : (
         <ShitContainer />
       )}
-      {<h1>{youWon ? "You won!" : isCzar ? "You were Czar" : "You Lost"}</h1>}
+      {
+        <h1 className="winnerh1">
+          {youWon ? "You won!" : isCzar ? "You were Czar" : "You Lost"}
+        </h1>
+      }
       <ul className="winner-container">
         {winnerCards &&
           winnerCards.map((card) => (
@@ -84,7 +88,8 @@ const Winner = ({
                   card?.pick
                     ? `${style.cardTemplateContainer} ${style.black}`
                     : `${style.cardTemplateContainer} ${style.whites}`
-                }>
+                }
+              >
                 {card.text}
               </div>
             </li>
@@ -96,7 +101,8 @@ const Winner = ({
             onClick={() => {
               setNoButtonAtAll(false);
               checkoutRound(cookies.socketId);
-            }}>
+            }}
+          >
             Ready
           </button>
         ) : (

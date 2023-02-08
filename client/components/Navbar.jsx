@@ -5,7 +5,7 @@ import { parseCookies } from "nookies";
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { ImProfile } from "react-icons/im";
-import { BsBug } from "react-icons/bs";
+import { BsBug, BsFillChatRightTextFill } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { AiOutlineDollarCircle, AiOutlineMail } from "react-icons/ai";
@@ -19,6 +19,7 @@ import { BiLogOut } from "react-icons/bi";
 import Profile from "./Profile";
 import SignIn from "../pages/api/auth/SignIn";
 import Background from "./Background";
+import AdminMail from "./AdminMail";
 
 function Navbar(props) {
   const {
@@ -39,12 +40,11 @@ function Navbar(props) {
   const [showBug, setShowBug] = useState(false);
   const [showContact, setShowContact] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
-
+  const [showMail, setShowMail] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(false);
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
-
   const [showErrMessage, setShowErrMessage] = useState(false);
-  const [reconnect, setReconnect] = useState(false);
   const router = useRouter();
   const [selectedCardBackground, setSelectedCardBackground] = useState("");
   const [selectedBackground, setSelectedBackground] = useState("");
@@ -86,9 +86,9 @@ function Navbar(props) {
 
       socket.io.on("reconnect", () => {
         setShowErrMessage(false);
-        setReconnect("Successfully reconnected to Server");
+        setSuccessMessage("Successfully reconnected to Server");
         setTimeout(() => {
-          setReconnect(false);
+          setSuccessMessage(false);
         }, 3000);
       });
     }
@@ -146,8 +146,7 @@ function Navbar(props) {
         onMouseLeave={() => {
           setShowProfile(false);
           setShowSettings(false);
-        }}
-      >
+        }}>
         <button className="burgerMenue"></button>
         <ul>
           {session ? (
@@ -155,8 +154,7 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowProfile((prev) => !prev)}
-                >
+                  onClick={() => setShowProfile((prev) => !prev)}>
                   <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
@@ -172,8 +170,7 @@ function Navbar(props) {
                         showProfile
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }
-                    >
+                      }>
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -186,8 +183,7 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowProfileMenu(true);
-                    }}
-                  >
+                    }}>
                     Card Backside
                   </li>
                   <li
@@ -195,8 +191,7 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowBackground(true);
-                    }}
-                  >
+                    }}>
                     Backgrounds
                   </li>
                   {router.pathname !== "/lobby/game/[...gameId]" ? (
@@ -220,8 +215,7 @@ function Navbar(props) {
           ) : (
             <li
               className={"signIn joyRideProfile"}
-              onClick={() => setShowSignIn(true)}
-            >
+              onClick={() => setShowSignIn(true)}>
               <div className="navbarIcons">
                 <CgProfile />
               </div>
@@ -234,8 +228,7 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowSettings((prev) => !prev)}
-                >
+                  onClick={() => setShowSettings((prev) => !prev)}>
                   <div className="navbarIcons gameSettingsIcon">
                     <FiSettings />
                   </div>
@@ -246,8 +239,7 @@ function Navbar(props) {
                         showSettings
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }
-                    >
+                      }>
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -299,6 +291,14 @@ function Navbar(props) {
             </div>
             <div className="navBarText">Contact us</div>
           </li>
+          {session && (
+            <li onClick={() => setShowMail(true)}>
+              <div className="navbarIcons">
+                <BsFillChatRightTextFill />
+              </div>
+              <div className="navBarText">Admin mail</div>
+            </li>
+          )}
         </ul>
         <p className="copyright">
           Copyright © 2023 Man Makes Monster. All rights reserved.
@@ -329,6 +329,8 @@ function Navbar(props) {
         <ReportBug
           setShowBug={setShowBug}
           showBug={showBug}
+          setSuccessMessage={setSuccessMessage}
+          setShowErrMessage={setShowErrMessage}
           className="gameRulesContent"
         />
         <GameRules
@@ -341,11 +343,14 @@ function Navbar(props) {
           showContact={showContact}
           className="gameRulesContent"
         />
+        {showMail && (
+          <AdminMail setShowMail={setShowMail} className="gameRulesContent" />
+        )}
       </div>
       <Error
         showErrMessage={showErrMessage}
         setShowErrMessage={setShowErrMessage}
-        success={reconnect}
+        success={successMessage}
       />
     </>
   );

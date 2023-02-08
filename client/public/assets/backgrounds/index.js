@@ -3,6 +3,7 @@ import spacebackground from "../../spacebackground.svg";
 import hellbackground from "../../hellbackground.svg";
 import linearbackground from "../../linearbackground.svg";
 import italianbackground2 from "../../italianbackground2.svg";
+import metalbackground from "../../metalbackground.svg";
 
 const allBackgrounds = [
   {
@@ -20,6 +21,10 @@ const allBackgrounds = [
   {
     label: "Italy",
     SVG: italianbackground2.src,
+  },
+  {
+    label: "Metal",
+    SVG: metalbackground.src,
   },
   {
     label: "Pwety",
