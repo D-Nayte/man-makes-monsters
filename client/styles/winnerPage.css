@@ -23,6 +23,7 @@
   padding-top: 10%;
   font-size: 50px;
   letter-spacing: 2px;
+  -webkit-text-stroke: 1px black;
 }
 
 .winner-container li:nth-child(1) {
