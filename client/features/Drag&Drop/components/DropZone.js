@@ -92,7 +92,7 @@ export function DropZone(props) {
     const skelletonCollection = [];
 
     for (let i = 0; i < maxAmountSkelleton; i++) {
-      const skelleton = { text: "", key: i, show: false };
+      const skelleton = { text: "", key: i + "skell", show: false };
 
       for (let j = i; j < amountToRender; j++) {
         skelleton.show = true;
@@ -214,8 +214,8 @@ export function DropZone(props) {
                   <DragItem
                     card={card}
                     allCards={cards}
-                    id={card.text + "cardItem" + index}
-                    key={card.text + card.pack + index}
+                    id={card.text}
+                    key={card.text + card.pack + +"cardItem" + index}
                     element={element}
                     confirmed={confirmed}
                     blackText={blackText}
@@ -250,7 +250,7 @@ export function DropZone(props) {
               stage === "deciding")
               ? skelletons.map((skell, index) => (
                   <li
-                    key={skell.key + index + "skellKey23"}
+                    key={skell.key}
                     className={
                       !skell.show
                         ? `hide-skell skeleton${index}`

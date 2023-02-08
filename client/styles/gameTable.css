@@ -36,6 +36,7 @@
   padding-top: 30px;
   padding-bottom: 10px;
 }
+
 .whiteCardTable ul li:hover {
   cursor: -webkit-grab;
   cursor: grab;

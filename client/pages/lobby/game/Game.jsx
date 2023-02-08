@@ -78,8 +78,6 @@ const Game = ({ socket }) => {
   };
 
   const whiteCardChoosed = (cards, bot) => {
-    console.log("bot", bot);
-    console.log("cards", cards);
     setTimer(false);
     const playerData = {
       playerId: bot?.id || cookies.socketId,
@@ -197,7 +195,6 @@ const Game = ({ socket }) => {
   };
 
   const processGame = ({ currentGame, err }) => {
-    console.log("currentGame", currentGame);
     //if player got kicket
     const player = currentGame?.players.find(
       (player) => player.id === cookies.socketId
@@ -547,7 +544,6 @@ const Game = ({ socket }) => {
               gameStage={gameStage}
             />
           )}
-
           {(isCzar && gameStage !== "black") || !isCzar ? (
             <DragAndDropContainer
               data={cardsOnTable}
