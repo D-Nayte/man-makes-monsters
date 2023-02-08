@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { CgCloseO } from "react-icons/cg";
 
-function ReportBug({ showBug, setShowBug }) {
+function ReportBug({
+  showBug,
+  setShowBug,
+  setSuccessMessage,
+  setShowErrMessage,
+}) {
   const [charCount, setCharCount] = useState(0);
+
   const [formData, setFormData] = useState({
     name: null,
     email: null,
@@ -25,7 +31,6 @@ function ReportBug({ showBug, setShowBug }) {
     const url =
       process.env.NEXT_PUBLIC_MAIL_URL || "http://localhost:5555/admin-mail/";
     try {
-      console.log("url", url);
       const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +48,12 @@ function ReportBug({ showBug, setShowBug }) {
           priority: "low",
         });
       }
+      setSuccessMessage("Thanks for your report :)");
+      setTimeout(() => {
+        setSuccessMessage(false);
+      }, 3000);
     } catch (error) {
+      setShowErrMessage("This was not working :/ please try again");
       console.error("failed to fetch", error);
     }
   };
@@ -60,8 +70,7 @@ function ReportBug({ showBug, setShowBug }) {
           onSubmit={(event) => {
             handleSubmit(event);
             setShowBug(false);
-          }}
-        >
+          }}>
           <div className="form-group">
             <label htmlFor="name">Name:</label>
             <input
@@ -105,8 +114,7 @@ function ReportBug({ showBug, setShowBug }) {
               id="priority"
               name="priority"
               onChange={handleInputChange}
-              defaultValue={formData.priority}
-            >
+              defaultValue={formData.priority}>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>

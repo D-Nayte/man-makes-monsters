@@ -168,9 +168,8 @@
 .errMessage {
   position: fixed;
   width: 100%;
-  color: white;
-  background-color: #eb455f;
-  opacity: 0.6;
+  color: rgba(255, 255, 255, 0.726);
+  background-color: #eb455ecb;
   height: 30px;
   -webkit-animation: errAnimation 0.7s;
   animation: errAnimation 0.7s;
