@@ -6,7 +6,6 @@ import { useAppContext } from "../context/index.js";
 const Layout = ({ children, socket, ...props }) => {
   const { storeData, setStoreData } = useAppContext();
 
-  console.log(storeData, "storeData");
   return (
     <>
       <Head>
@@ -49,8 +48,7 @@ const Layout = ({ children, socket, ...props }) => {
             backgroundPosition: "bottom",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-          }}
-        ></div>
+          }}></div>
       ) : (
         ""
       )}
