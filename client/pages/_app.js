@@ -15,27 +15,23 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const [socket, setSocket] = useState(null);
 
   const startSocket = () => {
-    const newSocket = io(
-      process.env.NEXT_PUBLIC_HOST || "http://localhost:5555",
-      {
-        reconnection: true, // enable reconnection
-        reconnectionAttempts: 5, // try to reconnect 5 times
-        reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
-      }
-    );
-    return newSocket;
+    const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
+      reconnection: true, // enable reconnection
+      reconnectionAttempts: 5, // try to reconnect 5 times
+      reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
+    });
+    socket.on("connect", () => {
+      setSocket(socket);
+    });
   };
 
   useEffect(() => {
     consoleMessage();
-    const socket = startSocket();
-    socket.on("connect", () => {
-      setSocket(socket);
-    });
+    startSocket();
   }, []);
 
   useEffect(() => {
-    if (socket) {
+    if (socket && socket.id) {
       if (socket.id && !cookies.socketId)
         setCookie(null, "socketId", socket.id, { path: "/" });
     }
@@ -48,7 +44,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
         socket.emit("cachUser", { cookieId: cookies.socketId });
       });
     }
-  }, [cookies.socketId, socket]);
+  }, [cookies.socketId]);
 
   const consoleMessage = () => {
     if (navigator.userAgent.indexOf("Firefox") != -1) {
@@ -84,8 +80,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
           handSize={handSize}
           amountOfRounds={amountOfRounds}
           language={language}
-          setLanguage={setLanguage}
-        >
+          setLanguage={setLanguage}>
           <AnimatePresence mode="wait" initial={false}>
             <Component
               key={router.pathname}

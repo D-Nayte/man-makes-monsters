@@ -162,7 +162,7 @@ const Lobby = (props) => {
       socket.removeAllListeners();
       setListenersReady(false);
     };
-  }, [cookies.socketId, lobbyId, joinGame, reconnect]);
+  }, [cookies.socketId, lobbyId, joinGame, reconnect, socket]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
