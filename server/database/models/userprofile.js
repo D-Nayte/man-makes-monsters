@@ -4,8 +4,7 @@ const userprofile = mongoose.Schema(
   {
     name: String,
     email: String,
-    avatar: String,
-    token: String,
+    avatar: String || null,
     admin: Boolean,
     favoritebackground: String,
     favoritecard: String,
