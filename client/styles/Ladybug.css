@@ -17,30 +17,30 @@
 }
 
 #Right1 {
-  animation: ladylegsleft1 1.5s infinite linear;
+  animation: ladylegsleft1 1s infinite linear;
   animation-delay: 0.75s;
   transform-box: fill-box;
   transform-origin: -15px 10px;
 }
 #Right2 {
-  animation: ladylegsleft1 1.5s infinite linear;
+  animation: ladylegsleft1 1s infinite linear;
   animation-delay: 0.75s;
   transform-box: fill-box;
   transform-origin: top left;
 }
 #Right3 {
-  animation: ladylegsleft1 1.5s infinite linear;
+  animation: ladylegsleft1 1s infinite linear;
   animation-delay: 0.75s;
   transform-box: fill-box;
   transform-origin: top;
 }
 #Left1 {
-  animation: ladylegsleft1 1.5s infinite linear;
+  animation: ladylegsleft1 1s infinite linear;
   transform-box: fill-box;
   transform-origin: bottom;
 }
 #Left2 {
-  animation: ladylegsleft1 1.5s infinite linear;
+  animation: ladylegsleft1 1s infinite linear;
   animation-delay: 0.75s;
   transform-box: fill-box;
   transform-origin: bottom;
@@ -55,7 +55,7 @@
   animation: x 3.6s linear infinite alternate;
 }
 .y {
-  animation: y 14.8s linear infinite alternate;
+  animation: y 4.8s linear infinite alternate;
 }
 
 @keyframes x {
