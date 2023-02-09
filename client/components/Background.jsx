@@ -28,6 +28,7 @@ function Background({
                     : ""
                 }`}
                 onClick={() => setSelectedBackground(backgroundObject)}
+                key={backgroundObject.label}
               >
                 <Image
                   width={1}

@@ -21,7 +21,7 @@ function Profile({
 
         <h2>Choose Your Card background</h2>
         <div className="profileCardsContainer">
-          <div className="lockedCard ">
+          <div className="lockedCard" key="ladybug">
             <AiOutlineLock className="lockedIcon" />
             <Ladybug />
           </div>
@@ -33,6 +33,7 @@ function Profile({
                     ? "selected"
                     : ""
                 }`}
+                key={cardObject.label}
                 onClick={() => setSelectedCardBackground(cardObject)}
               >
                 <img src={cardObject.SVG} alt="" className="profileCcMock" />
