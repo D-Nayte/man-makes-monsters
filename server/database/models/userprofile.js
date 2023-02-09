@@ -6,8 +6,8 @@ const userprofile = mongoose.Schema(
     email: String,
     avatar: String || null,
     admin: Boolean,
-    favoritebackground: String,
-    favoritecard: String,
+    favoritebackground: String || null,
+    favoritecard: String || null,
     ladybug: Boolean,
   },
   {

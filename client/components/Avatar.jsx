@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import emotions from "../utils/avatarEmotions.js";
 import { GoSettings } from "react-icons/go";
 import { motion as m } from "framer-motion";
+import { patchUserProfile } from "../utils/patchProfile";
+import { useSession } from "next-auth/react";
 
 const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   const cookies = parseCookies();
@@ -16,6 +18,7 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   const [currGameId, setCurrGameId] = useState(false);
   const { storeData, setStoreData } = useAppContext();
   const [showAvatar, setShowAvatar] = useState(false);
+  const { data: session } = useSession();
 
   const avatarOptions = {
     seed: userName,
@@ -61,6 +64,7 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
       id: playerId,
       avatar: options,
     });
+    if (session) patchUserProfile({ key: "avatar", value: options });
   };
 
   //create avatar based on options
@@ -78,9 +82,14 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   };
 
   useEffect(() => {
-    if (playerId === cookies.socketId && !isPopup)
+    if (playerId === cookies.socketId && !isPopup) {
       storeAvatarSettings(avatarOptions);
+    }
   }, []);
+
+  useEffect(() => {
+    if (storeData.profile) return storeAvatarSettings(storeData.profile.avatar);
+  }, [storeData.profile]);
 
   useEffect(() => {
     if (router.query.gameId) return setCurrGameId(router.query.gameId);

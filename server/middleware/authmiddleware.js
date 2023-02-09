@@ -10,12 +10,10 @@ export const protect = asyncHandler(async (req, res, next) => {
     try {
       //Get token from Bearer
       token = req.headers.authorization.split(" ")[1];
-      console.log("token", token);
       //Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       //Get user from token
       req.user = await Userprofile.findById(decoded.id);
-      console.log("decoded.id", decoded.id);
       next();
     } catch (error) {
       console.error(error);

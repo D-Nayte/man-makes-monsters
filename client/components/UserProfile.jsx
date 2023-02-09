@@ -1,32 +1,17 @@
+import { parseCookies, setCookie } from "nookies";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { CgCloseO } from "react-icons/cg";
+import { useAppContext } from "../context";
 
 function UserProfile({ showUserProfile, setShowUserProfile }) {
-  const [storedProfileData, setStoredProfileData] = useState(null);
+  const { storeData } = useAppContext();
+
   if (!showUserProfile) return;
-
-  const getuserProfileDetails = async () => {
-    try {
-      const url =
-        process.env.NEXT_PUBLIC_PROFILE_URL ||
-        "http://localhost:5555/user-profile/";
-      const response = await fetch(url);
-      const data = await response.json();
-      if (data) {
-        setStoredProfileData(data);
-      }
-    } catch (error) {
-      console.error(" USER PROFILE NOT FOUND", error);
-    }
-  };
-
-  useEffect(() => {
-    getuserProfileDetails();
-  }, []);
 
   return (
     <div className="gameRulesBackdrop">
+      {console.log("storeDate", storeData)}
       <div className="gameRules">
         <h1>USER PROFILE</h1>
         <button onClick={() => setShowUserProfile(false)}>

@@ -13,8 +13,8 @@ const createUser = async (res, userData) => {
     email,
     avatar: null,
     admin: false,
-    favoritebackground,
-    favoritecard,
+    favoritebackground: null,
+    favoritecard: null,
     ladybug: false,
   };
   if (!name && email) userProfile.name = randomName();
