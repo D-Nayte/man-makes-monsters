@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
-import router from "./router/pogMessage.js";
+import { pogMessageRouter } from "./router/pogMessage.js";
+import { userProfileRouter } from "./router/userProfile.js";
 import connectDB from "./database/db.js";
 import { Server } from "socket.io";
 import express from "express";
@@ -16,7 +17,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/admin-mail", router);
+app.use("/admin-mail", pogMessageRouter);
+app.use("/user-profile", userProfileRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is running!");

@@ -20,6 +20,7 @@ import Profile from "./Profile";
 import SignIn from "../pages/api/auth/SignIn";
 import Background from "./Background";
 import AdminMail from "./AdminMail";
+import Userprofile from "./UserProfile";
 
 function Navbar(props) {
   const {
@@ -35,6 +36,7 @@ function Navbar(props) {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showUserProfile, setShowUserProfile] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showRules, setShowRules] = useState(false);
   const [showBug, setShowBug] = useState(false);
@@ -146,7 +148,8 @@ function Navbar(props) {
         onMouseLeave={() => {
           setShowProfile(false);
           setShowSettings(false);
-        }}>
+        }}
+      >
         <button className="burgerMenue"></button>
         <ul>
           {session ? (
@@ -154,7 +157,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowProfile((prev) => !prev)}>
+                  onClick={() => setShowProfile((prev) => !prev)}
+                >
                   <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
@@ -170,7 +174,8 @@ function Navbar(props) {
                         showProfile
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -182,8 +187,18 @@ function Navbar(props) {
                     className="profileMenu "
                     onClick={() => {
                       setShowProfile((prev) => !prev);
+                      setShowUserProfile(true);
+                    }}
+                  >
+                    Profile
+                  </li>
+                  <li
+                    className="profileMenu "
+                    onClick={() => {
+                      setShowProfile((prev) => !prev);
                       setShowProfileMenu(true);
-                    }}>
+                    }}
+                  >
                     Card Backside
                   </li>
                   <li
@@ -191,7 +206,8 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowBackground(true);
-                    }}>
+                    }}
+                  >
                     Backgrounds
                   </li>
                   {router.pathname !== "/lobby/game/[...gameId]" ? (
@@ -215,7 +231,8 @@ function Navbar(props) {
           ) : (
             <li
               className={"signIn joyRideProfile"}
-              onClick={() => setShowSignIn(true)}>
+              onClick={() => setShowSignIn(true)}
+            >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
@@ -228,7 +245,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowSettings((prev) => !prev)}>
+                  onClick={() => setShowSettings((prev) => !prev)}
+                >
                   <div className="navbarIcons gameSettingsIcon">
                     <FiSettings />
                   </div>
@@ -239,7 +257,8 @@ function Navbar(props) {
                         showSettings
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -311,6 +330,12 @@ function Navbar(props) {
             className="gameRulesContent"
           />
         )}
+
+        <Userprofile
+          showUserProfile={showUserProfile}
+          setShowUserProfile={setShowUserProfile}
+          className="gameRulesContent"
+        />
 
         <Profile
           selectedCardBackground={selectedCardBackground}

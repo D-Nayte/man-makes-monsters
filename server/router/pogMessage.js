@@ -43,4 +43,4 @@ router.post("/", (req, res) => {
   Pogmessages.create(databaseEntry);
 });
 
-export default router;
+export { router as pogMessageRouter };
