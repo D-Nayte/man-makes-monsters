@@ -11,10 +11,16 @@ router.use(
   })
 );
 
-router.get("/fetchmail", async (req, res) => {
-  const pogged = await Pogmessages.find();
-  if (!pogged) return res.status(404).send("NOT FUCKING FOUND");
-  res.json(pogged);
+router.post("/fetchmail", async (req, res) => {
+  if (
+    req.body.email === "schunke.andy@gmail.com" ||
+    req.body.email === "dannimalka.iag@gmail.com"
+  ) {
+    const pogged = await Pogmessages.find();
+    if (!pogged) return res.status(404).send("NOT FUCKING FOUND");
+    return res.json(pogged);
+  }
+  res.status(403).json({ message: "No access buddy!" });
 });
 router.post("/", (req, res) => {
   if (

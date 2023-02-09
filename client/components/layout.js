@@ -48,8 +48,7 @@ const Layout = ({ children, socket, ...props }) => {
             backgroundPosition: "bottom",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
-          }}
-        ></div>
+          }}></div>
       ) : (
         ""
       )}

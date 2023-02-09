@@ -53,6 +53,7 @@ function Navbar(props) {
   const [lobbyId, setLobbyId] = useState(null);
   const cookies = parseCookies();
   const [gameIdentifier, setGameIdentifier] = useState(null);
+  const [storedMailData, setStoredMailData] = useState(null);
   const backToLobby = (e) => {
     e.stopPropagation();
     if (lobbyId) {
@@ -67,6 +68,31 @@ function Navbar(props) {
       router.push({
         pathname: `/lobby/${lobbyId}`,
       });
+    }
+  };
+
+  const getMails = async () => {
+    if (!session) return;
+    try {
+      console.log("session", session);
+      const url =
+        process.env.NEXT_PUBLIC_GETMAILS_URL ||
+        "http://localhost:5555/admin-mail/fetchmail/";
+
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({ email: session.user.email }),
+      });
+      const data = await response.json();
+
+      if (data && response.ok) {
+        setStoredMailData(data);
+      }
+    } catch (error) {
+      console.error("MAIL FETCH FAILED", error);
     }
   };
 
@@ -117,6 +143,9 @@ function Navbar(props) {
         setProviders(providers);
       })();
   }, []);
+  useEffect(() => {
+    getMails();
+  }, [session]);
 
   useEffect(() => {
     setStoreData((prev) => ({ ...prev, selectedCardBackground }));
@@ -310,7 +339,7 @@ function Navbar(props) {
             </div>
             <div className="navBarText">Contact us</div>
           </li>
-          {session && (
+          {session && storedMailData && (
             <li onClick={() => setShowMail(true)}>
               <div className="navbarIcons">
                 <BsFillChatRightTextFill />
@@ -369,7 +398,11 @@ function Navbar(props) {
           className="gameRulesContent"
         />
         {showMail && (
-          <AdminMail setShowMail={setShowMail} className="gameRulesContent" />
+          <AdminMail
+            setShowMail={setShowMail}
+            storedMailData={storedMailData}
+            className="gameRulesContent"
+          />
         )}
       </div>
       <Error
