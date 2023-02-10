@@ -39,12 +39,13 @@ export const getuserProfileDetails = async (session) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${cookies.token}`,
       },
       body: JSON.stringify({ email: session.user.email }),
     });
     const data = await response.json();
     if (data) {
-      if (!cookies.token && data.token) {
+      if (data.token) {
         const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
         setCookie(null, "token", data.token, {
           path: "/",

@@ -17,7 +17,7 @@ router.use(
 );
 
 //login user or create new user
-router.post("/", async (req, res) => {
+router.post("/", protect, async (req, res) => {
   const { email } = req.body;
   let token;
   try {
