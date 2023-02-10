@@ -3,7 +3,6 @@ import Userprofile from "../database/models/userprofile.js";
 import asyncHandler from "express-async-handler";
 export const protect = asyncHandler(async (req, res, next) => {
   let token;
-  console.log("req.headers ", req.headers);
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith("Bearer")
@@ -11,7 +10,6 @@ export const protect = asyncHandler(async (req, res, next) => {
     try {
       //Get token from Bearer
       token = req.headers.authorization.split(" ")[1];
-      console.log(token);
       //Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       //Get user from token

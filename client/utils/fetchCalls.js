@@ -1,4 +1,4 @@
-import { parseCookies } from "nookies";
+import { parseCookies, setCookie } from "nookies";
 
 // fetch admin mails
 export const getMails = async (session) => {
@@ -39,21 +39,21 @@ export const getuserProfileDetails = async (session) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.token}`,
       },
       body: JSON.stringify({ email: session.user.email }),
     });
     const data = await response.json();
     if (data) {
-      if (data.token) {
-        const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
-        setCookie(null, "token", data.token, {
-          path: "/",
-          expires: expires,
-        });
-      }
+      console.log("data", data);
+
+      const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
+      setCookie(null, "token", data.token, {
+        path: "/",
+        expires: expires,
+      });
+
       if (data.profile.avatar)
-        return { ...data, avatar: JSON.parse(data.profile.avatar) };
+        return { ...data.profile, avatar: JSON.parse(data.profile.avatar) };
       return data;
     }
   } catch (error) {

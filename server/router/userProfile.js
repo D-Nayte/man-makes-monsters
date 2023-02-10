@@ -17,7 +17,8 @@ router.use(
 );
 
 //login user or create new user
-router.post("/", protect, async (req, res) => {
+router.post("/", async (req, res) => {
+  console.log("RUN!");
   const { email } = req.body;
   let token;
   try {
@@ -25,12 +26,12 @@ router.post("/", protect, async (req, res) => {
 
     if (!foundUser) {
       foundUser = await createUser(res, req.body);
-      token = createToken(foundUser._id);
     }
 
     if (!foundUser) return;
     const profile = convertUserData(foundUser);
 
+    token = createToken(foundUser._id);
     return res.json({ message: "founduser received", profile, token });
   } catch (error) {
     console.error("Error while fetchin user data", error);

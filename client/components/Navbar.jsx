@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { signOut, getProviders, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 import { BsBug, BsFillChatRightTextFill } from "react-icons/bs";
@@ -122,19 +122,22 @@ function Navbar(props) {
 
   useEffect(() => {
     // fetch calls
-    if (session && cookies.token) {
+    if (session) {
       const mails = getMails(session);
       setStoredMailData(mails);
 
       (async () => {
         const profile = await getuserProfileDetails(session);
         setStoreData((prev) => ({ ...prev, profile }));
+        console.log("profile", profile);
       })();
     } else if (!session) {
       // delete all states after logout
       setStoredMailData(null);
       delete storeData.profile;
       setStoreData((prev) => ({ ...storeData }));
+      console.log("storeData :>> ", storeData);
+      destroyCookie(null, "token", { path: "/" });
     }
   }, [session]);
 
@@ -148,7 +151,6 @@ function Navbar(props) {
   return (
     <>
       <nav className="navContainer">
-        {console.log("storeData", storeData)}
         {lobbyId && !gameIdentifier && (
           <img
             src="/MMM-logo.svg"
