@@ -5,6 +5,7 @@ import JoinGame from "../components/JoinLobby.jsx";
 import HostGame from "../components/HostGame.jsx";
 import Error from "../components/Error.jsx";
 import Loading from "../components/Loading.jsx";
+import useLocalStorage from "../components/useLocalStorage.js";
 
 const Home = ({ socket }) => {
   if (!socket)
@@ -19,6 +20,7 @@ const Home = ({ socket }) => {
   const [showErrMessage, setShowErrMessage] = useState(false);
   const [isHostActive, setIsHostActive] = useState(false);
   const [isJoinActive, setIsJoinActive] = useState(false);
+  let [value, setValue] = useLocalStorage("name");
 
   const handleHostClick = (event) => {
     setIsHostActive(true);
@@ -94,7 +96,9 @@ const Home = ({ socket }) => {
               </div>
               <div className="lobbyBack">
                 <h2>I'm the Host but my Homies calls me</h2>
-                {hostOrJoin === "host" ? <HostGame socket={socket} /> : null}
+                {hostOrJoin === "host" ? (
+                  <HostGame socket={socket} value={value} setValue={setValue} />
+                ) : null}
               </div>
             </div>
           </div>
@@ -136,8 +140,9 @@ const Home = ({ socket }) => {
                   <JoinGame
                     setShowErrMessage={setShowErrMessage}
                     roomKey={roomKey}
-                    playerName={playerName}
                     socket={socket}
+                    value={value}
+                    setValue={setValue}
                   />
                 ) : null}
               </div>

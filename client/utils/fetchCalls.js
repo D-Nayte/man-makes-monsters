@@ -44,8 +44,6 @@ export const getuserProfileDetails = async (session) => {
     });
     const data = await response.json();
     if (data) {
-      console.log("data", data);
-
       const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
       setCookie(null, "token", data.token, {
         path: "/",

@@ -6,8 +6,7 @@ import { patchUserProfile } from "../utils/patchProfile";
 import useLocalStorage from "./useLocalStorage";
 
 //Hosting a new game
-const HostGame = ({ socket }) => {
-  let [value, setValue] = useLocalStorage("name", "");
+const HostGame = ({ socket, value, setValue }) => {
   const cookies = parseCookies();
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
@@ -29,12 +28,11 @@ const HostGame = ({ socket }) => {
   };
 
   useEffect(() => {
-    if (session && storeData.profile) setValue(storeData.profile.name);
+    if (session && storeData?.profile?.name) setValue(storeData.profile.name);
   }, [session, storeData.profile]);
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="lobbyForm">
-      {console.log("value", value)}
       <input
         maxLength={15}
         type="text"

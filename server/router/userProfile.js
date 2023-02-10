@@ -54,7 +54,6 @@ router.patch("/", protect, async (req, res) => {
     { returnDocument: "after" }
   );
   const userData = convertUserData(updatedUser);
-  console.log("userData :>> ", userData);
 
   res.status(200).json({ message: "success", user: userData });
 });

@@ -11,7 +11,6 @@ function UserProfile({ showUserProfile, setShowUserProfile }) {
 
   return (
     <div className="gameRulesBackdrop">
-      {console.log("storeDate", storeData)}
       <div className="gameRules">
         <h1>USER PROFILE</h1>
         <button onClick={() => setShowUserProfile(false)}>

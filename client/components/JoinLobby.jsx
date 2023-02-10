@@ -1,10 +1,8 @@
-import useLocalStorage from "./useLocalStorage";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { parseCookies } from "nookies";
 
 //Join a game
-const JoinGame = ({ roomKey, playerName, socket, setShowErrMessage }) => {
-  let [value, setValue] = useLocalStorage("name", "");
+const JoinGame = ({ roomKey, socket, setShowErrMessage, value, setValue }) => {
   let [noButtonAtAll, setNoButtonAtAll] = useState(true);
   let [roomCode, setRoomeCode] = useState("");
   const cookies = parseCookies();
@@ -18,7 +16,7 @@ const JoinGame = ({ roomKey, playerName, socket, setShowErrMessage }) => {
       noButtonAtAll = false;
 
       const lobbyId = roomCode;
-      const newPlayerName = playerName.current.value;
+      const newPlayerName = value;
       const id = cookies.socketId;
 
       // request to server to find the game by the given id from form
@@ -44,7 +42,6 @@ const JoinGame = ({ roomKey, playerName, socket, setShowErrMessage }) => {
       <p>Enter Your Name:</p>
       <input
         maxLength={15}
-        ref={playerName}
         type="text"
         placeholder="Name"
         required

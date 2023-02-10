@@ -129,14 +129,12 @@ function Navbar(props) {
       (async () => {
         const profile = await getuserProfileDetails(session);
         setStoreData((prev) => ({ ...prev, profile }));
-        console.log("profile", profile);
       })();
     } else if (!session) {
       // delete all states after logout
       setStoredMailData(null);
       delete storeData.profile;
       setStoreData((prev) => ({ ...storeData }));
-      console.log("storeData :>> ", storeData);
       destroyCookie(null, "token", { path: "/" });
     }
   }, [session]);
