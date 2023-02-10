@@ -48,23 +48,25 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   };
 
   const storeAvatarSettings = (options) => {
-    // if in runnning game, also update Game object
-    if (currGameId) {
-      socket.emit("changeGame", {
+    if (playerId === cookies.socketId) {
+      // if in runnning game, also update Game object
+      if (currGameId) {
+        socket.emit("changeGame", {
+          lobbyId: storeData.lobbyId,
+          gameId: storeData.lobbyId,
+          playerId: playerId,
+          avatar: options,
+          changeAvatar: true,
+        });
+        return;
+      }
+      socket.emit("updateLobby", {
         lobbyId: storeData.lobbyId,
-        gameId: storeData.lobbyId,
-        playerId: playerId,
+        id: playerId,
         avatar: options,
-        changeAvatar: true,
       });
-      return;
+      if (session) patchUserProfile({ key: "avatar", value: options });
     }
-    socket.emit("updateLobby", {
-      lobbyId: storeData.lobbyId,
-      id: playerId,
-      avatar: options,
-    });
-    if (session) patchUserProfile({ key: "avatar", value: options });
   };
 
   //create avatar based on options
