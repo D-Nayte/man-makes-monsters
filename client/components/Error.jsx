@@ -13,7 +13,7 @@ const Error = ({ showErrMessage, setShowErrMessage, success }) => {
           ? { backgroundColor: "#a0d68ad3" }
           : { backgroundColor: "#eb455f" }
       }>
-      {showErrMessage.length <= 0
+      {showErrMessage && showErrMessage.length <= 0
         ? "Something went wrong!"
         : success
         ? success

@@ -123,10 +123,10 @@ function Navbar(props) {
   useEffect(() => {
     // fetch calls
     if (session) {
-      const mails = getMails(session);
-      setStoredMailData(mails);
-
       (async () => {
+        const mails = await getMails(session);
+        setStoredMailData(mails);
+
         const profile = await getuserProfileDetails(session);
         setStoreData((prev) => ({ ...prev, profile }));
       })();

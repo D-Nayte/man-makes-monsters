@@ -3,27 +3,26 @@ import { parseCookies, setCookie } from "nookies";
 // fetch admin mails
 export const getMails = async (session) => {
   const cookies = parseCookies();
-
-  try {
-    const url =
-      process.env.NEXT_PUBLIC_GETMAILS_URL ||
-      "http://localhost:5555/admin-mail/fetchmail/";
-
-    const response = await fetch(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${cookies.token}`,
-      },
-      method: "POST",
-      body: JSON.stringify({ email: session.user.email }),
-    });
-    const data = await response.json();
-
-    if (data && response.ok) {
-      return data;
+  if (cookies.token !== undefined) {
+    try {
+      const url =
+        process.env.NEXT_PUBLIC_GETMAILS_URL ||
+        "http://localhost:5555/admin-mail/fetchmail/";
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${cookies.token}`,
+        },
+        method: "POST",
+        body: JSON.stringify({ email: session.user.email }),
+      });
+      const data = await response.json();
+      if (data && response.ok) {
+        return data;
+      }
+    } catch (error) {
+      console.error("MAIL FETCH FAILED", error);
     }
-  } catch (error) {
-    console.error("MAIL FETCH FAILED", error);
   }
 };
 
@@ -43,6 +42,7 @@ export const getuserProfileDetails = async (session) => {
       body: JSON.stringify({ email: session.user.email }),
     });
     const data = await response.json();
+
     if (data) {
       const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
       setCookie(null, "token", data.token, {
@@ -50,9 +50,7 @@ export const getuserProfileDetails = async (session) => {
         expires: expires,
       });
 
-      if (data.profile.avatar)
-        return { ...data.profile, avatar: JSON.parse(data.profile.avatar) };
-      return data;
+      return data.profile;
     }
   } catch (error) {
     console.error(" USER PROFILE NOT FOUND", error);

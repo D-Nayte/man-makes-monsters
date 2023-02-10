@@ -18,9 +18,10 @@ export const patchUserProfile = async ({ key, value }) => {
         body: JSON.stringify({ label: key, src: value }),
       });
       const data = await response.json();
-      return data;
+      return data.user;
     } catch (error) {
       console.error("MAIL FETCH FAILED", error);
+      return null;
     }
   }
 };

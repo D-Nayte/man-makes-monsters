@@ -19,15 +19,23 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   const { storeData, setStoreData } = useAppContext();
   const [showAvatar, setShowAvatar] = useState(false);
   const { data: session } = useSession();
-
-  const avatarOptions = {
+  const [avatarOptions, setAvatarOptions] = useState({
     seed: userName,
     ...playerAvatar,
-  };
+  });
+  // const avatarOptions =
+  //   playerId === cookies.socketId && profileSettings
+  //     ? {
+  //         ...profileSettings,
+  //       }
+  //     : {
+  //         seed: userName,
+  //         ...playerAvatar,
+  //       };
+  // const avatarOptions = { seed: userName, ...playerAvatar, ...profileSettings };
 
   const addAccessories = ({ key, value, newOptions }) => {
     // active accessories/beard/... probability if one of those is selected
-
     if (key === "accessories" || key === "facialHair")
       return value === "none"
         ? (newOptions[`${key}Probability`] = 0)
@@ -47,7 +55,7 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
     storeAvatarSettings(newOptions);
   };
 
-  const storeAvatarSettings = (options) => {
+  const storeAvatarSettings = async (options) => {
     if (playerId === cookies.socketId) {
       // if in runnning game, also update Game object
       if (currGameId) {
@@ -66,7 +74,10 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
         avatar: options,
       });
       if (session) {
-        const profile = patchUserProfile({ key: "avatar", value: options });
+        const profile = await patchUserProfile({
+          key: "avatar",
+          value: options,
+        });
         setStoreData((prev) => ({ ...prev, profile }));
       }
     }
@@ -87,14 +98,24 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   };
 
   useEffect(() => {
-    if (playerId === cookies.socketId && !isPopup) {
+    if (playerId === cookies.socketId && !isPopup && !session) {
       storeAvatarSettings(avatarOptions);
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (storeData.profile) return storeAvatarSettings(storeData.profile.avatar);
-  // }, [storeData.profile]);
+  useEffect(() => {
+    if (session && storeData?.profile?.avatar && playerId === cookies.socketId)
+      return setAvatarOptions({
+        ...storeData.profile.avatar,
+        seed: storeData.profile.name,
+      });
+    if (!session || playerId !== cookies.socketId) {
+      setAvatarOptions({
+        seed: userName,
+        ...playerAvatar,
+      });
+    }
+  }, [storeData, storeData.profile, playerAvatar]);
 
   useEffect(() => {
     if (router.query.gameId) return setCurrGameId(router.query.gameId);

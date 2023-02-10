@@ -42,20 +42,22 @@ router.post("/", async (req, res) => {
 router.patch("/", protect, async (req, res) => {
   let { label, src } = req.body;
   const { user } = req;
+  try {
+    if (!user)
+      return res.status(420).json({ message: "UserProfile User not found" });
 
-  if (!user)
-    return res.status(420).json({ message: "UserProfile User not found" });
+    if (label === "avatar") src = JSON.stringify(src);
 
-  if (label === "avatar") src = JSON.stringify(src);
+    user[label] = src;
 
-  const updatedUser = await Userprofile.findByIdAndUpdate(
-    user._id,
-    { [label]: src },
-    { returnDocument: "after" }
-  );
-  const userData = convertUserData(updatedUser);
+    const userData = convertUserData(user);
+    res.status(200).json({ message: "success", user: userData });
 
-  res.status(200).json({ message: "success", user: userData });
+    Userprofile.findByIdAndUpdate(user._id, { [label]: src }).exec();
+  } catch (error) {
+    console.error("update user error:", error);
+    res.status(500).json({ message: error });
+  }
 });
 
 export { router as userProfileRouter };

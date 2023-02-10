@@ -13,6 +13,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
   const [socket, setSocket] = useState(null);
+  const channel = new BroadcastChannel("logiIn");
 
   const startSocket = () => {
     const newSocket = io(
@@ -85,7 +86,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
           amountOfRounds={amountOfRounds}
           language={language}
           setLanguage={setLanguage}
-        >
+          channel={channel}>
           <AnimatePresence mode="wait" initial={false}>
             <Component
               key={router.pathname}
@@ -93,6 +94,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
               handSize={handSize}
               amountOfRounds={amountOfRounds}
               socket={socket}
+              channel={channel}
               language={language}
             />
           </AnimatePresence>

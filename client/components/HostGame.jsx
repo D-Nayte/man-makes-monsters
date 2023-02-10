@@ -11,7 +11,7 @@ const HostGame = ({ socket, value, setValue }) => {
   const { data: session } = useSession();
   const { storeData, setStoreData } = useAppContext();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const hostName = value;
     const id = cookies.socketId;
@@ -19,7 +19,7 @@ const HostGame = ({ socket, value, setValue }) => {
     socket.emit("createNewLobby", { hostName, id });
 
     if (session) {
-      const profile = patchUserProfile({
+      const profile = await patchUserProfile({
         key: "name",
         value,
       });
