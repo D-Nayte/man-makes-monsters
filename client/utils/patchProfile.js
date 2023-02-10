@@ -9,7 +9,7 @@ export const patchUserProfile = async ({ key, value }) => {
         process.env.NEXT_PUBLIC_USER_URL ||
         "http://localhost:5555/user-profile/";
 
-      await fetch(url, {
+      const response = await fetch(url, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
           "Content-Type": "application/json",
@@ -17,6 +17,8 @@ export const patchUserProfile = async ({ key, value }) => {
         method: "PATCH",
         body: JSON.stringify({ label: key, src: value }),
       });
+      const data = await response.json();
+      return data;
     } catch (error) {
       console.error("MAIL FETCH FAILED", error);
     }

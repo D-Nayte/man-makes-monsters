@@ -17,6 +17,8 @@ import { notTheHostSteps, Steps } from "../../components/Steps.js";
 import useLocalStorage from "../../components/useLocalStorage";
 import { AiOutlineEnter } from "react-icons/ai";
 import { VscDebugDisconnect } from "react-icons/vsc";
+import { useSession } from "next-auth/react";
+import { patchUserProfile } from "../../utils/patchProfile";
 
 const Lobby = (props) => {
   const { socket, handSize, amountOfRounds, language } = props;
@@ -37,6 +39,7 @@ const Lobby = (props) => {
   const [isHost, setHost] = useState(false);
   const [linkInvation, setlinkInvation] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
   const [isLoading, setIsloading] = useState(true);
   const [reconnect, setReconnect] = useState(false);
   const [currentLobby, setCurrentLobby] = useState(null);
@@ -63,6 +66,16 @@ const Lobby = (props) => {
       id: cookies.socketId,
       newPLayerName,
     });
+    if (session) {
+      const profile = patchUserProfile({ key: "name", value: newPLayerName });
+      setStoreData((prev) => ({ ...prev, profile }));
+    }
+  };
+
+  const renderProfileName = (playerId) => {
+    if (session && storeData.profile && playerId === cookies.socketId)
+      return storeData.profile.name;
+    return false;
   };
 
   function calculateFontSize(name) {
@@ -344,7 +357,11 @@ const Lobby = (props) => {
                   }>
                   <h2 style={{ fontSize: `${calculateFontSize(player.name)}` }}>
                     {player.name.toUpperCase() !== "DAVID" ? (
-                      player.name.toUpperCase()
+                      renderProfileName(player.id) ? (
+                        renderProfileName(player.id)
+                      ) : (
+                        player.name.toUpperCase()
+                      )
                     ) : (
                       <>
                         <TfiRocket className="rockt" />

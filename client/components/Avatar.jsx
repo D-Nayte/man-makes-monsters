@@ -65,7 +65,10 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
         id: playerId,
         avatar: options,
       });
-      if (session) patchUserProfile({ key: "avatar", value: options });
+      if (session) {
+        const profile = patchUserProfile({ key: "avatar", value: options });
+        setStoreData((prev) => ({ ...prev, profile }));
+      }
     }
   };
 
@@ -89,9 +92,9 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (storeData.profile) return storeAvatarSettings(storeData.profile.avatar);
-  }, [storeData.profile]);
+  // useEffect(() => {
+  //   if (storeData.profile) return storeAvatarSettings(storeData.profile.avatar);
+  // }, [storeData.profile]);
 
   useEffect(() => {
     if (router.query.gameId) return setCurrGameId(router.query.gameId);

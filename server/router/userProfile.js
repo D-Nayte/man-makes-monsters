@@ -18,7 +18,6 @@ router.use(
 
 //login user or create new user
 router.post("/", async (req, res) => {
-  console.log("RUN!");
   const { email } = req.body;
   let token;
   try {
@@ -41,17 +40,21 @@ router.post("/", async (req, res) => {
 
 //change user data
 router.patch("/", protect, async (req, res) => {
-  const { label, src } = req.body;
+  let { label, src } = req.body;
   const { user } = req;
 
   if (!user)
     return res.status(420).json({ message: "UserProfile User not found" });
 
-  user[label] = JSON.stringify(src);
+  if (label === "avatar") src = JSON.stringify(src);
 
-  await Userprofile.findByIdAndUpdate(user._id, user);
-
-  const userData = convertUserData(user);
+  const updatedUser = await Userprofile.findByIdAndUpdate(
+    user._id,
+    { [label]: src },
+    { returnDocument: "after" }
+  );
+  const userData = convertUserData(updatedUser);
+  console.log("userData :>> ", userData);
 
   res.status(200).json({ message: "success", user: userData });
 });
