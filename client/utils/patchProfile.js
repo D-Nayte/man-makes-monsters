@@ -6,7 +6,7 @@ export const patchUserProfile = async ({ key, value }) => {
   if (cookies.token) {
     try {
       const url =
-        process.env.NEXT_PUBLIC_USER_URL ||
+        process.env.NEXT_PUBLIC_PROFILE_URL ||
         "http://localhost:5555/user-profile/";
 
       const response = await fetch(url, {
