@@ -23,16 +23,6 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
     seed: userName,
     ...playerAvatar,
   });
-  // const avatarOptions =
-  //   playerId === cookies.socketId && profileSettings
-  //     ? {
-  //         ...profileSettings,
-  //       }
-  //     : {
-  //         seed: userName,
-  //         ...playerAvatar,
-  //       };
-  // const avatarOptions = { seed: userName, ...playerAvatar, ...profileSettings };
 
   const addAccessories = ({ key, value, newOptions }) => {
     // active accessories/beard/... probability if one of those is selected
@@ -66,7 +56,6 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
           avatar: options,
           changeAvatar: true,
         });
-        return;
       }
       socket.emit("updateLobby", {
         lobbyId: storeData.lobbyId,
@@ -78,6 +67,7 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
           key: "avatar",
           value: options,
         });
+        console.log("profile", profile);
         setStoreData((prev) => ({ ...prev, profile }));
       }
     }
