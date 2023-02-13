@@ -67,7 +67,6 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
           key: "avatar",
           value: options,
         });
-        console.log("profile", profile);
         setStoreData((prev) => ({ ...prev, profile }));
       }
     }
