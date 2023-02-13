@@ -17,7 +17,8 @@ router.use(
 // fetch admin mails if admin
 router.post("/fetchmail", protect, async (req, res) => {
   const { user } = req;
-  if (!user?.admin) res.status(403).json({ message: "No access buddy!" });
+  if (!user?.admin)
+    return res.status(403).json({ message: "No access buddy!" });
 
   const pogged = await Pogmessages.find();
   if (!pogged) return res.status(404).send("NOT FUCKING FOUND");
