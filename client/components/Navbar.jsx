@@ -83,6 +83,7 @@ function Navbar(props) {
   useEffect(() => {
     if (socket) {
       socket.on("disconnect", (reason) => {
+        setGameIdentifier;
         setShowErrMessage(
           "Server connection lost! Please reload or go back to Hompage"
         );
@@ -246,11 +247,14 @@ function Navbar(props) {
           ) : (
             <li
               className={"signIn joyRideProfile"}
-              onClick={() => setShowSignIn(true)}>
+              style={gameIdentifier ? { color: "gray", opacity: ".7" } : null}
+              onClick={!gameIdentifier ? () => setShowSignIn(true) : null}>
               <div className="navbarIcons">
                 <CgProfile />
               </div>
-              <div className="navBarText">Sign In</div>
+              <div className="navBarText">
+                {gameIdentifier ? "Can't sing in during a game" : "Sign In"}
+              </div>
             </li>
           )}
 

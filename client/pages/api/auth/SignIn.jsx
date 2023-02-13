@@ -1,11 +1,8 @@
-import { signIn, getProviders } from "next-auth/react";
 import { CgCloseO } from "react-icons/cg";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 export default function SignIn({ providers, showSignIn, setShowSignIn }) {
-  const [redirectTo, setRedirectTo] = useState(null);
   const router = useRouter();
 
   const handleSignIn = (providerId) => {
