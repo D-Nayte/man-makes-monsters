@@ -17,9 +17,11 @@ import { notTheHostSteps, Steps } from "../../components/Steps.js";
 import useLocalStorage from "../../components/useLocalStorage";
 import { AiOutlineEnter } from "react-icons/ai";
 import { VscDebugDisconnect } from "react-icons/vsc";
+import { useSession } from "next-auth/react";
+import { patchUserProfile } from "../../utils/patchProfile";
 
 const Lobby = (props) => {
-  const { socket, handSize, amountOfRounds, language } = props;
+  const { socket, handSize, amountOfRounds, language, channel } = props;
 
   if (!socket)
     return (
@@ -37,11 +39,13 @@ const Lobby = (props) => {
   const [isHost, setHost] = useState(false);
   const [linkInvation, setlinkInvation] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
   const [isLoading, setIsloading] = useState(true);
   const [reconnect, setReconnect] = useState(false);
   const [currentLobby, setCurrentLobby] = useState(null);
   const [listenersReady, setListenersReady] = useState(false);
   const [useJoyRide, setuseJoyRide] = useState(false);
+  const [success, setSuccess] = useState(false);
   let [value, setValue] = useLocalStorage("tutorial");
   const [stepIndex, setStepIndex] = useState(0);
   const { storeData, setStoreData } = useAppContext();
@@ -57,12 +61,25 @@ const Lobby = (props) => {
     });
   };
 
-  const changePLayerName = (newPLayerName) => {
+  const changePLayerName = async (newPLayerName) => {
     socket.emit("updateLobby", {
       lobbyId,
       id: cookies.socketId,
       newPLayerName,
     });
+    if (session) {
+      const user = await patchUserProfile({
+        key: "name",
+        value: newPLayerName,
+      });
+      setStoreData((prev) => ({ ...prev, profile: user }));
+    }
+  };
+
+  const renderProfileName = (playerId) => {
+    if (session && storeData.profile && playerId === cookies.socketId)
+      return storeData.profile.name;
+    return false;
   };
 
   function calculateFontSize(name) {
@@ -157,19 +174,27 @@ const Lobby = (props) => {
         }
       });
       setListenersReady(true);
+      if (channel)
+        channel.onmessage = (event) => {
+          if (event.data.message === "success")
+            setSuccess("Successfully loged in");
+          setTimeout(() => {
+            setSuccess(false);
+          }, 3000);
+        };
     }
     return () => {
       socket.removeAllListeners();
       setListenersReady(false);
     };
-  }, [cookies.socketId, lobbyId, joinGame, reconnect, socket]);
+  }, [cookies.socketId, lobbyId, joinGame, reconnect, channel]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
     if (listenersReady) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
     }
-  }, [listenersReady]);
+  }, [listenersReady, success]);
 
   useEffect(() => {
     if (currentLobby) {
@@ -258,7 +283,6 @@ const Lobby = (props) => {
             />
           </section>
         )}
-
         <section className="waitingLobbyCard">
           <m.div
             className="framerContainer"
@@ -301,9 +325,8 @@ const Lobby = (props) => {
                 maxLength={15}
                 className="changeNameButton"
                 type="text"
-                onClick={(e) => changePLayerName(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter") {
+                  if (e.key === "Enter" && e.target.value.length > 2) {
                     changePLayerName(e.target.value);
                   }
                 }}
@@ -344,7 +367,11 @@ const Lobby = (props) => {
                   }>
                   <h2 style={{ fontSize: `${calculateFontSize(player.name)}` }}>
                     {player.name.toUpperCase() !== "DAVID" ? (
-                      player.name.toUpperCase()
+                      renderProfileName(player.id) ? (
+                        renderProfileName(player.id)
+                      ) : (
+                        player.name.toUpperCase()
+                      )
                     ) : (
                       <>
                         <TfiRocket className="rockt" />
@@ -369,12 +396,12 @@ const Lobby = (props) => {
               ))}
           </ul>
         </section>
-        {showErrMessage && (
-          <Error
-            showErrMessage={showErrMessage}
-            setShowErrMessage={setShowErrMessage}
-          />
-        )}
+
+        <Error
+          showErrMessage={showErrMessage}
+          setShowErrMessage={setShowErrMessage}
+          success={success}
+        />
       </main>
     </>
   );

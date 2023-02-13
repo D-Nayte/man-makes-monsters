@@ -44,9 +44,6 @@
 }
 .czarPicking {
   padding: 15px;
-  /*
-  position: relative;
-  */
 
   display: inline-block;
   width: 240px;
@@ -75,7 +72,6 @@
   position: fixed;
   top: 30%;
   left: 28%;
-  /*z-index: 90000 !important;*/
 }
 .middle {
   position: fixed;
@@ -92,22 +88,9 @@
   font-size: 48px;
   font-weight: 800;
   letter-spacing: 2px;
-}
-/*
-@keyframes flyOut {
-  0% {
-    position: absolute !important;
-    transform: translate(-50%, -50%) !important;
-  }
-
-  100% {
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(0%, 0%);
-  }
+  text-shadow: 1px 1px 1px black;
 }
 
-*/
 @media (max-width: 640px) {
   .czarPicking {
     width: 160px;

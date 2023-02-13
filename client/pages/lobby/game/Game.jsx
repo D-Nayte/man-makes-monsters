@@ -387,7 +387,12 @@ const Game = ({ socket }) => {
         });
       }
 
-      if (gameStage === "black") setConfirmed(false);
+      if (
+        gameStage === "black" ||
+        gameStage === "winner" ||
+        gameStage === "start"
+      )
+        setConfirmed(false);
     }
   }, [gameStage, isCzar]);
 
@@ -426,7 +431,6 @@ const Game = ({ socket }) => {
         )}
       </main>
     );
-
   if (showErrMessage)
     return (
       <main>

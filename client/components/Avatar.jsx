@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import emotions from "../utils/avatarEmotions.js";
 import { GoSettings } from "react-icons/go";
 import { motion as m } from "framer-motion";
+import { patchUserProfile } from "../utils/patchProfile";
+import { useSession } from "next-auth/react";
 
 const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   const cookies = parseCookies();
@@ -16,15 +18,14 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   const [currGameId, setCurrGameId] = useState(false);
   const { storeData, setStoreData } = useAppContext();
   const [showAvatar, setShowAvatar] = useState(false);
-
-  const avatarOptions = {
+  const { data: session } = useSession();
+  const [avatarOptions, setAvatarOptions] = useState({
     seed: userName,
     ...playerAvatar,
-  };
+  });
 
   const addAccessories = ({ key, value, newOptions }) => {
     // active accessories/beard/... probability if one of those is selected
-
     if (key === "accessories" || key === "facialHair")
       return value === "none"
         ? (newOptions[`${key}Probability`] = 0)
@@ -44,23 +45,31 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
     storeAvatarSettings(newOptions);
   };
 
-  const storeAvatarSettings = (options) => {
-    // if in runnning game, also update Game object
-    if (currGameId) {
-      socket.emit("changeGame", {
+  const storeAvatarSettings = async (options) => {
+    if (playerId === cookies.socketId) {
+      // if in runnning game, also update Game object
+      if (currGameId) {
+        socket.emit("changeGame", {
+          lobbyId: storeData.lobbyId,
+          gameId: storeData.lobbyId,
+          playerId: playerId,
+          avatar: options,
+          changeAvatar: true,
+        });
+      }
+      socket.emit("updateLobby", {
         lobbyId: storeData.lobbyId,
-        gameId: storeData.lobbyId,
-        playerId: playerId,
+        id: playerId,
         avatar: options,
-        changeAvatar: true,
       });
-      return;
+      if (session) {
+        const profile = await patchUserProfile({
+          key: "avatar",
+          value: options,
+        });
+        setStoreData((prev) => ({ ...prev, profile }));
+      }
     }
-    socket.emit("updateLobby", {
-      lobbyId: storeData.lobbyId,
-      id: playerId,
-      avatar: options,
-    });
   };
 
   //create avatar based on options
@@ -78,9 +87,24 @@ const Avatar = ({ userName, playerId, playerAvatar, isPopup, socket }) => {
   };
 
   useEffect(() => {
-    if (playerId === cookies.socketId && !isPopup)
+    if (playerId === cookies.socketId && !isPopup && !session) {
       storeAvatarSettings(avatarOptions);
+    }
   }, []);
+
+  useEffect(() => {
+    if (session && storeData?.profile?.avatar && playerId === cookies.socketId)
+      return setAvatarOptions({
+        ...storeData.profile.avatar,
+        seed: storeData.profile.name,
+      });
+    if (!session || playerId !== cookies.socketId) {
+      setAvatarOptions({
+        seed: userName,
+        ...playerAvatar,
+      });
+    }
+  }, [storeData, storeData.profile, playerAvatar]);
 
   useEffect(() => {
     if (router.query.gameId) return setCurrGameId(router.query.gameId);

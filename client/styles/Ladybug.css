@@ -1,0 +1,83 @@
+.ladybugContainer {
+  /*width: 100%;
+  aspect-ratio: 1/1.4;
+  background-color: white;
+  display: flex;
+  border-radius: 10px;*/
+}
+.bugbackground {
+  position: absolute;
+  border-radius: 10px;
+}
+
+.ladybugSVG {
+  width: 50px;
+  height: max-content;
+  position: absolute;
+}
+
+#Right1 {
+  animation: ladylegsleft1 1s infinite linear;
+  animation-delay: 0.75s;
+  transform-box: fill-box;
+  transform-origin: -15px 10px;
+}
+#Right2 {
+  animation: ladylegsleft1 1s infinite linear;
+  animation-delay: 0.75s;
+  transform-box: fill-box;
+  transform-origin: top left;
+}
+#Right3 {
+  animation: ladylegsleft1 1s infinite linear;
+  animation-delay: 0.75s;
+  transform-box: fill-box;
+  transform-origin: top;
+}
+#Left1 {
+  animation: ladylegsleft1 1s infinite linear;
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+#Left2 {
+  animation: ladylegsleft1 1s infinite linear;
+  animation-delay: 0.75s;
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+#Left3 {
+  animation: ladylegsleft1 1.5s infinite linear;
+  transform-box: fill-box;
+  transform-origin: top right;
+}
+
+.x {
+  animation: x 3.6s linear infinite alternate;
+}
+.y {
+  animation: y 4.8s linear infinite alternate;
+}
+
+@keyframes x {
+  100% {
+    transform: translateX(calc(170px - 40px));
+  }
+}
+
+@keyframes y {
+  100% {
+    transform: translateY(calc(240px - 40px)) rotate(calc(240deg - 50deg));
+  }
+}
+
+@keyframes ladylegsleft1 {
+  0% {
+    transform: rotateZ(-60deg);
+  }
+  50% {
+    transform: rotateZ(0deg);
+  }
+  100% {
+    transform: rotateZ(-60deg);
+  }
+}

@@ -1,19 +1,9 @@
-import { signIn, getProviders } from "next-auth/react";
 import { CgCloseO } from "react-icons/cg";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/router";
-import { useState } from "react";
 
 export default function SignIn({ providers, showSignIn, setShowSignIn }) {
-  const [redirectTo, setRedirectTo] = useState(null);
   const router = useRouter();
-
-  /*const handleSignIn = (providerId) => {
-    setRedirectTo({
-      redirectUrl: router.asPath,
-    });
-    signIn(providerId, redirectTo);
-  };*/
 
   const handleSignIn = (providerId) => {
     let openWindow = window.open(
@@ -39,15 +29,14 @@ export default function SignIn({ providers, showSignIn, setShowSignIn }) {
 
         <ul className="authProviderButtonContainer">
           {Object.values(providers).map((provider) => (
-            <li>
+            <li key={provider.id}>
               {provider.name === "Google" && <FcGoogle className="Google" />}
               <button
                 onClick={() => {
                   handleSignIn(provider.id);
                   setShowSignIn(false);
                 }}
-                className="authProviderButton"
-              >
+                className="authProviderButton">
                 {`Sign in with ${provider.name}`}
               </button>
             </li>

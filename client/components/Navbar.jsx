@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { signIn, signOut, getProviders, useSession } from "next-auth/react";
+import { signOut, getProviders, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { parseCookies } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { ImProfile } from "react-icons/im";
 import { BsBug, BsFillChatRightTextFill } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { AiOutlineDollarCircle, AiOutlineMail } from "react-icons/ai";
+import { getMails, getuserProfileDetails } from "../utils/fetchCalls.js";
 import Settings from "./Settings";
 import { useAppContext } from "../context";
 import Error from "./Error";
@@ -20,6 +20,7 @@ import Profile from "./Profile";
 import SignIn from "../pages/api/auth/SignIn";
 import Background from "./Background";
 import AdminMail from "./AdminMail";
+import Userprofile from "./UserProfile";
 
 function Navbar(props) {
   const {
@@ -35,6 +36,7 @@ function Navbar(props) {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showUserProfile, setShowUserProfile] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showRules, setShowRules] = useState(false);
   const [showBug, setShowBug] = useState(false);
@@ -61,36 +63,12 @@ function Navbar(props) {
         gameId: lobbyId,
         leavedGame: true,
       };
+
       socket.removeAllListeners();
       socket.emit("changeGame", playerData);
       router.push({
         pathname: `/lobby/${lobbyId}`,
       });
-    }
-  };
-
-  const getMails = async () => {
-    if (!session) return;
-    try {
-      console.log("session", session);
-      const url =
-        process.env.NEXT_PUBLIC_GETMAILS_URL ||
-        "http://localhost:5555/admin-mail/fetchmail/";
-
-      const response = await fetch(url, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify({ email: session.user.email }),
-      });
-      const data = await response.json();
-
-      if (data && response.ok) {
-        setStoredMailData(data);
-      }
-    } catch (error) {
-      console.error("MAIL FETCH FAILED", error);
     }
   };
 
@@ -105,6 +83,7 @@ function Navbar(props) {
   useEffect(() => {
     if (socket) {
       socket.on("disconnect", (reason) => {
+        setGameIdentifier;
         setShowErrMessage(
           "Server connection lost! Please reload or go back to Hompage"
         );
@@ -141,8 +120,24 @@ function Navbar(props) {
         setProviders(providers);
       })();
   }, []);
+
   useEffect(() => {
-    getMails();
+    // fetch calls
+    if (session) {
+      (async () => {
+        const mails = await getMails(session);
+        setStoredMailData(mails);
+
+        const profile = await getuserProfileDetails(session);
+        setStoreData((prev) => ({ ...prev, profile }));
+      })();
+    } else if (!session) {
+      // delete all states after logout
+      setStoredMailData(null);
+      delete storeData.profile;
+      setStoreData((prev) => ({ ...storeData }));
+      destroyCookie(null, "token", { path: "/" });
+    }
   }, [session]);
 
   useEffect(() => {
@@ -211,6 +206,14 @@ function Navbar(props) {
                     className="profileMenu "
                     onClick={() => {
                       setShowProfile((prev) => !prev);
+                      setShowUserProfile(true);
+                    }}>
+                    Profile
+                  </li>
+                  <li
+                    className="profileMenu "
+                    onClick={() => {
+                      setShowProfile((prev) => !prev);
                       setShowProfileMenu(true);
                     }}>
                     Card Backside
@@ -244,11 +247,14 @@ function Navbar(props) {
           ) : (
             <li
               className={"signIn joyRideProfile"}
-              onClick={() => setShowSignIn(true)}>
+              style={gameIdentifier ? { color: "gray", opacity: ".7" } : null}
+              onClick={!gameIdentifier ? () => setShowSignIn(true) : null}>
               <div className="navbarIcons">
                 <CgProfile />
               </div>
-              <div className="navBarText">Sign In</div>
+              <div className="navBarText">
+                {gameIdentifier ? "Can't sing in during a game" : "Sign In"}
+              </div>
             </li>
           )}
 
@@ -340,6 +346,12 @@ function Navbar(props) {
             className="gameRulesContent"
           />
         )}
+
+        <Userprofile
+          showUserProfile={showUserProfile}
+          setShowUserProfile={setShowUserProfile}
+          className="gameRulesContent"
+        />
 
         <Profile
           selectedCardBackground={selectedCardBackground}

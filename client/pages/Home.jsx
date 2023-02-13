@@ -5,6 +5,7 @@ import JoinGame from "../components/JoinLobby.jsx";
 import HostGame from "../components/HostGame.jsx";
 import Error from "../components/Error.jsx";
 import Loading from "../components/Loading.jsx";
+import useLocalStorage from "../components/useLocalStorage.js";
 
 const Home = ({ socket }) => {
   if (!socket)
@@ -13,13 +14,14 @@ const Home = ({ socket }) => {
         <Loading />
       </main>
     );
-  const playerName = useRef("");
   const roomKey = useRef("");
   const [hostOrJoin, setHostOrJoin] = useState(null);
   const router = useRouter();
   const [showErrMessage, setShowErrMessage] = useState(false);
   const [isHostActive, setIsHostActive] = useState(false);
   const [isJoinActive, setIsJoinActive] = useState(false);
+  let [value, setValue] = useLocalStorage("name");
+
   const handleHostClick = (event) => {
     setIsHostActive(true);
     if (setIsJoinActive) setTimeout(() => setIsJoinActive(false), 150);
@@ -40,13 +42,13 @@ const Home = ({ socket }) => {
     //redirecting to lobby with data after server found the game in DB
     socket.on("foundRoom", (data) => {
       try {
-        const { noRoom, lobbyId, playerName, err } = data;
+        const { noRoom, lobbyId, err } = data;
         if (noRoom) {
           setShowErrMessage(err);
           return;
         }
-        if (!lobbyId || !playerName) {
-          throw new Error("Invalid lobbyId or playerName");
+        if (!lobbyId) {
+          throw new Error("Invalid lobbyId");
         }
         router.push({
           pathname: `/lobby/${lobbyId}`,
@@ -95,7 +97,7 @@ const Home = ({ socket }) => {
               <div className="lobbyBack">
                 <h2>I'm the Host but my Homies calls me</h2>
                 {hostOrJoin === "host" ? (
-                  <HostGame playerName={playerName} socket={socket} />
+                  <HostGame socket={socket} value={value} setValue={setValue} />
                 ) : null}
               </div>
             </div>
@@ -138,8 +140,9 @@ const Home = ({ socket }) => {
                   <JoinGame
                     setShowErrMessage={setShowErrMessage}
                     roomKey={roomKey}
-                    playerName={playerName}
                     socket={socket}
+                    value={value}
+                    setValue={setValue}
                   />
                 ) : null}
               </div>
