@@ -42,6 +42,7 @@ router.post("/", async (req, res) => {
 router.patch("/", protect, async (req, res) => {
   let { label, src } = req.body;
   const { user } = req;
+
   try {
     if (!user)
       return res.status(420).json({ message: "UserProfile User not found" });

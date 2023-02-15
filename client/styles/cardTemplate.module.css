@@ -62,6 +62,7 @@
 
 .whites {
   -webkit-animation: showUp 250ms ease-in 250ms forwards;
+  opacity: 0;
   animation: showUp 250ms ease-in 250ms forwards;
 }
 

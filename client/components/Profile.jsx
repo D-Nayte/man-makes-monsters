@@ -34,8 +34,7 @@ function Profile({
                     : ""
                 }`}
                 key={cardObject.label}
-                onClick={() => setSelectedCardBackground(cardObject)}
-              >
+                onClick={() => setSelectedCardBackground(cardObject)}>
                 <img src={cardObject.SVG} alt="" className="profileCcMock" />
               </div>
             );

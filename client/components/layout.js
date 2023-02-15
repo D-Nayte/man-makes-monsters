@@ -38,20 +38,19 @@ const Layout = ({ children, socket, ...props }) => {
       <header>
         <Navbar socket={socket} {...props} />
       </header>
-      {storeData.selectedBackground?.SVG ? (
-        <div
-          style={{
-            backgroundImage: `url(${storeData.selectedBackground.SVG})`,
-            width: "100%",
-            height: "100%",
-            position: "fixed",
-            backgroundPosition: "bottom",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-          }}></div>
-      ) : (
-        ""
-      )}
+      {storeData.selectedBackground?.SVG &&
+        storeData.selectedBackground?.SVG && (
+          <div
+            style={{
+              backgroundImage: `url(${storeData.selectedBackground.SVG})`,
+              width: "100%",
+              height: "100%",
+              position: "fixed",
+              backgroundPosition: "bottom",
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+            }}></div>
+        )}
       {children}
     </>
   );

@@ -21,6 +21,9 @@ import SignIn from "../pages/api/auth/SignIn";
 import Background from "./Background";
 import AdminMail from "./AdminMail";
 import Userprofile from "./UserProfile";
+import { patchUserProfile } from "../utils/patchProfile.js";
+import allCardBackgrounds from "../public/assets/cardpictures/index.js";
+import allBackgrounds from "../public/assets/backgrounds/index.js";
 
 function Navbar(props) {
   const {
@@ -141,11 +144,55 @@ function Navbar(props) {
   }, [session]);
 
   useEffect(() => {
+    if (session) {
+      patchUserProfile({
+        key: "favoritecard",
+        value: selectedCardBackground.label,
+      });
+    }
     setStoreData((prev) => ({ ...prev, selectedCardBackground }));
   }, [selectedCardBackground]);
+
   useEffect(() => {
+    if (session) {
+      patchUserProfile({
+        key: "favoritebackground",
+        value: selectedBackground.label,
+      });
+    }
     setStoreData((prev) => ({ ...prev, selectedBackground }));
   }, [selectedBackground]);
+
+  useEffect(() => {
+    if (storeData?.profile) {
+      //default value for cardBackground after log in
+      if (storeData.selectedCardBackground === "") {
+        const cardKey = storeData.profile.favoritecard;
+
+        const card = allCardBackgrounds.find((card) => card.label === cardKey);
+
+        card &&
+          setStoreData((prev) => ({
+            ...prev,
+            selectedCardBackground: card,
+          }));
+      }
+
+      //default value for global Background after log in
+      if (storeData.selectedBackground === "") {
+        const backgroundKey = storeData.profile.favoritebackground;
+
+        const backGround = allBackgrounds.find(
+          (background) => background.label === backgroundKey
+        );
+        backGround &&
+          setStoreData((prev) => ({
+            ...prev,
+            selectedBackground: backGround,
+          }));
+      }
+    }
+  }, [storeData?.profile, session]);
 
   return (
     <>

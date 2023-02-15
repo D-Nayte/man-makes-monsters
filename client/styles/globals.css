@@ -26,6 +26,7 @@
 @import url("./Background.css");
 @import url("./AdminMail.css");
 @import url("./Ladybug.css");
+@import url("./userProfile.css");
 
 * {
   box-sizing: border-box;

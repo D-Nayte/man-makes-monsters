@@ -83,7 +83,10 @@ const Lobby = (props) => {
   };
 
   function calculateFontSize(name) {
-    return 26 - name.length + "px";
+    const length = 26 - name.length;
+    const fontSize = length + "px";
+    if (length < 12) return `12px`;
+    return fontSize;
   }
 
   const checkIfPlaying = (playerId) => {

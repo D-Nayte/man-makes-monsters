@@ -136,7 +136,9 @@ const Scoreboard = ({ currentLobby, socket, isOpen, setIsOpen }) => {
                   <span
                     className="player-name"
                     style={{ fontSize: `${calculateFontSize(player.name)}` }}>
-                    {player.name}
+                    {storeData?.profile?.name
+                      ? storeData?.profile?.name
+                      : player.name}
                   </span>
                 </div>
                 <div>

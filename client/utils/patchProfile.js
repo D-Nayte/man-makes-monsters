@@ -2,7 +2,7 @@ import { parseCookies } from "nookies";
 
 export const patchUserProfile = async ({ key, value }) => {
   const cookies = parseCookies();
-
+  if (!key || !value) return;
   if (cookies.token) {
     try {
       const url =

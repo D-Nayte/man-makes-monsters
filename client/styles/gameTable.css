@@ -117,6 +117,33 @@
   gap: 0.25rem;
   background-color: transparent;
   transition: all 250ms;
+  scale: 0;
+  -webkit-animation: popIn 150ms ease-in forwards;
+  animation: popIn 150ms ease-in forwards;
+}
+
+@-webkit-keyframes popIn {
+  0% {
+    scale: 0;
+  }
+  80% {
+    scale: 1.1;
+  }
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    scale: 0;
+  }
+  80% {
+    scale: 1.1;
+  }
+  100% {
+    scale: 1;
+  }
 }
 
 .cardDisplay.playedWhite li div:nth-child(1) {

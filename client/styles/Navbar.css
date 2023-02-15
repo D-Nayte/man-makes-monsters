@@ -2,7 +2,7 @@
   position: relative;
   font-size: 30px;
   position: relative;
-  background-color: black;
+  background-color: transparent;
   color: gray;
 }
 
@@ -17,27 +17,33 @@
   width: max-content;
   transition: all 0.5s ease-in-out;
   -webkit-animation: slide-in 0.2s ease-in-out forwards;
-  animation: slide-in 0.2s ease-in-out forwards;
+  animation: slide-in 0.25s ease-in-out forwards;
   z-index: -1;
   opacity: 0;
 }
+
 @-webkit-keyframes slide-in {
   0% {
     opacity: 0;
     left: -200px;
   }
-
+  70% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
     left: 22px;
   }
 }
+
 @keyframes slide-in {
   0% {
     opacity: 0;
     left: -200px;
   }
-
+  70% {
+    opacity: 0;
+  }
   100% {
     opacity: 1;
     left: 22px;
@@ -47,8 +53,7 @@
 .navContainer {
   width: 100%;
   padding-right: 20px;
-  top: 0;
-  right: 0;
+  position: relative;
   z-index: 5;
   display: flex;
   align-items: flex-start;
