@@ -7,45 +7,33 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 
+const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
+  reconnection: true, // enable reconnection
+  reconnectionAttempts: 5, // try to reconnect 5 times
+  reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
+});
+
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const cookies = parseCookies();
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
-  const [socket, setSocket] = useState(null);
   const channel = new BroadcastChannel("logiIn");
 
-  const startSocket = () => {
-    const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
-      reconnection: true, // enable reconnection
-      reconnectionAttempts: 5, // try to reconnect 5 times
-      reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
-    });
-    socket.on("connect", () => {
-      setSocket(socket);
-    });
+  const storeUserId = async () => {
+    if (!cookies.socketId) {
+      setCookie(null, "socketId", socket.id, { path: "/" });
+      return socket.emit("cachUser", { cookieId: socket.id });
+    }
+    socket.emit("cachUser", { cookieId: cookies.socketId });
   };
 
-  useEffect(() => {
-    consoleMessage();
-    startSocket();
-  }, []);
-
-  useEffect(() => {
-    if (socket && socket.id) {
-      if (socket.id && !cookies.socketId)
-        setCookie(null, "socketId", socket.id, { path: "/" });
-    }
-  }, [socket]);
-
-  useEffect(() => {
-    if (socket) {
-      socket.emit("cachUser", { cookieId: cookies.socketId });
+  const startReconnectListener = () => {
+    if (cookies.socketId)
       socket.io.on("reconnect", () => {
         socket.emit("cachUser", { cookieId: cookies.socketId });
       });
-    }
-  }, [cookies.socketId]);
+  };
 
   const consoleMessage = () => {
     if (navigator.userAgent.indexOf("Firefox") != -1) {
@@ -70,6 +58,17 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
       );
     }
   };
+
+  useEffect(() => {
+    consoleMessage();
+    storeUserId();
+    startReconnectListener;
+    socket.on("connect", () => {
+      storeUserId();
+      startReconnectListener;
+    });
+    if (!socket.connected) socket.connect();
+  });
 
   return (
     <ContextWrapper>
