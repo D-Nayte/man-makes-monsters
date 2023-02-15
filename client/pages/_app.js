@@ -14,7 +14,6 @@ const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
 });
 
 function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
-  console.log("socekt", socket);
   const cookies = parseCookies();
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
