@@ -27,6 +27,7 @@
 @import url("./AdminMail.css");
 @import url("./Ladybug.css");
 @import url("./userProfile.css");
+@import url("./captchaLogo.css");
 
 * {
   box-sizing: border-box;
@@ -116,4 +117,8 @@ body {
   z-index: 100;
   top: 50%;
   left: 50%;
+}
+
+.grecaptcha-badge {
+  display: none !important;
 }

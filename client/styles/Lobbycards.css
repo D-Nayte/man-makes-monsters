@@ -57,6 +57,7 @@
   background: black;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transform: rotate(0);
 }
 
 .lobbyFront:hover,
@@ -84,6 +85,7 @@
   height: 100%;
   padding: 0.5rem 2rem 1rem 2rem;
   z-index: -1;
+  backface-visibility: hidden;
 }
 
 .lobbyBack h2 {
