@@ -6,6 +6,7 @@ import { io } from "socket.io-client";
 import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
   reconnection: true, // enable reconnection
@@ -71,31 +72,34 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   });
 
   return (
-    <ContextWrapper>
-      <SessionProvider session={session}>
-        <Layout
-          socket={socket}
-          setHandSize={setHandSize}
-          setAmountOfRounds={setAmountOfRounds}
-          handSize={handSize}
-          amountOfRounds={amountOfRounds}
-          language={language}
-          setLanguage={setLanguage}
-          channel={channel}>
-          <AnimatePresence mode="wait" initial={false}>
-            <Component
-              key={router.pathname}
-              {...pageProps}
-              handSize={handSize}
-              amountOfRounds={amountOfRounds}
-              socket={socket}
-              channel={channel}
-              language={language}
-            />
-          </AnimatePresence>
-        </Layout>
-      </SessionProvider>
-    </ContextWrapper>
+    <GoogleReCaptchaProvider
+      reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_KEY}>
+      <ContextWrapper>
+        <SessionProvider session={session}>
+          <Layout
+            socket={socket}
+            setHandSize={setHandSize}
+            setAmountOfRounds={setAmountOfRounds}
+            handSize={handSize}
+            amountOfRounds={amountOfRounds}
+            language={language}
+            setLanguage={setLanguage}
+            channel={channel}>
+            <AnimatePresence mode="wait" initial={false}>
+              <Component
+                key={router.pathname}
+                {...pageProps}
+                handSize={handSize}
+                amountOfRounds={amountOfRounds}
+                socket={socket}
+                channel={channel}
+                language={language}
+              />
+            </AnimatePresence>
+          </Layout>
+        </SessionProvider>
+      </ContextWrapper>
+    </GoogleReCaptchaProvider>
   );
 }
 

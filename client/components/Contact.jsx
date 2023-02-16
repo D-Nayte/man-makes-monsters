@@ -1,8 +1,20 @@
 import React, { useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { CgCloseO } from "react-icons/cg";
+import { validateCaptcha } from "../utils/validateCaptcha";
+import CaptchaLogo from "./CaptchaLogo";
+import emailjs from "@emailjs/browser";
 
-function Contact({ showContact, setShowContact }) {
+function Contact({
+  showContact,
+  setShowContact,
+  setSuccessMessage,
+  setShowErrMessage,
+}) {
   if (!showContact) return;
+  const [isValidating, setIsValidating] = useState(false);
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -14,17 +26,59 @@ function Contact({ showContact, setShowContact }) {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Send formData to server or do something else here
-    alert(
-      `Name: ${formData.name} \n Email: ${formData.email} \n Message: ${formData.message}`
+    setSubmitted(true);
+
+    if (
+      formData.name === "" ||
+      formData.email === "" ||
+      formData.message === ""
+    )
+      return setShowErrMessage("Please fill in each field");
+
+    //get recaptha token and validate
+    if (!executeRecaptcha) return;
+    setIsValidating(true);
+    const valdidation = await validateCaptcha(
+      executeRecaptcha,
+      setShowErrMessage
     );
-    setFormData({ name: "", email: "", message: "" });
+    if (!valdidation) return;
+    setIsValidating(false);
+
+    // Send formData to server or do something else here
+    try {
+      const response = await emailjs.send(
+        "service_jgoymz7",
+        "template_rb5gpbr",
+        formData,
+        "Af9obEhLKFtcQVNRT"
+      );
+
+      setSubmitted(false);
+      if (response.status === 200) {
+        setSuccessMessage("Thanks for your mail, we will responde soon");
+        setShowContact(false);
+
+        setTimeout(() => {
+          setSuccessMessage(false);
+        }, 3000);
+        setFormData({ name: "", email: "", message: "" });
+        return;
+      }
+      setShowErrMessage("Could not send mail, please try again later");
+    } catch (error) {
+      console.error("Sending mail failed:", error);
+      setShowErrMessage("Could not send mail, please try again later");
+      setSubmitted(false);
+    }
   };
 
   return (
     <div className="gameRulesBackdrop">
+      <CaptchaLogo isValidating={isValidating} />
+
       <div className="gameRules">
         <h1>Contact us</h1>
         <button onClick={() => setShowContact(false)}>
@@ -32,7 +86,13 @@ function Contact({ showContact, setShowContact }) {
         </button>
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="name">Name:</label>
+            <label
+              htmlFor="name"
+              style={
+                submitted && formData.name === "" ? { color: "red" } : null
+              }>
+              Name:
+            </label>
             <input
               type="text"
               id="name"
@@ -42,7 +102,13 @@ function Contact({ showContact, setShowContact }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="email">Email:</label>
+            <label
+              htmlFor="email"
+              style={
+                submitted && formData.email === "" ? { color: "red" } : null
+              }>
+              Email:
+            </label>
             <input
               type="email"
               id="email"
@@ -52,7 +118,13 @@ function Contact({ showContact, setShowContact }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="message">Message:</label>
+            <label
+              htmlFor="message"
+              style={
+                submitted && formData.message === "" ? { color: "red" } : null
+              }>
+              Message:
+            </label>
             <textarea
               id="message"
               name="message"

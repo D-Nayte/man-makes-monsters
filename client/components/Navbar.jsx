@@ -428,6 +428,8 @@ function Navbar(props) {
         />
         <Contact
           setShowContact={setShowContact}
+          setSuccessMessage={setSuccessMessage}
+          setShowErrMessage={setShowErrMessage}
           showContact={showContact}
           className="gameRulesContent"
         />
