@@ -22,7 +22,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   const channel = new BroadcastChannel("logiIn");
 
   const storeUserId = async () => {
-    if (!cookies.socketId) {
+    if (!cookies.socketId && socket.id) {
       setCookie(null, "socketId", socket.id, { path: "/" });
       return socket.emit("cachUser", { cookieId: socket.id });
     }
@@ -61,17 +61,14 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   };
 
   useEffect(() => {
-    consoleMessage();
-    storeUserId();
-    startReconnectListener();
-    socket.on("connect", () => {
+    if (socket.connected) {
+      startReconnectListener();
       storeUserId();
-    });
-    if (!socket.connected) socket.connect();
+    }
+  }, [socket.connected]);
 
-    return () => {
-      socket.removeListener("reconnect");
-    };
+  useEffect(() => {
+    consoleMessage;
   }, []);
 
   return (
