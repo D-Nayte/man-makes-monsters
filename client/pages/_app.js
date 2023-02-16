@@ -63,12 +63,15 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   useEffect(() => {
     consoleMessage();
     storeUserId();
-    startReconnectListener;
+    startReconnectListener();
     socket.on("connect", () => {
       storeUserId();
-      startReconnectListener;
     });
     if (!socket.connected) socket.connect();
+
+    return () => {
+      socket.removeListener("reconnect");
+    };
   }, []);
 
   return (
