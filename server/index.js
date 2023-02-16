@@ -29,8 +29,9 @@ const PORT = process.env.PORT || 5555;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["https://manmakesmonster.com", "http://localhost:3000"],
     methods: ["GET", "POST"],
+    allowedHeaders: ["Access-Control-Allow-Origin"],
   },
 });
 
