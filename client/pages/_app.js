@@ -69,7 +69,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
       startReconnectListener;
     });
     if (!socket.connected) socket.connect();
-  });
+  }, []);
 
   return (
     <GoogleReCaptchaProvider
