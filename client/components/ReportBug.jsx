@@ -10,9 +10,9 @@ function ReportBug({
   const [charCount, setCharCount] = useState(0);
 
   const [formData, setFormData] = useState({
-    name: null,
-    email: null,
-    description: null,
+    name: "",
+    email: "",
+    description: "",
     priority: "low",
   });
 
