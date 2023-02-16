@@ -10,6 +10,7 @@
   border-radius: 50%;
   background-color: rgba(0, 0, 0, 0.118);
 }
+
 .motionAvatarContainer .avatar-image svg {
   position: relative;
   display: flex;
@@ -22,6 +23,7 @@
   flex-shrink: 0;
   scale: 3.5;
 }
+
 .motionAvatarContainer p {
   color: rgb(101, 91, 91);
   font-weight: bold;
