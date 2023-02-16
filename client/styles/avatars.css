@@ -180,7 +180,6 @@ input[type="radio"]:checked + * {
   padding: 0;
   scale: 1;
   margin: 0;
-  overflow: hidden;
   font-size: 12px;
   text-shadow: 0px 1px 1px white;
   transition: all 250ms;
@@ -191,7 +190,7 @@ input[type="radio"]:checked + * {
 
 .avata-settings li:hover h3 {
   transform: translateY(-30%);
-  font-size: 13px;
+  font-size: 14px;
   text-shadow: 1px 1px 2px black;
   color: rgb(223, 223, 223);
 }
@@ -205,7 +204,7 @@ input[type="radio"]:checked + * {
   transition: all 250ms;
   font-weight: 600;
   font-size: 12px;
-  width: 8rem;
+  width: 10rem;
   text-align: center;
   color: rgba(0, 0, 0, 0.163);
   border-radius: 1rem;
