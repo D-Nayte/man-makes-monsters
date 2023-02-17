@@ -48,6 +48,7 @@ export const getuserProfileDetails = async (session) => {
       setCookie(null, "token", data.token, {
         path: "/",
         expires: expires,
+        sameSite: "none",
       });
 
       return data.profile;

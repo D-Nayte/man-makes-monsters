@@ -23,7 +23,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
 
   const storeUserId = async () => {
     if (!cookies.socketId && socket.id) {
-      setCookie(null, "socketId", socket.id, { path: "/" });
+      setCookie(null, "socketId", socket.id, { path: "/", sameSite: "none" });
       return socket.emit("cachUser", { cookieId: socket.id });
     }
     socket.emit("cachUser", { cookieId: cookies.socketId });
@@ -61,6 +61,9 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   };
 
   useEffect(() => {
+    // if (!socket.connected) socket.connect();
+    console.log("socket.id :>> ", socket.id);
+    console.log("socket.connected :>> ", socket.connected);
     if (socket.connected) {
       startReconnectListener();
       storeUserId();
