@@ -116,7 +116,7 @@ function Navbar(props) {
       setGameIdentifier(null);
       return setLobbyId(router.query.lobbyId[0]);
     }
-  }, [router.isReady, router, socket]);
+  }, [router.isReady, router, socket, socket.connected]);
 
   useEffect(() => {
     !providers &&

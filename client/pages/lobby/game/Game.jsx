@@ -341,7 +341,7 @@ const Game = ({ socket }) => {
     });
     setListenersReady(true);
     return () => {
-      socket.removeAllListeners();
+      socket.removeListener("currentGame");
       setListenersReady(false);
     };
   }, [router.isReady, gameStage, reconnect]);
@@ -370,8 +370,11 @@ const Game = ({ socket }) => {
     }
     socket.io.on("reconnect", () => {
       setListenersReady((prev) => !prev);
-      setReconnect((prev) => !prev);
+      setReconnect(!reconnect);
     });
+    return () => {
+      socket.io.removeListener("reconnect");
+    };
   }, [router.isReady]);
 
   // start dealing phase automalicly after game starts

@@ -69,6 +69,7 @@ function ReportBug({
           description: "",
           priority: "low",
         });
+        setCharCount(0);
         setSuccessMessage("Thanks for your report :)");
         setShowBug(false);
 

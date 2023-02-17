@@ -118,11 +118,7 @@ const Lobby = (props) => {
 
   useEffect(() => {
     if (cookies.socketId && lobbyId) {
-      console.log("READY!");
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
-        console.log("currentLobby :>> ", currentLobby);
-        console.log("err :>> ", err);
-
         if (!currentLobby || err) {
           setIsloading(false);
           return setShowErrMessage(
@@ -191,8 +187,8 @@ const Lobby = (props) => {
         };
     }
     return () => {
-      // socket.removeListener("updateRoom");
-      // socket.removeListener("newgame");
+      socket.removeListener("updateRoom");
+      socket.removeListener("newgame");
       setListenersReady(false);
     };
   }, [cookies.socketId, lobbyId, joinGame, reconnect, channel]);
@@ -201,7 +197,6 @@ const Lobby = (props) => {
     //self update page after got redirected, use key from query as lobby id
 
     if (listenersReady) {
-      console.log("RUNNING!");
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
     }
   }, [listenersReady]);
@@ -222,9 +217,12 @@ const Lobby = (props) => {
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
       socket.io.on("reconnect", () => {
         setListenersReady(false);
-        setReconnect((prev) => !prev);
+        setReconnect(!reconnect);
       });
     }
+    return () => {
+      socket.io.removeListener("reconnect");
+    };
   }, [router.isReady]);
 
   //hello David :) WE good at naming conventions😘😘
