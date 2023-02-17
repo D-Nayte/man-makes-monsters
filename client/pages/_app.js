@@ -67,6 +67,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 
   useEffect(() => {
     connectSocket();
+
     if (mySocket)
       mySocket.io.on("reconnect", () => {
         if (cookies.socketId)
