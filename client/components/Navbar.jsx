@@ -69,7 +69,7 @@ function Navbar(props) {
         leavedGame: true,
       };
 
-      socket.removeAllListeners();
+      // socket.removeAllListeners();
       socket.emit("changeGame", playerData);
       router.push({
         pathname: `/lobby/${lobbyId}`,
