@@ -42,13 +42,11 @@ export const getuserProfileDetails = async (session) => {
       body: JSON.stringify({ email: session.user.email }),
     });
     const data = await response.json();
-
     if (data) {
       const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000); // 30 days
       setCookie(null, "token", data.token, {
         path: "/",
         expires: expires,
-        sameSite: "none",
       });
 
       return data.profile;
