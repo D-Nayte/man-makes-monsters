@@ -35,6 +35,7 @@ function Navbar(props) {
     language,
     setLanguage,
   } = props;
+  if (!socket) return;
   const [providers, setProviders] = useState(null);
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -57,6 +58,7 @@ function Navbar(props) {
   const cookies = parseCookies();
   const [gameIdentifier, setGameIdentifier] = useState(null);
   const [storedMailData, setStoredMailData] = useState(null);
+
   const backToLobby = (e) => {
     e.stopPropagation();
     if (lobbyId) {
@@ -84,7 +86,7 @@ function Navbar(props) {
   };
 
   useEffect(() => {
-    if (socket) {
+    if (socket && socket.connected) {
       socket.on("disconnect", (reason) => {
         setGameIdentifier;
         setShowErrMessage(

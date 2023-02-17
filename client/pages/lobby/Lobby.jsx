@@ -22,14 +22,12 @@ import { patchUserProfile } from "../../utils/patchProfile";
 
 const Lobby = (props) => {
   const { socket, handSize, amountOfRounds, language, channel } = props;
-
   if (!socket)
     return (
       <main>
         <Loading />
       </main>
     );
-
   const router = useRouter();
   const [joinGame, setJoinGame] = useState(null);
   const cookies = parseCookies();
@@ -120,7 +118,11 @@ const Lobby = (props) => {
 
   useEffect(() => {
     if (cookies.socketId && lobbyId) {
+      console.log("READY!");
       socket.on("updateRoom", ({ currentLobby, err, kicked }) => {
+        console.log("currentLobby :>> ", currentLobby);
+        console.log("err :>> ", err);
+
         if (!currentLobby || err) {
           setIsloading(false);
           return setShowErrMessage(
@@ -139,7 +141,6 @@ const Lobby = (props) => {
             }, 5500)
           );
 
-        setIsloading(false);
         setCurrentLobby(currentLobby);
 
         if (!player) {
@@ -156,6 +157,7 @@ const Lobby = (props) => {
         if (err) return console.warn(err);
 
         setPlayers((pre) => waiting);
+        setIsloading(false);
       });
 
       // creates new game if host and redirect everyone to game
@@ -175,8 +177,10 @@ const Lobby = (props) => {
             router.push(gamePath);
           }
         }
+        setIsloading(false);
       });
       setListenersReady(true);
+
       if (channel)
         channel.onmessage = (event) => {
           if (event.data.message === "success")
@@ -187,17 +191,20 @@ const Lobby = (props) => {
         };
     }
     return () => {
-      socket.removeAllListeners();
+      // socket.removeListener("updateRoom");
+      // socket.removeListener("newgame");
       setListenersReady(false);
     };
   }, [cookies.socketId, lobbyId, joinGame, reconnect, channel]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
+
     if (listenersReady) {
+      console.log("RUNNING!");
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
     }
-  }, [listenersReady, success]);
+  }, [listenersReady]);
 
   useEffect(() => {
     if (currentLobby) {
@@ -235,7 +242,7 @@ const Lobby = (props) => {
       </main>
     );
 
-  if (!currentLobby)
+  if (!currentLobby && !isLoading)
     return (
       <main>
         {showErrMessage && (

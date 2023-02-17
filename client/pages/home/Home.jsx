@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 import { motion as m } from "framer-motion";
-import JoinGame from "../components/JoinLobby.jsx";
-import HostGame from "../components/HostGame.jsx";
-import Error from "../components/Error.jsx";
-import Loading from "../components/Loading.jsx";
-import useLocalStorage from "../components/useLocalStorage.js";
+import JoinGame from "../../components/JoinLobby.jsx";
+import HostGame from "../../components/HostGame.jsx";
+import Error from "../../components/Error.jsx";
+import Loading from "../../components/Loading.jsx";
+import useLocalStorage from "../../components/useLocalStorage.js";
 
 const Home = ({ socket }) => {
   if (!socket)
@@ -60,7 +60,8 @@ const Home = ({ socket }) => {
     });
 
     return () => {
-      socket.removeAllListeners();
+      socket.removeListener("foundRoom");
+      socket.removeListener("LobbyCreated");
     };
   }, []);
 

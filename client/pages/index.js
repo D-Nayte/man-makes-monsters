@@ -1,9 +1,9 @@
-import FrontPage from "../components/FrontPage";
+import FrontPage from "./FrontPage";
 
-export default function index() {
+export default function index(props) {
   return (
     <main>
-      <FrontPage />
+      <FrontPage {...props} />
     </main>
   );
 }
