@@ -84,6 +84,7 @@ const Lobby = (props) => {
         setStoreData((prev) => ({ ...prev, profile: user }));
       }
       inputname.current.value = "";
+      inputname.current.blur();
     }
   };
 
