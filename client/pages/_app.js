@@ -9,7 +9,7 @@ import { ContextWrapper } from "../context";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import { useRouter } from "next/router";
 
-const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:3000", {
+const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
   autoConnect: false,
   reconnection: true, // enable reconnection
   reconnectionAttempts: 5, // try to reconnect 5 times
