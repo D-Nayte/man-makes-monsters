@@ -75,6 +75,10 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
       });
   }, [mySocket]);
 
+  useEffect(() => {
+    consoleMessage();
+  }, []);
+
   return (
     <GoogleReCaptchaProvider
       reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTHA_KEY}>

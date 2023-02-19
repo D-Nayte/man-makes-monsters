@@ -570,7 +570,7 @@ const Game = ({ socket }) => {
               )}
             </DragAndDropContainer>
           ) : null}
-          {/* {(timerTrigger && isCzar) ||
+          {(timerTrigger && isCzar) ||
           (!isCzar && gameStage !== "black" && !confirmed) ? (
             <div className="timerContainer">
               <Countdown
@@ -583,7 +583,7 @@ const Game = ({ socket }) => {
                 isCzar={isCzar}
               />
             </div>
-          ) : null} */}
+          ) : null}
 
           {showErrMessage && (
             <Error
