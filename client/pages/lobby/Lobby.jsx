@@ -48,6 +48,7 @@ const Lobby = (props) => {
   const [stepIndex, setStepIndex] = useState(0);
   const { storeData, setStoreData } = useAppContext();
   const lobbyId = storeData.lobbyId;
+  const inputname = useRef("");
 
   const handleGameCreation = () => {
     setIsloading(true);
@@ -59,18 +60,31 @@ const Lobby = (props) => {
     });
   };
 
-  const changePLayerName = async (newPLayerName) => {
-    socket.emit("updateLobby", {
-      lobbyId,
-      id: cookies.socketId,
-      newPLayerName,
-    });
-    if (session) {
-      const user = await patchUserProfile({
-        key: "name",
-        value: newPLayerName,
+  const changePLayerName = async (event) => {
+    const newPLayerName = inputname.current.value;
+    const key = event.key;
+    const { name } =
+      players?.find((player) => player.id === cookies.socketId) ?? {};
+
+    if (
+      (key === "Enter" || key === "Done" || event.type === "click") &&
+      newPLayerName !== "" &&
+      name !== newPLayerName
+    ) {
+      socket.emit("updateLobby", {
+        lobbyId,
+        id: cookies.socketId,
+        newPLayerName,
       });
-      setStoreData((prev) => ({ ...prev, profile: user }));
+      if (session) {
+        const user = await patchUserProfile({
+          key: "name",
+          value: newPLayerName,
+        });
+        setStoreData((prev) => ({ ...prev, profile: user }));
+      }
+      inputname.current.value = "";
+      inputname.current.blur();
     }
   };
 
@@ -311,7 +325,6 @@ const Lobby = (props) => {
                 </div>
               </span>
             </h1>
-
             {isHost && (
               <div className="lobbyIdContainer">
                 <h3>Invite your Friends: </h3>
@@ -328,19 +341,21 @@ const Lobby = (props) => {
                 </div>
               </div>
             )}
-            <div className="inputEnterIconContainer">
+            <div
+              className="inputEnterIconContainer"
+              onKeyDown={(e) => changePLayerName(e)}
+              on>
               <input
                 maxLength={15}
                 className="changeNameButton"
                 type="text"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && e.target.value.length > 2) {
-                    changePLayerName(e.target.value);
-                  }
-                }}
                 placeholder="Change name"
+                ref={inputname}
               />
-              <AiOutlineEnter className="enterIcon" />
+              <AiOutlineEnter
+                className="enterIcon"
+                onClick={(e) => changePLayerName(e)}
+              />
             </div>
 
             {isHost && (
@@ -386,6 +401,7 @@ const Lobby = (props) => {
                       </>
                     )}
                   </h2>
+
                   {player.inactive && (
                     <>
                       <VscDebugDisconnect className="disconectIcon" />
