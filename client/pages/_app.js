@@ -7,33 +7,38 @@ import { useEffect, useState } from "react";
 import { parseCookies, setCookie } from "nookies";
 import { ContextWrapper } from "../context";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import { useRouter } from "next/router";
 
-const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:5555", {
+const socket = io(process.env.NEXT_PUBLIC_HOST || "http://localhost:3000", {
+  autoConnect: false,
   reconnection: true, // enable reconnection
   reconnectionAttempts: 5, // try to reconnect 5 times
   reconnectionDelay: 3000, // increase the delay between reconnection attempts to 3 seconds
 });
 
-function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const cookies = parseCookies();
   const [amountOfRounds, setAmountOfRounds] = useState(10);
   const [handSize, setHandSize] = useState(10);
   const [language, setLanguage] = useState("english");
   const channel = new BroadcastChannel("logiIn");
+  const router = useRouter();
+  const [mySocket, setMySocket] = useState(null);
+
+  function connectSocket() {
+    socket.on("connect", () => {
+      setMySocket(socket);
+      storeUserId();
+    });
+    socket.connect();
+  }
 
   const storeUserId = async () => {
     if (!cookies.socketId && socket.id) {
-      setCookie(null, "socketId", socket.id, { path: "/", sameSite: "none" });
+      setCookie(null, "socketId", socket.id, { path: "/" });
       return socket.emit("cachUser", { cookieId: socket.id });
     }
     socket.emit("cachUser", { cookieId: cookies.socketId });
-  };
-
-  const startReconnectListener = () => {
-    if (cookies.socketId)
-      socket.io.on("reconnect", () => {
-        socket.emit("cachUser", { cookieId: cookies.socketId });
-      });
   };
 
   const consoleMessage = () => {
@@ -61,17 +66,17 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
   };
 
   useEffect(() => {
-    // if (!socket.connected) socket.connect();
-    console.log("socket.id :>> ", socket.id);
-    console.log("socket.connected :>> ", socket.connected);
-    if (socket.connected) {
-      startReconnectListener();
-      storeUserId();
-    }
-  }, [socket.connected]);
+    connectSocket();
+
+    if (mySocket)
+      mySocket.io.on("reconnect", () => {
+        if (cookies.socketId)
+          mySocket.emit("cachUser", { cookieId: cookies.socketId });
+      });
+  }, [mySocket]);
 
   useEffect(() => {
-    consoleMessage;
+    consoleMessage();
   }, []);
 
   return (
@@ -94,7 +99,7 @@ function MyApp({ Component, router, pageProps: { session, ...pageProps } }) {
                 {...pageProps}
                 handSize={handSize}
                 amountOfRounds={amountOfRounds}
-                socket={socket}
+                socket={mySocket}
                 channel={channel}
                 language={language}
               />

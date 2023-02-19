@@ -69,7 +69,6 @@ export const updateClient = async (data) => {
     return socket.emit("updateRoom", {
       err: "Cant find game to join. Wrong lobby id or player id",
     });
-
   try {
     const { currentLobby } = await getCache({ lobbyId });
     if (!currentLobby) throw Error();

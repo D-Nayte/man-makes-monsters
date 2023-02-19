@@ -22,14 +22,12 @@ import { patchUserProfile } from "../../utils/patchProfile";
 
 const Lobby = (props) => {
   const { socket, handSize, amountOfRounds, language, channel } = props;
-
   if (!socket)
     return (
       <main>
         <Loading />
       </main>
     );
-
   const router = useRouter();
   const [joinGame, setJoinGame] = useState(null);
   const cookies = parseCookies();
@@ -139,7 +137,6 @@ const Lobby = (props) => {
             }, 5500)
           );
 
-        setIsloading(false);
         setCurrentLobby(currentLobby);
 
         if (!player) {
@@ -156,6 +153,7 @@ const Lobby = (props) => {
         if (err) return console.warn(err);
 
         setPlayers((pre) => waiting);
+        setIsloading(false);
       });
 
       // creates new game if host and redirect everyone to game
@@ -175,8 +173,10 @@ const Lobby = (props) => {
             router.push(gamePath);
           }
         }
+        setIsloading(false);
       });
       setListenersReady(true);
+
       if (channel)
         channel.onmessage = (event) => {
           if (event.data.message === "success")
@@ -187,17 +187,19 @@ const Lobby = (props) => {
         };
     }
     return () => {
-      socket.removeAllListeners();
+      socket.removeListener("updateRoom");
+      socket.removeListener("newgame");
       setListenersReady(false);
     };
   }, [cookies.socketId, lobbyId, joinGame, reconnect, channel]);
 
   useEffect(() => {
     //self update page after got redirected, use key from query as lobby id
+
     if (listenersReady) {
       socket.emit("updateLobby", { lobbyId, id: cookies.socketId, joinGame });
     }
-  }, [listenersReady, success]);
+  }, [listenersReady]);
 
   useEffect(() => {
     if (currentLobby) {
@@ -215,9 +217,12 @@ const Lobby = (props) => {
       setStoreData((prev) => ({ ...prev, lobbyId: router.query.lobbyId[0] }));
       socket.io.on("reconnect", () => {
         setListenersReady(false);
-        setReconnect((prev) => !prev);
+        setReconnect(!reconnect);
       });
     }
+    return () => {
+      socket.io.removeListener("reconnect");
+    };
   }, [router.isReady]);
 
   //hello David :) WE good at naming conventions😘😘
@@ -235,7 +240,7 @@ const Lobby = (props) => {
       </main>
     );
 
-  if (!currentLobby)
+  if (!currentLobby && !isLoading)
     return (
       <main>
         {showErrMessage && (
