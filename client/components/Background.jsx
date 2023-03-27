@@ -11,14 +11,14 @@ function Background({
 }) {
   if (!showBackground) return;
   return (
-    <div className="gameRulesBackdrop">
+    <div className="gameRulesBackdrop fullscreenMobile">
       <div className="gameRules">
         <button onClick={() => setShowBackground(false)}>
           <CgCloseO className="closeMenuButton" />
         </button>
 
         <h2>Choose Your background</h2>
-        <div className="backgroundsContainer">
+        <div className="backgroundsContainer fullscreenMobileContainer">
           {allBackgrounds.map((backgroundObject) => {
             return (
               <div

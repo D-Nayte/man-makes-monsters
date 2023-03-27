@@ -43,3 +43,8 @@
   font-weight: bold;
   transition: 0.3s;
 }
+@media (max-width: 640px) {
+  .contactFormContainer {
+    width: 100vw;
+  }
+}

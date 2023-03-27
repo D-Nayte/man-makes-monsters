@@ -12,7 +12,7 @@ function Profile({
 }) {
   if (!showProfileMenu) return;
   return (
-    <div className="gameRulesBackdrop">
+    <div className="gameRulesBackdrop fullscreenMobile">
       <div className="gameRules">
         <h1>Profile</h1>
         <button onClick={() => setShowProfileMenu(false)}>
@@ -34,7 +34,8 @@ function Profile({
                     : ""
                 }`}
                 key={cardObject.label}
-                onClick={() => setSelectedCardBackground(cardObject)}>
+                onClick={() => setSelectedCardBackground(cardObject)}
+              >
                 <img src={cardObject.SVG} alt="" className="profileCcMock" />
               </div>
             );

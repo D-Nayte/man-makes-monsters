@@ -4,7 +4,7 @@ import { CgCloseO } from "react-icons/cg";
 function GameRules({ setShowRules, showRules }) {
   if (!showRules) return;
   return (
-    <div className="gameRulesBackdrop">
+    <div className="gameRulesBackdrop fullscreenMobile">
       <div className="gameRules">
         <button onClick={() => setShowRules(false)}>
           <CgCloseO className="closeMenuButton" />

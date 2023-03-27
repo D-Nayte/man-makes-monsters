@@ -76,10 +76,9 @@ function Contact({
   };
 
   return (
-    <div className="gameRulesBackdrop">
-      <CaptchaLogo isValidating={isValidating} />
-
-      <div className="gameRules">
+    <div className="gameRulesBackdrop fullscreenMobile">
+      <div className="gameRules contactFormContainer">
+        <CaptchaLogo isValidating={isValidating} />
         <h1>Contact us</h1>
         <button onClick={() => setShowContact(false)}>
           <CgCloseO className="closeMenuButton" />
@@ -90,7 +89,8 @@ function Contact({
               htmlFor="name"
               style={
                 submitted && formData.name === "" ? { color: "red" } : null
-              }>
+              }
+            >
               Name:
             </label>
             <input
@@ -106,7 +106,8 @@ function Contact({
               htmlFor="email"
               style={
                 submitted && formData.email === "" ? { color: "red" } : null
-              }>
+              }
+            >
               Email:
             </label>
             <input
@@ -122,7 +123,8 @@ function Contact({
               htmlFor="message"
               style={
                 submitted && formData.message === "" ? { color: "red" } : null
-              }>
+              }
+            >
               Message:
             </label>
             <textarea

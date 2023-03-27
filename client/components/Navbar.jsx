@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { BsBug, BsFillChatRightTextFill } from "react-icons/bs";
+import {
+  BsBug,
+  BsFillChatRightTextFill,
+  BsFullscreen,
+  BsFullscreenExit,
+} from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { AiOutlineDollarCircle, AiOutlineMail } from "react-icons/ai";
@@ -58,6 +63,17 @@ function Navbar(props) {
   const cookies = parseCookies();
   const [gameIdentifier, setGameIdentifier] = useState(null);
   const [storedMailData, setStoredMailData] = useState(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [currentWindowSize, setcurrentWindowSize] = useState(null);
+
+  const handleToggleFullScreen = (event) => {
+    if (!isFullScreen) {
+      event.view.document.body.requestFullscreen();
+    } else {
+      event.view.document.exitFullscreen();
+    }
+    setIsFullScreen(!isFullScreen);
+  };
 
   const backToLobby = (e) => {
     e.stopPropagation();
@@ -84,6 +100,29 @@ function Navbar(props) {
       "height=500px,width=500px"
     );
   };
+
+  useEffect(() => {
+    setcurrentWindowSize(window.innerHeight);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "F11") {
+        event.preventDefault();
+        handleToggleFullScreen(event);
+      }
+    };
+
+    const handleFullScreenExit = () => {
+      if (currentWindowSize >= window.innerHeight)
+        setIsFullScreen(false), setcurrentWindowSize(window.innerHeight);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleFullScreenExit);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleFullScreenExit);
+    };
+  }, [currentWindowSize]);
 
   useEffect(() => {
     if (socket && socket.connected) {
@@ -383,6 +422,17 @@ function Navbar(props) {
               <div className="navBarText">Admin mail</div>
             </li>
           )}
+          <li onClick={handleToggleFullScreen}>
+            <div className="navbarIcons">
+              {isFullScreen ? <BsFullscreenExit /> : <BsFullscreen />}
+            </div>
+
+            {isFullScreen ? (
+              <div className="navBarText">Exit Fullscreen</div>
+            ) : (
+              <div className="navBarText">Enter Fullscreen</div>
+            )}
+          </li>
         </ul>
         <p className="copyright">
           Copyright © 2023 Man Makes Monster. All rights reserved.
