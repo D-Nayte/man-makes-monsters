@@ -64,6 +64,7 @@ function Navbar(props) {
   const [gameIdentifier, setGameIdentifier] = useState(null);
   const [storedMailData, setStoredMailData] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const [currentWindowSize, setcurrentWindowSize] = useState(null);
 
   const handleToggleFullScreen = (event) => {
     if (!isFullScreen) {
@@ -101,23 +102,27 @@ function Navbar(props) {
   };
 
   useEffect(() => {
+    setcurrentWindowSize(window.innerHeight);
+
     const handleKeyDown = (event) => {
-      console.log("gibberish");
-      console.log("event", event);
       if (event.key === "F11") {
         event.preventDefault();
-        event.type === "keyup" && handleToggleFullScreen(event);
+        handleToggleFullScreen(event);
       }
     };
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyDown);
-    document.addEventListener("fullscreenchange", handleKeyDown);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyDown);
-      document.removeEventListener("fullscreenchange", handleKeyDown);
+
+    const handleFullScreenExit = () => {
+      if (currentWindowSize >= window.innerHeight)
+        setIsFullScreen(false), setcurrentWindowSize(window.innerHeight);
     };
-  }, []);
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleFullScreenExit);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleFullScreenExit);
+    };
+  }, [currentWindowSize]);
 
   useEffect(() => {
     if (socket && socket.connected) {
@@ -253,8 +258,7 @@ function Navbar(props) {
         onMouseLeave={() => {
           setShowProfile(false);
           setShowSettings(false);
-        }}
-      >
+        }}>
         <button className="burgerMenue"></button>
         <ul>
           {session ? (
@@ -262,8 +266,7 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowProfile((prev) => !prev)}
-                >
+                  onClick={() => setShowProfile((prev) => !prev)}>
                   <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
@@ -279,8 +282,7 @@ function Navbar(props) {
                         showProfile
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }
-                    >
+                      }>
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -293,8 +295,7 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowUserProfile(true);
-                    }}
-                  >
+                    }}>
                     Profile
                   </li>
                   <li
@@ -302,8 +303,7 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowProfileMenu(true);
-                    }}
-                  >
+                    }}>
                     Card Backside
                   </li>
                   <li
@@ -311,8 +311,7 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowBackground(true);
-                    }}
-                  >
+                    }}>
                     Backgrounds
                   </li>
                   {router.pathname !== "/lobby/game/[...gameId]" ? (
@@ -337,8 +336,7 @@ function Navbar(props) {
             <li
               className={"signIn joyRideProfile"}
               style={gameIdentifier ? { color: "gray", opacity: ".7" } : null}
-              onClick={!gameIdentifier ? () => setShowSignIn(true) : null}
-            >
+              onClick={!gameIdentifier ? () => setShowSignIn(true) : null}>
               <div className="navbarIcons">
                 <CgProfile />
               </div>
@@ -353,8 +351,7 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowSettings((prev) => !prev)}
-                >
+                  onClick={() => setShowSettings((prev) => !prev)}>
                   <div className="navbarIcons gameSettingsIcon">
                     <FiSettings />
                   </div>
@@ -365,8 +362,7 @@ function Navbar(props) {
                         showSettings
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }
-                    >
+                      }>
                       <IoIosArrowDown />
                     </span>
                   </div>
