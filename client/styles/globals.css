@@ -122,3 +122,14 @@ body {
 .grecaptcha-badge {
   display: none !important;
 }
+
+::-webkit-scrollbar-thumb {
+  border-radius: 1rem;
+  color: white;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
