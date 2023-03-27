@@ -105,6 +105,8 @@
   width: -moz-max-content;
   width: max-content;
   margin: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   gap: 2rem;
   background-color: transparent;
   justify-content: center;
