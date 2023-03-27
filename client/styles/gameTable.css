@@ -103,7 +103,7 @@
   display: flex;
   width: -webkit-max-content;
   width: -moz-max-content;
-  width: max-content;
+  width: 100%;
   margin: auto;
   overflow-x: auto;
   overflow-y: hidden;
@@ -495,7 +495,7 @@
   .cardDisplay.playedWhite {
     display: flex;
     width: 100vw;
-    overflow-x: scroll;
+    overflow-x: auto;
     margin: auto;
     gap: 0rem;
     justify-content: flex-start;

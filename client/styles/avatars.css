@@ -347,21 +347,7 @@ input[type="radio"]:checked + * {
     position: relative;
     width: 100%;
   }
-  .avatar-preview > div:nth-child(2) > ul::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: #f5f5f500;
-  }
-  .avatar-preview > div:nth-child(2) > ul::-webkit-scrollbar {
-    width: 12px;
-    background-color: #f5f5f500;
-  }
-  .avatar-preview > div:nth-child(2) > ul::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: rgba(0, 0, 0, 0.524);
-    size: 20px;
-    min-height: 20px;
-  }
+
   .avatar-preview > div:nth-child(2) > ul {
     flex-wrap: nowrap;
     overflow: auto;
