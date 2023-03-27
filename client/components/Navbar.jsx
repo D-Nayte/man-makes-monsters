@@ -4,7 +4,12 @@ import { useRouter } from "next/router";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { IoIosArrowBack, IoIosArrowDown } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
-import { BsBug, BsFillChatRightTextFill } from "react-icons/bs";
+import {
+  BsBug,
+  BsFillChatRightTextFill,
+  BsFullscreen,
+  BsFullscreenExit,
+} from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { BsCardChecklist } from "react-icons/bs";
 import { AiOutlineDollarCircle, AiOutlineMail } from "react-icons/ai";
@@ -58,6 +63,16 @@ function Navbar(props) {
   const cookies = parseCookies();
   const [gameIdentifier, setGameIdentifier] = useState(null);
   const [storedMailData, setStoredMailData] = useState(null);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  const handleToggleFullScreen = () => {
+    if (!isFullScreen) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+    setIsFullScreen(!isFullScreen);
+  };
 
   const backToLobby = (e) => {
     e.stopPropagation();
@@ -219,7 +234,8 @@ function Navbar(props) {
         onMouseLeave={() => {
           setShowProfile(false);
           setShowSettings(false);
-        }}>
+        }}
+      >
         <button className="burgerMenue"></button>
         <ul>
           {session ? (
@@ -227,7 +243,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowProfile((prev) => !prev)}>
+                  onClick={() => setShowProfile((prev) => !prev)}
+                >
                   <div className="navbarProfilePic joyRideProfile">
                     <img
                       className="navIcon"
@@ -243,7 +260,8 @@ function Navbar(props) {
                         showProfile
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -256,7 +274,8 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowUserProfile(true);
-                    }}>
+                    }}
+                  >
                     Profile
                   </li>
                   <li
@@ -264,7 +283,8 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowProfileMenu(true);
-                    }}>
+                    }}
+                  >
                     Card Backside
                   </li>
                   <li
@@ -272,7 +292,8 @@ function Navbar(props) {
                     onClick={() => {
                       setShowProfile((prev) => !prev);
                       setShowBackground(true);
-                    }}>
+                    }}
+                  >
                     Backgrounds
                   </li>
                   {router.pathname !== "/lobby/game/[...gameId]" ? (
@@ -297,7 +318,8 @@ function Navbar(props) {
             <li
               className={"signIn joyRideProfile"}
               style={gameIdentifier ? { color: "gray", opacity: ".7" } : null}
-              onClick={!gameIdentifier ? () => setShowSignIn(true) : null}>
+              onClick={!gameIdentifier ? () => setShowSignIn(true) : null}
+            >
               <div className="navbarIcons">
                 <CgProfile />
               </div>
@@ -312,7 +334,8 @@ function Navbar(props) {
               <li id="sidebar-item">
                 <div
                   id="settingsToggle"
-                  onClick={() => setShowSettings((prev) => !prev)}>
+                  onClick={() => setShowSettings((prev) => !prev)}
+                >
                   <div className="navbarIcons gameSettingsIcon">
                     <FiSettings />
                   </div>
@@ -323,7 +346,8 @@ function Navbar(props) {
                         showSettings
                           ? "arrowDownIcon "
                           : "arrowDownIcon openArrow"
-                      }>
+                      }
+                    >
                       <IoIosArrowDown />
                     </span>
                   </div>
@@ -383,6 +407,17 @@ function Navbar(props) {
               <div className="navBarText">Admin mail</div>
             </li>
           )}
+          <li onClick={handleToggleFullScreen}>
+            <div className="navbarIcons">
+              {isFullScreen ? <BsFullscreenExit /> : <BsFullscreen />}
+            </div>
+
+            {isFullScreen ? (
+              <div className="navBarText">Exit Fullscreen</div>
+            ) : (
+              <div className="navBarText">Enter Fullscreen</div>
+            )}
+          </li>
         </ul>
         <p className="copyright">
           Copyright © 2023 Man Makes Monster. All rights reserved.
