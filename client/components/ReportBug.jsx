@@ -86,9 +86,9 @@ function ReportBug({
   };
 
   return (
-    <div className="gameRulesBackdrop">
-      <CaptchaLogo isValidating={isValidating} />
-      <div className="gameRules">
+    <div className="gameRulesBackdrop fullscreenMobile">
+      <div className="gameRules bugReportContainer">
+        <CaptchaLogo isValidating={isValidating} />
         <h1>Bug Report</h1>
         <button onClick={() => setShowBug(false)}>
           <CgCloseO className="closeMenuButton" />
@@ -97,13 +97,15 @@ function ReportBug({
           className="bug-report-form"
           onSubmit={(event) => {
             handleSubmit(event);
-          }}>
+          }}
+        >
           <div className="form-group">
             <label
               htmlFor="name"
               style={
                 submitted && formData.name === "" ? { color: "red" } : null
-              }>
+              }
+            >
               Name:
             </label>
             <input
@@ -120,7 +122,8 @@ function ReportBug({
               htmlFor="email"
               style={
                 submitted && formData.email === "" ? { color: "red" } : null
-              }>
+              }
+            >
               Email:
             </label>
             <input
@@ -139,7 +142,8 @@ function ReportBug({
                 submitted && formData.description === ""
                   ? { color: "red" }
                   : null
-              }>
+              }
+            >
               Description:
             </label>
             <textarea
@@ -161,7 +165,8 @@ function ReportBug({
               id="priority"
               name="priority"
               onChange={handleInputChange}
-              defaultValue={formData.priority}>
+              defaultValue={formData.priority}
+            >
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>

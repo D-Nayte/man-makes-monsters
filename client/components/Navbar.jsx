@@ -65,11 +65,11 @@ function Navbar(props) {
   const [storedMailData, setStoredMailData] = useState(null);
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const handleToggleFullScreen = () => {
+  const handleToggleFullScreen = (event) => {
     if (!isFullScreen) {
-      document.documentElement.requestFullscreen();
+      event.view.document.body.requestFullscreen();
     } else {
-      document.exitFullscreen();
+      event.view.document.exitFullscreen();
     }
     setIsFullScreen(!isFullScreen);
   };
@@ -99,6 +99,25 @@ function Navbar(props) {
       "height=500px,width=500px"
     );
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      console.log("gibberish");
+      console.log("event", event);
+      if (event.key === "F11") {
+        event.preventDefault();
+        event.type === "keyup" && handleToggleFullScreen(event);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyDown);
+    document.addEventListener("fullscreenchange", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyDown);
+      document.removeEventListener("fullscreenchange", handleKeyDown);
+    };
+  }, []);
 
   useEffect(() => {
     if (socket && socket.connected) {

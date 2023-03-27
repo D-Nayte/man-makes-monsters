@@ -35,3 +35,9 @@
   text-decoration: underline;
   transition: 0.3s;
 }
+
+@media (max-width: 640px) {
+  .bugReportContainer {
+    width: 100vw;
+  }
+}

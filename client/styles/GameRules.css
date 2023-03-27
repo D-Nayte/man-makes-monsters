@@ -1,9 +1,5 @@
 .gameRules {
-  position: fixed;
   max-width: 800px;
-  height: -webkit-max-content;
-  height: -moz-max-content;
-  height: max-content;
   inset: 0;
   margin: auto;
   background-color: black;
@@ -27,6 +23,7 @@
 
 .gameRulesBackdrop {
   position: fixed;
+  display: flex;
   width: 100%;
   height: 100%;
   inset: 0;
@@ -80,6 +77,9 @@
 @media (max-width: 640px) {
   .closeMenuButton {
     width: 30px;
+  }
+  .gameRulesText {
+    height: 65vh;
   }
 }
 

@@ -231,6 +231,13 @@
   .navContainer {
     padding: 0.5rem 0 0;
   }
+  .fullscreenMobile {
+    min-height: 100vh;
+  }
+  .fullscreenMobile > *:first-child {
+    min-height: 80vh;
+    max-height: 81vh;
+  }
   .accountMenu {
     font-size: 12px;
     height: -webkit-max-content;
@@ -241,7 +248,8 @@
     width: 100vw;
     z-index: 20;
     right: 0;
-    top: -380px;
+    top: 0;
+    transform: translateY(-100%);
     border: 2px solid white;
     background-color: black;
   }
@@ -263,6 +271,7 @@
     right: 0;
     color: white;
     top: 0px;
+    transform: translateY(0);
   }
 
   .navbarIcons {
