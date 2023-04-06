@@ -32,7 +32,7 @@ const io = new Server(server, {
     origin: [
       "https://manmakesmonster.com",
       "http://localhost:3000",
-      " https://man-makes-monsters-demo.vercel.app",
+      "https://man-makes-monsters-demo.vercel.app",
     ],
     methods: ["GET", "POST"],
     allowedHeaders: ["Access-Control-Allow-Origin"],
